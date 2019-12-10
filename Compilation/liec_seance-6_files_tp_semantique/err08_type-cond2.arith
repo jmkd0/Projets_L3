@@ -1,0 +1,1 @@
+a = if (if 1 == 2 then 3 else 4) then 5 else 6; # line 1 col 8: expected bool but given num

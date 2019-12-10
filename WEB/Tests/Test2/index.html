@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html style="-webkit-overflow-scrolling: touch;">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Rotate HTML elements by mouse in JavaScript - Propeller.js</title>
+    <meta name="viewport" content="width=device-width, target-densitydpi=device-dpi">
+    
+</head>
+<body>
+
+<div id="turbine" style="background-color: red; width:400px; height: 200px;"><p>Voila</p></div>
+<script src="propeller.js"></script>
+<script>
+    new Propeller(document.getElementById('turbine'), {
+        inertia: 0.99
+      
+    });
+  
+</script>
+</body>
+</html>

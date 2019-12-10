@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "chrono": "cpp",
+        "iostream": "cpp",
+        "thread": "cpp",
+        "ostream": "cpp"
+    },
+    "editor.mouseWheelZoom": true
+}

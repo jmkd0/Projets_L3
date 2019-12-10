@@ -1,0 +1,1 @@
+a = if true then 42 else false; # line 1 col 25: number expected but boolean given 

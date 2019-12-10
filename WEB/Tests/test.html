@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Rotation d'une image, animation</title>
+  <script src="main.js"></script>
+  <script type="text/javascript">
+  /* style='cursor:pointer'*/
+  //<![CDATA[
+    var cv,ctx,tmr,ima=new Image(),W=400,H=400; // dimensions de l'image
+    var k,n=330,a=Math.PI/n; // n: nombre de pas pour faire un demi-tour
+    var ap="Cliquez pour voir 'après'",av="Cliquez pour voir 'avant'";
+    
+    function Drw() {
+      ctx.rotate(a); ctx.drawImage(ima,-W/2,-H/2,W,H);
+      if (++k>=n) {clearInterval(tmr); cv.title=((a=-a)>0)?ap:av;}
+    }
+    function Ini() {
+      cv=document.getElementById('cv'); cv.width=W; cv.height=H; cv.title=ap;
+      ctx=cv.getContext('2d'); //ctx.translate(W/2,H/2);
+      ima.onload=function() {
+          ctx.drawImage(ima,-W/2,-H/2,W,H);}
+      ima.src='img.jpg';
+    }
+    function Clk() {k=1; tmr=setInterval('Drw()',20);}
+  //]]>
+  </script>
+</head>
+<body style='background-color:#BBBBBB;' onload='Ini()'>
+  <canvas id='cv' onclick='Clk()'>
+    Your browser does not support HTML5 canvas
+  </canvas>
+  <div>
+    Cliquez pour tourner l'image.<br/><br/>
+    <a href='http://www.william-voirol.ch/Prog/Transformations/RotImage.zip'>
+      Zip du code
+    </a>
+  </div>
+</body>
+</html>

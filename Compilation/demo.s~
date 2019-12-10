@@ -1,0 +1,13 @@
+.text
+.globl main
+
+main:
+li $v0, 1
+syscall
+li $a0, 42
+syscall
+jr $ra
+
+
+.data
+hw: .asciiz "Hello, World!\n"

@@ -1,0 +1,58 @@
+;;EXERCICE 2
+#lang racket/base
+
+(require racket/port)
+(require parser-tools/lex
+         (prefix-in : parser-tools/lex-sre))
+
+(provide first-lexer)
+
+
+
+;;Question 1
+(define first-lexer
+  (lexer
+   ((eof)           'Eof)
+   (whitespace      (first-lexer input-port))
+   ((:+ alphabetic) (begin printf(lexeme)(first-lexer input-port)))
+   (any-char        'Error))
+  )
+;;Question 2
+(call-with-input-string "Est-ce que ça marche ?" first-lexer)
+
+;;Question 3
+(define second-lexer
+  (lexer
+   ((eof)           'Eof)
+   (whitespace      (second-lexer input-port))
+   ((:+ alphabetic) lexeme)
+   (any-char        'Error)))
+;;Question 4
+(define (second-lex in)
+  (let loop ((t (second-lexer in)))
+    (unless (eq? t 'Eof)
+      (write t)
+      (newline) 
+      (loop (second-lexer in)))))
+
+;;Question 5
+(call-with-input-string "Est-ce que ça marche ?" second-lex)
+;;Question 6
+(define argv (current-command-line-arguments))
+(cond
+  ((= (vector-length argv) 1)
+   (call-with-input-file (vector-ref argv 0) second-lex))
+  (else
+   (eprintf "Usage: racket lexers.rkt \"file\"\n")
+   (exit 1)))
+
+
+
+
+
+
+
+
+
+
+

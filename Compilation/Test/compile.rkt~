@@ -1,0 +1,12 @@
+#lang racket/base
+(require racket/match
+         "ast.rkt"
+         "mips.rkt"
+         "helper.rkt")
+(provide compile)
+
+(define (compile-prog prog)
+  (match prog
+    [(Num n)]))
+(define (compile ast)
+  (compile-prog ast))

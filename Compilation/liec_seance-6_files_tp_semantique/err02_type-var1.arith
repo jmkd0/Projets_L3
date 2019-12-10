@@ -1,0 +1,2 @@
+a = true;
+b = 2 * a; # line 2 col 8: expected number but boolean given

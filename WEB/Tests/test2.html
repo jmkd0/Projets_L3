@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>test coordonnées</title>
+<style type="text/css">
+.corps{
+        
+        width: 180px;
+        height: 290px;
+        background-color: #DDD;
+        border: 1px solid #000;
+}
+.barre{
+        width: 15px;
+        height: 30px;
+        float: top;
+        background-color: #00D;
+        color: #FFF;      
+}
+.orig{
+  transform-origin:300px 200px;
+}
+.descprofil{
+    width: 60px;
+    height: 50px;
+    position:relative; 
+
+    top:0px;
+    background-color:rgb(168, 22, 22);
+}
+
+</style>
+<div id="fenetre" style="  width: 250px; height: 300px; margin: 50px 0px 0px 60px;   background-color: rgb(41, 27, 9);">
+</div>
+<HTML>
+
+    <IMG SRC="img.jpg" STYLE="position:absolute">
+    <DIV STYLE="position:relative; top:30px;"><FONT COLOR="red">J'ai écrit sur une image </FONT></DIV>
+    
+    </HTML>
+</head>
+<body style="margin:0px 0px 0px 0px;">
+      <script type="text/javascript">
+        var cadre=document.getElementById("fenetre");
+        let conteneur=document.createElement("div");
+        let image=document.createElement("img");
+        image.src="img.jpg"
+        let descProfil=document.createElement("div")
+        descProfil.className="descprofil"
+        conteneur.appendChild(descProfil)
+        conteneur.appendChild(image)
+        cadre.appendChild(conteneur)
+      
+
+        </script>
+</body>
+</html>

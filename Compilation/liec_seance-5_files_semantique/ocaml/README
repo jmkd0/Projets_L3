@@ -1,0 +1,7 @@
+Pour compiler :
+
+    ocamlbuild -use-menhir gawi.byte
+
+Pour tester :
+
+    ./gawi.byte ../test.gw

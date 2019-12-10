@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>test coordonnées</title>
+<style type="text/css">
+.corps{
+        
+        width: 180px;
+        height: 290px;
+        background-color: #DDD;
+        border: 1px solid #000;
+}
+.barre{
+        width: 15px;
+        height: 30px;
+        float: top;
+        background-color: #00D;
+        color: #FFF;      
+}
+.orig{
+  transform-origin:300px 200px;
+}
+
+</style>
+<div id="fenetre" style="  width: 200px; height: 300px; margin: 50px 0px 0px 60px;   background-color: rgb(41, 27, 9);">
+</div>
+</head>
+<body style="margin:0px 0px 0px 0px;">
+      <script type="text/javascript">
+      
+        var cadre=document.getElementById("fenetre");
+        let conteneur=document.createElement("div");
+        conteneur.className="corps";
+        
+        
+        let dragged = null;
+        addEvents();
+        cadre.appendChild(conteneur);
+
+        function addEvents(){
+          conteneur.addEventListener('mousedown',(event)=>{
+           onStart(event,conteneur);}, true);
+          document.addEventListener('mousemove',(event)=>{
+            onMove(event, conteneur)},true);
+          document.addEventListener('mouseup',(event)=>{
+            onUp(event, conteneur)},true);
+
+          conteneur.addEventListener('touchstart',(event)=>{
+           onStart(event,conteneur);}, true);
+          document.addEventListener('touchmove',(event)=>{
+            onMove(event, conteneur)},true);
+          document.addEventListener('touchend',(event)=>{
+            onUp(event, conteneur)},true);
+        }
+        let x,y=1;
+        let ang1
+        let ang2
+        let angle
+        let a=cadre.getBoundingClientRect().left+(document.documentElement.scrollLeft + document.body.scrollLeft)+cadre.offsetWidth/2;
+        let b=cadre.getBoundingClientRect().top+(document.documentElement.scrollTop + document.body.scrollTop)+cadre.offsetHeight;
+         
+        function onStart(event, object){
+            event.returnValue = false;
+            dragged = object;
+            if(event.touches){
+              x = event.touches[0].clientX + (document.documentElement.scrollLeft + document.body.scrollLeft);
+             // y = event.touches[0].clientY + (document.documentElement.scrollTop + document.body.scrollTop);
+            }else{
+              x = event.clientX + (document.documentElement.scrollLeft + document.body.scrollLeft);
+            //  y = event.clientY + (document.documentElement.scrollTop + document.body.scrollTop);
+        }
+        ang1=(Math.atan((b-y)/(x-a)))*180/Math.PI
+        if(x-a<0) ang1-=180
+        
+        
+        
+        event.preventDefault();
+        } 
+        function onMove(event, object){
+          if( dragged ) {
+           
+            
+            if(event.touches){
+              x = event.touches[0].clientX + (document.documentElement.scrollLeft + document.body.scrollLeft);
+              //y = event.touches[0].clientY + (document.documentElement.scrollTop + document.body.scrollTop);
+            }else{
+              x = event.clientX + (document.documentElement.scrollLeft + document.body.scrollLeft);
+             // y = event.clientY + (document.documentElement.scrollTop + document.body.scrollTop);
+        }
+         
+          ang2=Math.atan((b-y)/(x-a))*180/Math.PI;
+         if(x-a<0) ang2-=180
+         
+         angle=ang1-ang2;
+       
+          object.style.transformOrigin=cadre.offsetWidth/2+"px "+cadre.offsetHeight*4+"px";
+          
+          object.style.transform="rotate("+angle+"deg)";
+        }
+        }   
+        function onUp(event, object) {
+          dragged = null;
+          
+         // console.log(ang2 );
+          let angleRetour=Math.atan((b-y)/(x-a))*180/Math.PI;
+          
+          if(x-a<0) angleRetour=-angleRetour-90
+          if(x-a>0) angleRetour=90-angleRetour
+
+         if(angleRetour<30 && angleRetour>-30){ 
+              object.style.transform="rotate("+0+"deg)";
+          }
+       
+            
+          
+        } 
+
+        </script>
+</body>
+</html>

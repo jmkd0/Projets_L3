@@ -1,0 +1,28 @@
+#lang racket
+(require parser-tools/lex)
+
+(define (string->char s)
+  (car (string->list s)))
+
+(define lex
+  (lexer#lang racket/base
+(provide (all-defined-out))
+
+(struct ASM (data text))
+(struct Label (name))
+(struct Li (reg imm))
+#lang racket/base
+(provide (all-defined-out))
+
+(struct ASM (data text))
+(struct Label (name))
+(struct Li (reg imm))
+
+    ; skip spaces:
+    [#\space     (lex input-port)]
+    
+    ; skip newline:
+    [#\newline   (lex input-port)]
+   
+    ; an actual character:
+    [any-char    (list 'CHAR (string->char lexeme))]))

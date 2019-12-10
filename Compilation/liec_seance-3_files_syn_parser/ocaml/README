@@ -1,0 +1,7 @@
+Pour compiler :
+
+    ocamlbuild -use-menhir test.byte
+
+Pour tester :
+
+    ./test.byte '1 && 0 || !(1 || 0)'

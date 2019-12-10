@@ -1,0 +1,2 @@
+a = 42;
+b = true && 42; # line 2 col 12: expected boolean but number given

@@ -1,0 +1,20 @@
+Exercice 1:
+1) Symboles terminaux: '0'...'9', '(', ')', '+', '-', '/', '?'
+Symboles non terminaux: <expr>, <num>
+symboles de départ: <expr>
+2) L'ensembe des règles de dérivation:
+
+3)Soit G=(V, W, S,R) une grammaire non-contextuelle 
+a- C'est une grammaire non-contextuelle car les règles sont de la forme A--->a avec a appartenant V* et A appartenant à V privé de W.
+
+
+Exercice 3:
+1) Grammaire:
+<expr>::=<num>
+      |<expr><expr> "+"
+      |<expr><expr> "-"
+      |<expr><expr> "*"
+      |<expr><expr> "/"
+      |"(" <expr> ")" 
+<num> ::="-"? ["0"-"9"]+
+2)    

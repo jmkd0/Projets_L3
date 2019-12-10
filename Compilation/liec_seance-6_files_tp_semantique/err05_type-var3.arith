@@ -1,0 +1,2 @@
+a = 42;
+b = if a then 13 else 51; # line 2 col 7: expected boolean but number given

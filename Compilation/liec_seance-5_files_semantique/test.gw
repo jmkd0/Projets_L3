@@ -1,0 +1,17 @@
+let dup a -> a  where
+  a <- a;
+  b <- a.
+
+let and3 a b c -> x where
+  x <- a & b & c.
+
+let truc x -> y where
+  a <- dup x;
+  y <- and3 x (dup a) a.
+
+let notnot b -> a where
+  a <- b & b.
+
+let main i1 i2 i3 -> o1 o2 where
+  o1 <- i1 & i2;
+  o2 <- o1 ^ i3.

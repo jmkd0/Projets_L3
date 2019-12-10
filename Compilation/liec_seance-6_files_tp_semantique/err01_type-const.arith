@@ -1,0 +1,1 @@
+a =42 + true; # line 1 col 9: expected number but boolean given

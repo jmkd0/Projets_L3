@@ -1,0 +1,150 @@
+ li{
+ 	list-style-type: none;
+ }
+nav > div > ul > li, ul>li{
+	float:left;
+	
+}
+nav>ul{
+	margin:0px;
+ 	padding:0px;
+ 	border-bottom:4px solid white;
+}
+nav>ul>li{
+	background-image: linear-gradient(white,palevioletred,white);
+}
+div>a{
+	font-size: 12px;/*taille pour connexion mon panier et contact*/
+}
+a{
+	font-size: 20px;
+	display:inline-block;
+	text-decoration: none;
+}
+a:hover{
+	color:cyan;
+}
+nav>ul>li>a,ul>li>a{
+	padding:10px 30px;
+	color:black;
+}
+nav>ul::after{
+	content:"";
+	display:block;
+	clear:both;
+
+}
+nav>ul>li:hover{
+	color:green;
+ 	transition-duration: 2s;
+    background-color:black;
+    border:2px solid #5E005E;
+}
+
+td{
+	background-color: cornsilk;
+	border:4px solid black;
+	padding:2px 12px;
+	border-radius: 10px;
+}
+td:hover{
+	color:cyan;
+	transition-duration: 2s;
+    background-color:darkmagenta;
+
+}
+th{
+	height: 40px;
+
+}
+table{
+	box-shadow: 5px 5px 5px white;
+	border-collapse:collapse;
+
+}
+.button2{
+	border:none;
+	padding:10px 15px 10px 15px;
+	border-radius:8px;
+	background:green;
+	font-size: 20px;
+	font:bold 13px Arial;
+	color:#fff;
+	margin-left: 50%;
+}
+.button1 {
+	border:none;
+	padding:6px 10px 6px 10px;
+	border-radius:8px;
+	background:green;
+	font:bold 13px Arial;
+	color:#fff;
+	margin-left: 50%;
+}
+.button1, .button2:hover {
+    background-color:limegreen;
+}
+.clien{
+	display:inline-table;
+	float:right;
+}
+.recherche{
+	    background: url(http://4.bp.blogspot.com/-u0fEq-zSTYI/VD1gGDLy3aI/AAAAAAAAAhw/im3bcQd5wBM/s1600/search-box.png) no-repeat;
+    
+	float:right;
+
+}
+.recherche input[type="text"] {
+    background: transparent;
+    margin: 0px 0px 0px 12px;
+    padding: 5px 0px 5px 0px;
+    border-width: 0px;
+    font-size: 20px;
+    width: 77%;
+    color: #828282;
+    display: inline-table;
+    vertical-align: top;
+}
+.button{
+	   background: url(http://2.bp.blogspot.com/-4OxjMRukhCM/VD1gBscpzII/AAAAAAAAAhk/TUxMSv7bCzA/s1600/search-button.png) no-repeat;
+    border-width: 0px;
+    cursor: pointer;
+    width: 30px;
+    display: inline-table;
+    height: 25px;
+}
+.button:hover{
+	transition-duration: 2s;
+	background: url(http://2.bp.blogspot.com/-4-xFDFGKJrA/VD1Kn04f9TI/AAAAAAAAAgw/2ta84QY1x9A/s1600/magnifier-hover.png) no-repeat;}
+header{
+/*Marge verticale*/
+background-image: linear-gradient(white,lightpink,white);
+
+}
+
+body{
+	background-color:white;
+}
+
+footer{
+    height:300px;
+	padding-top: 25px;
+	font-size:12px;  
+	background-color:gray;
+	border-top: 4px solid black;
+
+}
+.payement{
+	display:inline-block;
+	width:40%;
+	
+}
+.contact{
+	display:inline-block;
+	width:5%;
+	
+}
+footer>div>a{
+	color:white;
+	font-size: 18px;
+}

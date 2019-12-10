@@ -1,0 +1,380 @@
+0	parser793	=	(parser794)
+1	parser794	=	(prog Lend)
+2	prog	=	(block)
+3	prog	=	(block prog)
+4	block	=	(Llet Lident names Lrarr names Lwhere body Ldot)
+5	names	=	(Lident)
+6	names	=	(Lident names)
+7	body	=	(instr)
+8	body	=	(instr Lsc body)
+9	instr	=	(names Llarr expr)
+10	expr	=	(Lident args)
+11	expr	=	(expr Land expr)
+12	expr	=	(expr Lor expr)
+13	expr	=	(expr Lxor expr)
+14	expr	=	(Lnot expr)
+15	expr	=	(arg)
+16	args	=	(arg)
+17	args	=	(arg args)
+18	arg	=	(Lident)
+19	arg	=	(Lbool)
+20	arg	=	(Lopar expr Lcpar)
+State 0
+	parser793 -> . parser794 
+
+	block					goto	3
+	Llet					shift	4
+	parser794					goto	1
+	prog					goto	2
+
+State 1
+	parser793 -> parser794 . 
+
+
+State 2
+	parser794 -> prog . Lend 
+
+	Lend					accept	
+
+State 3
+	prog -> block . 
+	prog -> block . prog 
+
+	block					goto	3
+	Llet					shift	4
+	Lend					reduce	2
+	prog					goto	6
+
+State 4
+	block -> Llet . Lident names Lrarr names Lwhere body Ldot 
+
+	Lident					shift	7
+
+State 5
+	parser794 -> prog Lend . 
+
+
+State 6
+	prog -> block prog . 
+
+	Lend					reduce	3
+
+State 7
+	block -> Llet Lident . names Lrarr names Lwhere body Ldot 
+
+	names					goto	8
+	Lident					shift	9
+
+State 8
+	block -> Llet Lident names . Lrarr names Lwhere body Ldot 
+
+	Lrarr					shift	10
+
+State 9
+	names -> Lident . 
+	names -> Lident . names 
+
+	names					goto	11
+	Lident					shift	9
+	Lwhere					reduce	5
+	Lrarr					reduce	5
+	Llarr					reduce	5
+
+State 10
+	block -> Llet Lident names Lrarr . names Lwhere body Ldot 
+
+	names					goto	12
+	Lident					shift	9
+
+State 11
+	names -> Lident names . 
+
+	Lwhere					reduce	6
+	Lrarr					reduce	6
+	Llarr					reduce	6
+
+State 12
+	block -> Llet Lident names Lrarr names . Lwhere body Ldot 
+
+	Lwhere					shift	13
+
+State 13
+	block -> Llet Lident names Lrarr names Lwhere . body Ldot 
+
+	names					goto	14
+	body					goto	15
+	Lident					shift	9
+	instr					goto	16
+
+State 14
+	instr -> names . Llarr expr 
+
+	Llarr					shift	17
+
+State 15
+	block -> Llet Lident names Lrarr names Lwhere body . Ldot 
+
+	Ldot					shift	18
+
+State 16
+	body -> instr . 
+	body -> instr . Lsc body 
+
+	Lsc					shift	19
+	Ldot					reduce	7
+
+State 17
+	instr -> names Llarr . expr 
+
+	expr					goto	20
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 18
+	block -> Llet Lident names Lrarr names Lwhere body Ldot . 
+
+	Llet					reduce	4
+	Lend					reduce	4
+
+State 19
+	body -> instr Lsc . body 
+
+	names					goto	14
+	body					goto	26
+	Lident					shift	9
+	instr					goto	16
+
+State 20
+	instr -> names Llarr expr . 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lor					shift	28
+	Land					shift	27
+	Lsc					reduce	9
+	Ldot					reduce	9
+	Lxor					shift	29
+
+State 21
+	expr -> arg . 
+
+	Lxor					reduce	15
+	Land					reduce	15
+	Lcpar					reduce	15
+	Lsc					reduce	15
+	Lor					reduce	15
+	Ldot					reduce	15
+
+State 22
+	expr -> Lnot . expr 
+
+	expr					goto	30
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 23
+	arg -> Lopar . expr Lcpar 
+
+	expr					goto	31
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 24
+	arg -> Lbool . 
+
+	Land					reduce	19
+	Lcpar					reduce	19
+	Ldot					reduce	19
+	Lbool					reduce	19
+	Lor					reduce	19
+	Lident					reduce	19
+	Lsc					reduce	19
+	Lopar					reduce	19
+	Lxor					reduce	19
+
+State 25
+	expr -> Lident . args 
+	arg -> Lident . 
+
+	Land					reduce	18
+	Lcpar					reduce	18
+	Ldot					reduce	18
+	Lbool					shift	24
+	Lor					reduce	18
+	Lident					shift	34
+	Lsc					reduce	18
+	Lopar					shift	23
+	arg					goto	33
+	args					goto	32
+	Lxor					reduce	18
+
+State 26
+	body -> instr Lsc body . 
+
+	Ldot					reduce	8
+
+State 27
+	expr -> expr Land . expr 
+
+	expr					goto	35
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 28
+	expr -> expr Lor . expr 
+
+	expr					goto	36
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 29
+	expr -> expr Lxor . expr 
+
+	expr					goto	37
+	Lident					shift	25
+	Lopar					shift	23
+	arg					goto	21
+	Lnot					shift	22
+	Lbool					shift	24
+
+State 30
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	expr -> Lnot expr . 
+
+	Lxor					reduce	14
+	Land					reduce	14
+	Lcpar					reduce	14
+	Lsc					reduce	14
+	Lor					reduce	14
+	Ldot					reduce	14
+
+State 31
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	arg -> Lopar expr . Lcpar 
+
+	Lor					shift	28
+	Land					shift	27
+	Lcpar					shift	38
+	Lxor					shift	29
+
+State 32
+	expr -> Lident args . 
+
+	Lxor					reduce	10
+	Land					reduce	10
+	Lcpar					reduce	10
+	Lsc					reduce	10
+	Lor					reduce	10
+	Ldot					reduce	10
+
+State 33
+	args -> arg . 
+	args -> arg . args 
+
+	Land					reduce	16
+	Lcpar					reduce	16
+	Ldot					reduce	16
+	Lbool					shift	24
+	Lor					reduce	16
+	Lident					shift	34
+	Lsc					reduce	16
+	Lopar					shift	23
+	arg					goto	33
+	args					goto	39
+	Lxor					reduce	16
+
+State 34
+	arg -> Lident . 
+
+	Land					reduce	18
+	Lcpar					reduce	18
+	Ldot					reduce	18
+	Lbool					reduce	18
+	Lor					reduce	18
+	Lident					reduce	18
+	Lsc					reduce	18
+	Lopar					reduce	18
+	Lxor					reduce	18
+
+State 35
+	expr -> expr . Land expr 
+	expr -> expr Land expr . 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lxor					reduce	11
+	Land					reduce	11
+	Lcpar					reduce	11
+	Lsc					reduce	11
+	Lor					reduce	11
+	Ldot					reduce	11
+
+State 36
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr Lor expr . 
+	expr -> expr . Lxor expr 
+
+	Lxor					shift	29
+	Land					shift	27
+	Lcpar					reduce	12
+	Lsc					reduce	12
+	Lor					reduce	12
+	Ldot					reduce	12
+
+State 37
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	expr -> expr Lxor expr . 
+
+	Lxor					reduce	13
+	Land					shift	27
+	Lcpar					reduce	13
+	Lsc					reduce	13
+	Lor					reduce	13
+	Ldot					reduce	13
+
+State 38
+	arg -> Lopar expr Lcpar . 
+
+	Land					reduce	20
+	Lcpar					reduce	20
+	Ldot					reduce	20
+	Lbool					reduce	20
+	Lor					reduce	20
+	Lident					reduce	20
+	Lsc					reduce	20
+	Lopar					reduce	20
+	Lxor					reduce	20
+
+State 39
+	args -> arg args . 
+
+	Lxor					reduce	17
+	Land					reduce	17
+	Lcpar					reduce	17
+	Lsc					reduce	17
+	Lor					reduce	17
+	Ldot					reduce	17
+

@@ -1,0 +1,5 @@
+a = 42;
+b = true;
+c = a + 9;
+d = c != 51;
+e = if d then a else c;

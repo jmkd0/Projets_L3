@@ -1,0 +1,27 @@
+Exercice 0:
+Exercice 1:
+1) Les types d'unités lexicales: 
+   -l'addition (+)
+   -la soustraction (-)
+   -la multiplication (*)
+   -la division (/)
+   -caractère blanc: ( )
+   -parenthèse ouvrante "("
+   -parenthèse fermante ")"
+2) Expressions régulière:
+    -l'addition:       "+"
+   -la soustraction:   "-"
+   -la multiplication: "*"
+   -la division:        "/"
+   -caractère blanc:    whitespace
+   -parenthèse ouvrante "("
+   -parenthèse fermante ")"
+3) et 4) confère le fichier "image image_exo1_q3_q4.jpg" qui contient le diagramme et la table.
+
+Exercice 2: 
+
+
+
+Exercice 3:
+1) On déclare les unités lexicales en rassemblant les identifiants de chaque token. Pour chacun de ces identifiants une fonction token-token-id est créée et qui prend en entré une valeur et le note à l'adresse spécifique token-id.
+2-7) Confère arith-lexer.rkt

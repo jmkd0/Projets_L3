@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <div id="cont" style="background-color: #FFECEC; width: 800px; height: 500px;"></div>
+  <meta name="viewport" 
+        content="width=device-width, 
+        initial-scale=1.0, 
+        user-scalable=no" />
+  <title>Drag/Drop/Bounce</title>
+  
+</head>
+
+<body>
+  <script>
+    var contenet=document.getElementById('cont');
+    let list1=document.createElement("ul");
+    list1.style.width="320px";
+    list1.style.height="500px";
+    list1.style.padding="10px";
+    list1.style.backgroundColor="#D9B3B3";
+    let list2=document.createElement("ul");
+    list2.style.width="320px";
+    list2.style.height="500px";
+    list2.style.padding ="10px";
+    list2.style.backgroundColor="#D9B3B3";
+   /* list1.style.display="inline-block";
+    list2.style.display="inline-block";*/
+
+    
+var  tab= ["Liste une", "Liste deux", "Liste trois", "Liste quatre","Liste Cinq","Liste Six","Liste sept","Liste huit","Liste neuf","Liste dix"];
+tab.forEach(function(nom, index, originalArray){
+      addElementToDocFragment(nom);
+    })
+
+
+
+
+function addElementToDocFragment(nom){
+  let elementList=document.createElement("li");
+  let ongletList=document.createElement("div");
+  var text=document.createTextNode(nom);
+    ongletList.style.padding ="4px 4px";
+    ongletList.style.width="10px";
+    ongletList.style.height="10px";
+    ongletList.style.backgroundColor="#272727";
+    ongletList.style.float="right";
+    elementList.appendChild(ongletList);
+    elementList.style.backgroundColor="#E0E0E0";
+    elementList.style.padding ="10px 10px";
+    elementList.style.width="300px";
+    elementList.style.listStyleType="none";
+elementList.addEventListener("mousedown",(event)=>{
+      mouseDown(event,elementList);
+        elementList.addEventListener("mousemove",(event)=>{
+          mouseMove(event,elementList);
+          elementList.addEventListener("mouseup",(event)=>{
+             mouseUp(event,elementList);
+           });
+        });
+    });
+   
+    
+    elementList.appendChild(text);
+    list1.appendChild(elementList);
+}
+var active = false;
+    var currentX;
+    var currentY;
+    var initialX;
+    var initialY;
+    let mouseOffset={x:0, y:0};
+    
+function mouseDown(event,elementList) {
+  mouseOffset={x:0, y:0};
+        initialX = event.clientX - mouseOffset.x;
+        initialY = event.clientY - mouseOffset.y;    
+         if (event.target === elementList) {
+        active = true;
+      }
+    }
+
+    function mouseUp(event) {
+      initialX = currentX;
+      initialY = currentY;
+      
+      active = false;
+    }
+    function mouseMove(event,elementList) {
+      if (active) {   
+        event.preventDefault();  
+         if (event.type === "touchmove") {
+          currentX = event.touches[0].clientX - initialX;
+          currentY = event.touches[0].clientY - initialY;
+        } else {   
+          currentX = event.clientX - initialX;
+          currentY = event.clientY - initialY; 
+          }    
+        mouseOffset ={x:currentX, y:currentY};
+        elementList.style.transform = "translate3d(" + mouseOffset.x + "px, " + mouseOffset.y + "px, 0)";
+      }
+    }
+
+
+   
+    cont.appendChild(list1);
+    //cont.appendChild(list2);
+ 
+ 
+  </script>
+</body>
+
+</html>
