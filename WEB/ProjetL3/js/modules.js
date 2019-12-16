@@ -1,12 +1,23 @@
-import {users, rotation} from './match.js'
-
-export class Users{
-  constructor(index,nbreProfil, newContener,contenerDrag){
-    this.index=index
+class ProfilMatchView{
+  constructor(nbreProfil){
+    this.index=1
     this.nbreProfil=nbreProfil
-    this.newContener=newContener
-    this.contenerDrag=contenerDrag
+    this.newContener=document.createElement("div")
+    this.contenerDrag=document.createElement("div")
     this.drag=true
+    this.init()
+  }
+  init(){
+    this.contenerDrag.style.position='absolute'
+    this.newContener.style.position='absolute'
+    this.contenerDrag.style.zIndex=3
+    this.newContener.style.zIndex=2
+    this.newContener.appendChild(document.createElement('li'))
+    this.contenerDrag.appendChild(document.createElement('li'))
+    this.drag=false
+    this.suivantPrecedent()
+    this.drag=true
+    this.suivantPrecedent()
   }
   suivantPrecedent(){
   let i;
@@ -39,22 +50,55 @@ this.contenerDrag.className="drag"
 this.newContener.className="drag"
 }
 }
-
-
-export class Rotation{
-  constructor(cadre, a, b, y, x0, y0){
-    this.cadre=cadre
-    this.a=a
-    this.b=b
-    this.y=y
-    this.x0=x0
-    this.y0=y0
+class UsersCadreView extends CadreView{
+  constructor(){
+    super();
+    this.a=this.cadreDrag.getBoundingClientRect().left+(document.documentElement.scrollLeft + document.body.scrollLeft)+this.cadreDrag.offsetWidth/2,
+    this.b=this.cadreDrag.getBoundingClientRect().top+(document.documentElement.scrollTop + document.body.scrollTop)+this.cadreDrag.offsetHeight,    
+    this.x0=this.cadreDrag.offsetWidth/2
+    this.y0=this.cadreDrag.offsetHeight*2
     this.x=1
+    this.cadreDrag.appendChild(profilMatchs.newContener)
+    this.cadreDrag.appendChild(profilMatchs.contenerDrag)
+    this.addEvent()
+    
+  }
+addEvent(){
+  profilMatchs.contenerDrag.addEventListener('mousedown',(event)=>{
+    controlCadre.onStart(event);}, true);
+   document.addEventListener('mousemove',(event)=>{
+     controlCadre.onMove(event)},true);
+   document.addEventListener('mouseup',(event)=>{
+     controlCadre.onUp(event, profilMatchs.contenerDrag)},true);
+   profilMatchs.contenerDrag.addEventListener('touchstart',(event)=>{
+    controlCadre.onStart(event);}, true);
+   document.addEventListener('touchmove',(event)=>{
+     controlCadre.onMove(event)},true);
+   document.addEventListener('touchend',(event)=>{
+     controlCadre.onUp(event, conteneur)},true);
+}
+rotation(element, x, y, degre){
+  element.style.transformOrigin=x+"px "+y+"px";
+  element.style.transform="rotate("+degre+"deg)";
+}
+}
+
+class CadreController{
+  constructor(userCadreView){
+    this.userCadreView=userCadreView
+    //this.model=model
+    this.b=this.userCadreView.b
+    this.a=this.userCadreView.a
+    this.x=this.userCadreView.x
+    this.y=1 
+    this.x0=this.userCadreView.x0
+    this.y0=this.userCadreView.y0
     this.angle=0
     this.ang1=0
     this.ang2=0
     this.valeurAngle=0
     this.dragged=null
+    
   }
   setX(event){
     if(event.touches){
@@ -62,55 +106,56 @@ export class Rotation{
         }else{
         this.x = event.clientX + (document.documentElement.scrollLeft + document.body.scrollLeft);
      }
-}
-setAngle(){
+    }
+  setAngle(){
     this.valeurAngle=(Math.atan((this.b-this.y)/(this.x-this.a)))*180/Math.PI
     }
-onStart(event){
-  event.returnValue = false;
-  this.dragged = users.contenerDrag;
-  this.setX(event) 
+  onStart(event){
+    event.returnValue = false;
+    this.dragged = profilMatchs.contenerDrag;
+    this.setX(event) 
+    this.setAngle()
+    this.ang1=this.valeurAngle
+    if(this.x-this.a<0) this.ang1-=180
+    profilMatchs.drag=false
+    profilMatchs.suivantPrecedent()
+    event.preventDefault();
+  }
+  onMove(event){
+  if( this.dragged ) {  
+    this.setX(event) 
+    this.setAngle()
+      this.ang2=this.valeurAngle
+     if(this.x-this.a<0) this.ang2-=180
+     this.angle=this.ang1-this.ang2;
+     this.userCadreView.rotation(profilMatchs.contenerDrag, this.x0, this.y0, this.angle)
+    }
+  }
+  onUp(event){
+  if(this.dragged){
+    this.dragged = null;
   this.setAngle()
-  this.ang1=this.valeurAngle
-  if(this.x-this.a<0) this.ang1-=180
-  users.drag=false
-  users.suivantPrecedent()
-  event.preventDefault();
-}
-onMove(event){
-if( this.dragged ) {  
-  this.setX(event) 
-  this.setAngle()
-    this.ang2=this.valeurAngle
-   if(this.x-this.a<0) this.ang2-=180
-   this.angle=this.ang1-this.ang2;
-   users.contenerDrag.style.transformOrigin=this.x0+"px "+this.y0+"px";
-   users.contenerDrag.style.transform="rotate("+this.angle+"deg)";
+      let angleRetour=this.valeurAngle
+      if(this.x-this.a<0) angleRetour=-angleRetour-90
+      if(this.x-this.a>0) angleRetour=90-angleRetour
+     if(angleRetour<15 && angleRetour>-15){ 
+      this.userCadreView.rotation(profilMatchs.contenerDrag, this.x0, this.y0, 0)
+      profilMatchs.index-=2
+      profilMatchs.drag=true
+      profilMatchs.suivantPrecedent() 
+    }else{
+        profilMatchs.contenerDrag.remove()
+        controlCadre.userCadreView.cadreDrag.appendChild(profilMatchs.contenerDrag)
+        profilMatchs.index--
+        profilMatchs.drag=true
+        profilMatchs.suivantPrecedent()
+        this.userCadreView.rotation(profilMatchs.contenerDrag, this.x0, this.y0, 0)
+       if(angleRetour<0){
+        console.log("dragg gauche")
+      }else console.log("dragg droite")
+       }
+    }
   }
 }
-onUp(event){
-if(this.dragged){
-  this.dragged = null;
-this.setAngle()
-    let angleRetour=this.valeurAngle
-    if(this.x-this.a<0) angleRetour=-angleRetour-90
-    if(this.x-this.a>0) angleRetour=90-angleRetour
-   if(angleRetour<15 && angleRetour>-15){ 
-    users.contenerDrag.style.transform="rotate("+0+"deg)";
-    users.index-=2
-    users.drag=true
-    users.suivantPrecedent() 
-  }else{
-      users.contenerDrag.remove()
-      rotation.cadre.appendChild(users.contenerDrag)
-      users.index--
-      users.drag=true
-      users.suivantPrecedent()
-      users.contenerDrag.style.transform="rotate("+0+"deg)"
-     if(angleRetour<0){
-      console.log("dragg gauche")
-    }else console.log("dragg droite")
-     }
-  }
-}
-}
+
+

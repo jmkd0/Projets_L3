@@ -1,7 +1,7 @@
-export class NewCadre{
+class CadreView{
     constructor(){
       this.cadreDrag=document.createElement("div")
-      let cadre=document.createElement("div")
+      this.cadre=document.createElement("div")
       let cadreTete=document.createElement("div")
       
       let navigation=document.createElement("div")
@@ -17,7 +17,7 @@ export class NewCadre{
       imgMache.src="../images/icone_match.jpg"
       imgProfil.src="../images/icone_profil.png"
       
-      aGlobe.href="../html/profil_user.html"
+      aGlobe.href="../html/match_map.html"
       aMache.href="../html/match.html"
       aProfil.href="../html/profil_user.html"
   
@@ -25,18 +25,16 @@ export class NewCadre{
       aGlobe.appendChild(imgGlobe)
       aMache.appendChild(imgMache)
       aProfil.appendChild(imgProfil)
-      navigation.appendChild(aGlobe)
-      navigation.appendChild(aMache)
-      navigation.appendChild(aProfil)
-      cadre.appendChild(cadreTete)
-      cadre.appendChild(this.cadreDrag)
-      cadre.appendChild(navigation)
-      document.body.appendChild(cadre)
+      navigation.append(aGlobe,aMache,aProfil)
+    
+      this.cadre.append(cadreTete, this.cadreDrag, navigation)
+   
+      document.body.appendChild(this.cadre)
   
       cadreTete.className="cadretete"
       this.cadreDrag.className="cadredrag"
       navigation.className="navigation"
-      cadre.className="cadre"
+      this.cadre.className="cadre"
   
     }
   }
