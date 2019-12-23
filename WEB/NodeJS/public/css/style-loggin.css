@@ -1,0 +1,126 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #474e5d;
+  }
+  * {box-sizing: border-box;}
+  
+  .principal{
+    width: 50%;
+    height: 30%;
+    margin: 5% auto 15% 30%;
+  }
+  
+  input[type=text], input[type=password],input[type=date],  input[type=tel] {
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #bebebe;
+  }
+  
+  input[type=text]:focus, input[type=password]:focus,input[type=date]:focus, input[type=tel]:focus {
+    background-color: rgb(182, 179, 179);
+    outline: none;
+  }
+  .gender, .descript{
+    width: 100%;
+    padding: 15px;
+    margin: 5px 0 22px 0;
+    display: inline-block;
+    border: none;
+    background: #bebebe;
+  }
+  .gender:focus, .descript:focus{
+    background-color: #ddd;
+    outline: none;
+  }
+  
+  button {
+    
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    opacity: 0.9;
+    border-radius: 5px;
+    border: 3px outset #c0c0c0;
+  }
+  
+  button:hover {
+    opacity:1;
+  }
+  
+  .cancelbtn {
+    padding: 15px 5px 15px 5px;
+  
+    background-color: #cc9724;
+  }
+  .signupbtn {
+    padding: 15px 5px 15px 5px;
+    
+    float: right;
+    background-color: #4CAF50;
+  }
+  
+  .cancelbtn, .signupbtn {
+    
+    width: 25%;
+  }
+  
+  .container {
+    padding: 16px;
+  }
+  
+  
+  .modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto;
+    background-color: #474e5d;
+    padding-top: 50px;
+    
+  }
+  
+  
+  .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; 
+    border: 1px solid #888;
+    width: 50%;
+    border-radius: 20px;
+  }
+  
+  hr {
+    border: 1px solid #f1f1f1;
+    margin-bottom: 25px;
+  }
+   
+  
+  
+  
+  /* Clear floats */
+  .clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+  .text-welcom{
+     
+       left:25%;
+      color: white;
+      margin: 30px auto auto 30% ;
+  }
+  img{
+      
+       border-radius: 20px;
+       width: 80%;
+       height: 50%;
+  }
