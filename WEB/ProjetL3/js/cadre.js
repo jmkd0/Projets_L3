@@ -1,4 +1,4 @@
-class CadreView{
+export class CadreView{
     constructor(){
       this.cadreDrag=document.createElement("div")
       this.cadre=document.createElement("div")
@@ -35,6 +35,5 @@ class CadreView{
       this.cadreDrag.className="cadredrag"
       navigation.className="navigation"
       this.cadre.className="cadre"
-  
     }
   }

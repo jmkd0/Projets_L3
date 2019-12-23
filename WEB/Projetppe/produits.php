@@ -3,10 +3,10 @@
  <head>
  <meta charset="utf-8"/>
 <link rel="stylesheet" href="style.css" />
- <title>Vos articles à choisir</title>
+ <title>Vos articles ï¿½ choisir</title>
  </head>
  <body>
- <!-- L'en-tête -->
+ <!-- L'en-tï¿½te -->
  <?php include("head.php"); ?>
 
 
@@ -40,6 +40,7 @@
     li.appendChild(a);
     docFrag.appendChild(li);
   }
+ 
 
 
   if(produit=='nouveau'){

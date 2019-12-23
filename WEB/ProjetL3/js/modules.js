@@ -1,11 +1,19 @@
-class ProfilMatchView{
-  constructor(nbreProfil){
-    this.index=1
+import {CadreView} from './cadre.js'
+import {profilMatchs, controlCadre} from './match.js'
+//import {index} from './match_map.js'
+export class ProfilMatchView{
+   constructor(nbreProfil, index){
+    this.index=index
+    //this.valI()
     this.nbreProfil=nbreProfil
     this.newContener=document.createElement("div")
     this.contenerDrag=document.createElement("div")
     this.drag=true
     this.init()
+  }
+  valI(){
+    if(index != this.index) this.index=index
+    console.log(index)
   }
   init(){
     this.contenerDrag.style.position='absolute'
@@ -24,12 +32,14 @@ class ProfilMatchView{
   if(this.index>this.nbreProfil) this.index=1
   if(this.index<1) this.index=this.nbreProfil
   let imageContener=document.createElement("div");
+ /*
   let p=document.createElement('p')
   let pn=document.createTextNode("Da Silva  25ans   reside à Aubervillier");
   p.appendChild(pn)
-  p.style.color="white"
+  p.style.color="white"*/
   let descProfil=document.createElement("div")
-  descProfil.appendChild(p)
+  descProfil.innerHTML="Da Silva  25ans   reside à Aubervillier"
+  //descProfil.appendChild(p)
   descProfil.className="descprofil"
   let img=document.createElement('img')
   img.appendChild(descProfil)
@@ -48,10 +58,11 @@ class ProfilMatchView{
   this.index++
 this.contenerDrag.className="drag"
 this.newContener.className="drag"
+} 
 }
-}
-class UsersCadreView extends CadreView{
-  constructor(){
+
+export class UsersCadreView extends CadreView{
+   constructor(){
     super();
     this.a=this.cadreDrag.getBoundingClientRect().left+(document.documentElement.scrollLeft + document.body.scrollLeft)+this.cadreDrag.offsetWidth/2,
     this.b=this.cadreDrag.getBoundingClientRect().top+(document.documentElement.scrollTop + document.body.scrollTop)+this.cadreDrag.offsetHeight,    
@@ -67,6 +78,7 @@ addEvent(){
   profilMatchs.contenerDrag.addEventListener('mousedown',(event)=>{
     controlCadre.onStart(event);}, true);
    document.addEventListener('mousemove',(event)=>{
+     event.target.id
      controlCadre.onMove(event)},true);
    document.addEventListener('mouseup',(event)=>{
      controlCadre.onUp(event, profilMatchs.contenerDrag)},true);
@@ -80,11 +92,11 @@ addEvent(){
 rotation(element, x, y, degre){
   element.style.transformOrigin=x+"px "+y+"px";
   element.style.transform="rotate("+degre+"deg)";
-}
+} 
 }
 
-class CadreController{
-  constructor(userCadreView){
+export class CadreController{
+   constructor(userCadreView){
     this.userCadreView=userCadreView
     //this.model=model
     this.b=this.userCadreView.b
@@ -155,7 +167,7 @@ class CadreController{
       }else console.log("dragg droite")
        }
     }
-  }
+  } 
 }
 
 
