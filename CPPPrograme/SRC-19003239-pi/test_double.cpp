@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string.h>
 #include <math.h> 
 using namespace std;
 double pi(int n){
@@ -8,8 +9,11 @@ double pi(int n){
     }
     return somme;
 }
+
 int main(){
     int n=8;
+    char* str="fhgjkl";
+    cout<<strlen(str);
     double d=pi(n);
     int a=(int)(d*pow(10,n+1))-10*(int)(d*pow(10,n));
     cout<<a;
