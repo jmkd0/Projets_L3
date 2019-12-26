@@ -1,0 +1,1 @@
+let newCadre=new CadreView()
