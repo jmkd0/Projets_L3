@@ -78,7 +78,8 @@
           [(cons instr body)
            (let ([ai (analyze-instr instr env lenv)])
              (cons (car ai)
-                   (analyze-body body (cdr ai))))])))
+                   (analyze-body body (cdr ai))))
+                   ])))
     (cons
      (Block (Pblock-name block) inputs outputs body)
      (hash-set env (Pblock-name block) (cons (length inputs) (length outputs))))))

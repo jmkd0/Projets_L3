@@ -9,7 +9,7 @@
     (Lident Lnum Lbool))
 (define-empty-tokens keywords-and-operators
     (Lend Ladd Lsub Lmul Ldiv Lopar Lcpar Loacc Lcacc 
-    Lsc Lco Lassign Lneq Lgt Llt Lgte Llte Land Lxor Lnot Lor Leq Ldef Lreturn Lif Lthen Lelse))
+    Lsc Lco Lassign Lneq Lgt Llt Lgte Llte Land Lxor Lnot Lor Leq Ldef Lreturn Lif Lelse))
 (define-lex-abbrev identifier
   (:: alphabetic (:* (:or alphabetic numeric "-" "_"))))
 
@@ -42,7 +42,6 @@
     ["||"       (token-Lor)]
     ["=="       (token-Leq)]
     ["if"       (token-Lif)]
-    ["then"     (token-Lthen)]
     ["else"     (token-Lelse)]
     ["def"      (token-Ldef)]
     ["return"   (token-Lreturn)]

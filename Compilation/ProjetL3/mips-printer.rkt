@@ -1,6 +1,3 @@
-
-
-
 #lang racket/base
 
 (require racket/match
@@ -15,6 +12,7 @@
     [(? symbol? r) (format "$~a" r)]))
 
 (define (print-instr instr)
+(printf "Marie1 ")
   (match instr
     [(Asciiz n s) (printf "~a: .asciiz \"~a\"\n" n s)]
     [(Label n)    (printf "~a:\n" n)]

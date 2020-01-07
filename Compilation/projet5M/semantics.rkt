@@ -3,13 +3,10 @@
 (require racket/match
          racket/set
          (only-in parser-tools/lex position-line position-col)
-         racket/string
          "ast.rkt"
-         "baselib.rkt")
+         "stdlib.rkt")
 
-(provide analyze)
-
-(define DEBUG #t)
+(provide gawi-analyze)
 
 (define (fail! msg)
   (eprintf "Fatal error: ~a.\n" msg)
@@ -21,31 +18,6 @@
            (position-col pos)
            msg)
   (exit 1))
-
-(define (type->string t)
-  (match t
-    ['bool "boolean"]
-    ['num  "number"]
-    [(Fun r a)
-     (string-append (if (> (length a) 1) "(" "")
-                    (string-join (map type->string a) ", ")
-                    (if (> (length a) 1) ")" "")
-                    " -> " (type->string r))]))
-
-(define (expr-pos expr)
-  (match expr
-    [(Pbool _ pos)     pos]
-    [(Pnum _ pos)      pos]
-    [(Pident _ pos)      pos]
-    [(Pcall _ _ pos)   pos]
-    [(Pcond _ _ _ pos) pos]
-    [else (fail! "not an expression")]))
-
-(define (errt expected given pos)
-  (err (format "expected ~a but given ~a"
-               (type->string expected)
-               (type->string given))
-       pos))
 
 (define (warn msg pos)
   (eprintf "Warning on line ~a col ~a: ~a.\n"
@@ -86,8 +58,6 @@
         (match body
           [(list)
            (begin
-              ;;(when DEBUG
-              ;;    (hash-for-each env (lambda (v t) (printf "~a: ~a\n" v t))))
              (let ([written (car lenv)]
                    [outs (list->set outputs)]
                    [read (cdr lenv)]
@@ -105,14 +75,10 @@
                                (Pblock-name block))
                        (Pblock-pos block))))
              null)]
-         [(cons instr body)
-         ;;(printf "Heloo")
-         ;; (Pblock-pos block)
+          [(cons instr body)
            (let ([ai (analyze-instr instr env lenv)])
              (cons (car ai)
-                   (analyze-body body (cdr ai))))
-                   ]
-          )))
+                   (analyze-body body (cdr ai))))])))
     (cons
      (Block (Pblock-name block) inputs outputs body)
      (hash-set env (Pblock-name block) (cons (length inputs) (length outputs))))))
@@ -122,17 +88,16 @@
   ;; on vérifie l'arité de l'affectation
   (let ([ae (analyze-expr (Passign-expr instr) env lenv)]
         [nb-outputs (length (Passign-outputs instr))])
-    ;;(unless (= nb-outputs (cdr ae))
-    ;;  (err (format "assignment expects ~a output~a but ~a ~a given"
-    ;;               nb-outputs (~s nb-outputs)
-    ;;               (cdr ae) (~be (cdr ae)))
-    ;;       (Passign-pos instr)))
+    (unless (= nb-outputs (cdr ae))
+      (err (format "assignment expects ~a output~a but ~a ~a given"
+                   nb-outputs (~s nb-outputs)
+                   (cdr ae) (~be (cdr ae)))
+           (Passign-pos instr)))
     (cons (Assign (Passign-outputs instr) (car ae))
           (cons (set-union (car lenv)
                            (list->set (Passign-outputs instr)))
                 (set-union (cdr lenv)
-                           (collect-read-var (car ae))))
-                           )))
+                           (collect-read-var (car ae)))))))
 
 (define (analyze-expr expr env lenv)
   ;; analyse d'une expression :
@@ -142,45 +107,28 @@
      (let ([block-arity
             (hash-ref env block (lambda () (err (format "unknown block ~a" block) pos)))]
            [aas (map (lambda (a) (analyze-expr a env lenv)) args)])
-      ;; (let ([nb-inputs (apply + (map cdr aas))])
-      ;;   (unless (= nb-inputs (car block-arity))
-      ;;     (err (format "block ~a expects ~a input~a but ~a ~a given"
-      ;;                  block
-      ;;                  (car block-arity) (~s (car block-arity))
-      ;;                  nb-inputs (~be nb-inputs))
-      ;;          pos)))
+       (let ([nb-inputs (apply + (map cdr aas))])
+         (unless (= nb-inputs (car block-arity))
+           (err (format "block ~a expects ~a input~a but ~a ~a given"
+                        block
+                        (car block-arity) (~s (car block-arity))
+                        nb-inputs (~be nb-inputs))
+                pos)))
        (cons (Call block (map car aas))
-              (hash (car lenv) block)
-             ;;(Fun-ret block-arity)
-             ))]
+             (cdr block-arity)))]
     [(Pident name pos)
      (if (set-member? (car lenv) name)
-         (cons (Var name) (hash (car lenv) name))
+         (cons (Var name) 1)
          (err (format "unknown variable ~a" name) pos))]
-    [(Pbool val pos)
-     (cons (Bool val) 'bool)]
-     [(Pnum n pos)
-     (cons (Num n)
-           'num)]
-    [(Pcond t y n pos)
-     (let ([at (analyze-expr t env lenv)]
-           [ay (analyze-expr y env lenv)]
-           [an (analyze-expr n env lenv)])
-       (unless (eq? (cdr at) 'bool)
-         (errt 'bool (cdr at) (expr-pos t)))
-       (unless (eq? (cdr ay) (cdr an))
-         (errt (cdr ay) (cdr an) (expr-pos n)))
-       (cons (Cond at ay an)
-             (cdr ay)))]))
+    [(Pbit val pos)
+     (cons (Bit val) 1)]))
 
 (define (collect-read-var expr)
   ;; renvoie l'ensemble des variables lues par une expression
   (match expr
     [(Call _ args) (apply set-union (map collect-read-var args))]
     [(Var name) (set name)]
-    [(Bool _) (set)]
-    [(Num _) (set)]
-    [(Cond _ _ _) (set)]))
+    [(Bit _) (set)]))
 
-(define (analyze parsed)
-  (analyze-prog parsed *types*))
+(define (gawi-analyze parsed)
+  (analyze-prog parsed *stdlib-typing*))

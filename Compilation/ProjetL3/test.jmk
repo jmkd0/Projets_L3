@@ -1,20 +1,10 @@
-def half(a,b)(s,c){
-    s=a^b;
-    c=a&&b;
-  
+def factoriel(a,n){
+  a=4;
+  b=if(true) then 12 else 10;
+  c=n;
+  return c;
 }
-
-def full(a, b, cin)(s,cout){
-    ts, tc=half(a,b);
-    s, c=half(ts, cin);
-    cout=tc || c;
-    
+def main(void){
+  m=factoriel(6,2);
+  return void;
 }
-
-def main(a0, a1, a2, a3, b0, b1, b2, b3)(s0, s1, s2, s3, s4){
-  s0,c0 = full(a0, b0, a3) ;
-  s1,c1 = full(a1, b1, c0);
-  s2,c2 = full(a2, b2, c1);
-  s3,s4 = full(a3, b3, c2);
- 
-  }

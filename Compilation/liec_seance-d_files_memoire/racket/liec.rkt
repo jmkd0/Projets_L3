@@ -13,7 +13,9 @@
    (let* ([src (open-input-file (vector-ref argv 0))]
           [prs (parse src)]
           [ast (analyze prs)]
+          (displayln ast)
           [smp (simplify ast)]
+          (displayln smp)
           [asm (compile smp)])
      (close-input-port src)
      (with-output-to-file (string-append (vector-ref argv 0) ".asm")

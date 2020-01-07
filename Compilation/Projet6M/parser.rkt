@@ -24,14 +24,11 @@
      ((Lident Lco names) (cons $1 $3)))
     (body
      ((instr)          (list $1))
-     ((instr body) (cons $1 $2))
-     )
+     ((instr body) (cons $1 $2)))
     (instr
-     ((names Lassign expr Lsc) (Passign $1 $3 $2-start-pos))
-     )
-    (expr 
+     ((names Lassign expr Lsc) (Passign $1 $3 $2-start-pos)))
+    (expr
      ((arg)            $1)
-     ((Lif Lopar expr Lcpar Lthen expr Lelse expr) (Pcond $3 $6 $8 $1-start-pos))
      ((Lident Lopar args Lcpar)    (Pcall $1 $3 $1-start-pos))
      ((expr Ladd expr) (Pcall '%add (list $1 $3) $2-start-pos))
      ((expr Lsub expr) (Pcall '%sub (list $1 $3) $2-start-pos))
@@ -39,13 +36,7 @@
      ((expr Ldiv expr) (Pcall '%div (list $1 $3) $2-start-pos))
      ((expr Land expr) (Pcall '%and (list $1 $3) $2-start-pos))
      ((expr Lor expr)  (Pcall '%or  (list $1 $3) $2-start-pos))
-     ((expr Leq expr)  (Pcall '%eq  (list $1 $3) $2-start-pos))
-     ((expr Lneq expr) (Pcall '%neq (list $1 $3) $2-start-pos))
-     ((expr Llt expr)  (Pcall '%lt  (list $1 $3) $2-start-pos))
-     ((expr Lgt expr)  (Pcall '%gt  (list $1 $3) $2-start-pos))
-     ((expr Llte expr) (Pcall '%lte (list $1 $3) $2-start-pos))
-     ((expr Lgte expr) (Pcall '%gte (list $1 $3) $2-start-pos))
-     
+     ((expr Lxor expr) (Pcall '%xor (list $1 $3) $2-start-pos))
      ((Lnot expr)      (Pcall '%not (list $2) $1-start-pos))
      )
     (args

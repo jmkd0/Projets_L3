@@ -1,0 +1,12 @@
+def multitable(n){
+    a=n+1;
+    b=a*n;
+    c=b+n;
+    return c;
+}
+def main(void){
+    a=false;
+    b=4;
+    reponse=multitable(b);
+    return void;
+}

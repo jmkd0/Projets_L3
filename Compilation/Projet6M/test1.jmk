@@ -1,0 +1,7 @@
+def main(a){
+    a=67+4;
+    f=5;
+    d=true;
+    e=a+f;
+    return  a;
+}

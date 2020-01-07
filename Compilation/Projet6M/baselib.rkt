@@ -20,5 +20,13 @@
     (cons '%gt  (Fun 'bool (list 'num 'num)))
     (cons '%lte (Fun 'bool (list 'num 'num)))
     (cons '%gte (Fun 'bool (list 'num 'num)))
+    ;;Test de deux bool
+    (cons '%and (Fun 'bool (list 'bool 'bool)))
+    (cons '%or  (Fun 'bool  (list 'bool 'bool)))
     ;;
-    )))
+   )))
+;;(define *types*
+;;  (make-immutable-hash '((%and . (2 . 1))
+;;                         (%or  . (2 . 1))
+;;                         (%xor . (2 . 1))
+;;                         (%not . (1 . 1)))))

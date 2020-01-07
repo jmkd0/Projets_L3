@@ -1,6 +1,6 @@
 let dup a -> a  where
   a <- a;
-  b <- a&a.
+  b <- a.
 
 let and3 a b c -> x where
   x <- a & b & c.

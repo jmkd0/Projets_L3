@@ -1,0 +1,3 @@
+Pour tester :
+
+    racket gawi.rkt ../test.gw

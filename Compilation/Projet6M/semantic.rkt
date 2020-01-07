@@ -86,8 +86,8 @@
         (match body
           [(list)
            (begin
-              ;;(when DEBUG
-              ;;    (hash-for-each env (lambda (v t) (printf "~a: ~a\n" v t))))
+              (when DEBUG
+                  (hash-for-each env (lambda (v t) (printf "~a: ~a\n" v t))))
              (let ([written (car lenv)]
                    [outs (list->set outputs)]
                    [read (cdr lenv)]
@@ -150,9 +150,7 @@
       ;;                  nb-inputs (~be nb-inputs))
       ;;          pos)))
        (cons (Call block (map car aas))
-              (hash (car lenv) block)
-             ;;(Fun-ret block-arity)
-             ))]
+             (Fun-ret block-arity)))]
     [(Pident name pos)
      (if (set-member? (car lenv) name)
          (cons (Var name) (hash (car lenv) name))
@@ -161,17 +159,7 @@
      (cons (Bool val) 'bool)]
      [(Pnum n pos)
      (cons (Num n)
-           'num)]
-    [(Pcond t y n pos)
-     (let ([at (analyze-expr t env lenv)]
-           [ay (analyze-expr y env lenv)]
-           [an (analyze-expr n env lenv)])
-       (unless (eq? (cdr at) 'bool)
-         (errt 'bool (cdr at) (expr-pos t)))
-       (unless (eq? (cdr ay) (cdr an))
-         (errt (cdr ay) (cdr an) (expr-pos n)))
-       (cons (Cond at ay an)
-             (cdr ay)))]))
+           'num)]))
 
 (define (collect-read-var expr)
   ;; renvoie l'ensemble des variables lues par une expression
@@ -179,8 +167,7 @@
     [(Call _ args) (apply set-union (map collect-read-var args))]
     [(Var name) (set name)]
     [(Bool _) (set)]
-    [(Num _) (set)]
-    [(Cond _ _ _) (set)]))
+    [(Num _) (set)]))
 
 (define (analyze parsed)
   (analyze-prog parsed *types*))

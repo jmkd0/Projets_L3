@@ -12,12 +12,8 @@
 (struct Pident (name pos) #:transparent)
 (struct Pnum (val pos) #:transparent)
 (struct Pbool (val pos) #:transparent)
-(struct Pstr (s pos))
-(struct Pnil (pos))
 
-;; 'bool and 'num are used as base types
-(struct Fun (ret args))
-(struct Pair (t)       #:transparent)
+
 ;;;;
 ;;;; AST après analyse sémantique
 ;;;;
@@ -37,33 +33,3 @@
 (struct Var (name) #:transparent)
 (struct Num (val) #:transparent)
 (struct Bool (val) #:transparent)
-(struct Str (s))
-(struct Nil ())
-(struct Data (l))
-
-
-;;; MIPS
-(struct Mips (data text))
-
-; instructions
-(struct Asciiz (lbl str))
-(struct Label (lbl))
-(struct Li (dst imm))
-(struct La (dst loc))
-(struct Addi (dst reg imm))
-(struct Add (dst rg1 rg2))
-(struct Sw (reg loc))
-(struct Lw (reg loc))
-(struct Move (dst reg))
-(struct Syscall ())
-(struct Jal (loc))
-(struct Jr (reg))
-
-; locations
-(struct Mem (reg offset))
-(struct Lbl (name))
-
-; contants
-(define PRINT_INT    1)
-(define PRINT_STRING 4)
-(define SBRK         9)

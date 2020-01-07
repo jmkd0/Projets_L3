@@ -1,0 +1,710 @@
+0	parser1032	=	(parser1033)
+1	parser1033	=	(prog Lend)
+2	prog	=	(block)
+3	prog	=	(block prog)
+4	block	=	(Ldef Lident Lopar names Lcpar Loacc body Lreturn names Lsc Lcacc)
+5	names	=	(Lident)
+6	names	=	(Lident Lco names)
+7	body	=	(instr)
+8	body	=	(instr body)
+9	instr	=	(names Lassign expr Lsc)
+10	expr	=	(arg)
+11	expr	=	(Lident Lopar args Lcpar)
+12	expr	=	(expr Ladd expr)
+13	expr	=	(expr Lsub expr)
+14	expr	=	(expr Lmul expr)
+15	expr	=	(expr Ldiv expr)
+16	expr	=	(expr Land expr)
+17	expr	=	(expr Lor expr)
+18	expr	=	(expr Lxor expr)
+19	expr	=	(Lnot expr)
+20	args	=	(arg)
+21	args	=	(arg Lco args)
+22	arg	=	(Lident)
+23	arg	=	(Lbool)
+24	arg	=	(Lopar expr Lcpar)
+State 0
+	parser1032 -> . parser1033 
+
+	block					goto	3
+	Ldef					shift	4
+	parser1033					goto	1
+	prog					goto	2
+
+State 1
+	parser1032 -> parser1033 . 
+
+
+State 2
+	parser1033 -> prog . Lend 
+
+	Lend					accept	
+
+State 3
+	prog -> block . 
+	prog -> block . prog 
+
+	Lend					reduce	2
+	block					goto	3
+	Ldef					shift	4
+	prog					goto	6
+
+State 4
+	block -> Ldef . Lident Lopar names Lcpar Loacc body Lreturn names Lsc Lcacc 
+
+	Lident					shift	7
+
+State 5
+	parser1033 -> prog Lend . 
+
+
+State 6
+	prog -> block prog . 
+
+	Lend					reduce	3
+
+State 7
+	block -> Ldef Lident . Lopar names Lcpar Loacc body Lreturn names Lsc Lcacc 
+
+	Lopar					shift	8
+
+State 8
+	block -> Ldef Lident Lopar . names Lcpar Loacc body Lreturn names Lsc Lcacc 
+
+	names					goto	9
+	Lident					shift	10
+
+State 9
+	block -> Ldef Lident Lopar names . Lcpar Loacc body Lreturn names Lsc Lcacc 
+
+	Lcpar					shift	11
+
+State 10
+	names -> Lident . 
+	names -> Lident . Lco names 
+
+	Lsc					reduce	5
+	Lcpar					reduce	5
+	Lco					shift	12
+	Lassign					reduce	5
+
+State 11
+	block -> Ldef Lident Lopar names Lcpar . Loacc body Lreturn names Lsc Lcacc 
+
+	Loacc					shift	13
+
+State 12
+	names -> Lident Lco . names 
+
+	names					goto	14
+	Lident					shift	10
+
+State 13
+	block -> Ldef Lident Lopar names Lcpar Loacc . body Lreturn names Lsc Lcacc 
+
+	names					goto	15
+	body					goto	16
+	Lident					shift	10
+	instr					goto	17
+
+State 14
+	names -> Lident Lco names . 
+
+	Lsc					reduce	6
+	Lcpar					reduce	6
+	Lassign					reduce	6
+
+State 15
+	instr -> names . Lassign expr Lsc 
+
+	Lassign					shift	18
+
+State 16
+	block -> Ldef Lident Lopar names Lcpar Loacc body . Lreturn names Lsc Lcacc 
+
+	Lreturn					shift	19
+
+State 17
+	body -> instr . 
+	body -> instr . body 
+
+	Lreturn					reduce	7
+	names					goto	15
+	body					goto	20
+	Lident					shift	10
+	instr					goto	17
+
+State 18
+	instr -> names Lassign . expr Lsc 
+
+	expr					goto	21
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 19
+	block -> Ldef Lident Lopar names Lcpar Loacc body Lreturn . names Lsc Lcacc 
+
+	names					goto	27
+	Lident					shift	10
+
+State 20
+	body -> instr body . 
+
+	Lreturn					reduce	8
+
+State 21
+	instr -> names Lassign expr . Lsc 
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lxor					shift	34
+	Land					shift	33
+	Ladd					shift	28
+	Lmul					shift	30
+	Lsc					shift	32
+	Lsub					shift	29
+	Lor					shift	35
+	Ldiv					shift	31
+
+State 22
+	expr -> arg . 
+
+	Lcpar					reduce	10
+	Ladd					reduce	10
+	Land					reduce	10
+	Lxor					reduce	10
+	Lmul					reduce	10
+	Lsc					reduce	10
+	Lsub					reduce	10
+	Lor					reduce	10
+	Ldiv					reduce	10
+
+State 23
+	arg -> Lopar . expr Lcpar 
+
+	expr					goto	36
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 24
+	expr -> Lnot . expr 
+
+	expr					goto	37
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 25
+	arg -> Lbool . 
+
+	Lcpar					reduce	23
+	Ladd					reduce	23
+	Land					reduce	23
+	Lxor					reduce	23
+	Lmul					reduce	23
+	Lsc					reduce	23
+	Lsub					reduce	23
+	Lco					reduce	23
+	Lor					reduce	23
+	Ldiv					reduce	23
+
+State 26
+	expr -> Lident . Lopar args Lcpar 
+	arg -> Lident . 
+
+	Lcpar					reduce	22
+	Ladd					reduce	22
+	Land					reduce	22
+	Lxor					reduce	22
+	Lmul					reduce	22
+	Lsc					reduce	22
+	Lopar					shift	38
+	Lsub					reduce	22
+	Lor					reduce	22
+	Ldiv					reduce	22
+
+State 27
+	block -> Ldef Lident Lopar names Lcpar Loacc body Lreturn names . Lsc Lcacc 
+
+	Lsc					shift	39
+
+State 28
+	expr -> expr Ladd . expr 
+
+	expr					goto	40
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 29
+	expr -> expr Lsub . expr 
+
+	expr					goto	41
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 30
+	expr -> expr Lmul . expr 
+
+	expr					goto	42
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 31
+	expr -> expr Ldiv . expr 
+
+	expr					goto	43
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 32
+	instr -> names Lassign expr Lsc . 
+
+	Lreturn					reduce	9
+	Lident					reduce	9
+
+State 33
+	expr -> expr Land . expr 
+
+	expr					goto	44
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 34
+	expr -> expr Lxor . expr 
+
+	expr					goto	45
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 35
+	expr -> expr Lor . expr 
+
+	expr					goto	46
+	Lopar					shift	23
+	Lnot					shift	24
+	arg					goto	22
+	Lident					shift	26
+	Lbool					shift	25
+
+State 36
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	arg -> Lopar expr . Lcpar 
+
+	Lcpar					shift	47
+	Lxor					shift	34
+	Land					shift	33
+	Ladd					shift	28
+	Lmul					shift	30
+	Lsub					shift	29
+	Lor					shift	35
+	Ldiv					shift	31
+
+State 37
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	expr -> Lnot expr . 
+
+	Lcpar					reduce	19
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	19
+end conflict
+	Land					reduce	19
+	Lxor					reduce	19
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	19
+end conflict
+	Lsc					reduce	19
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	19
+end conflict
+	Lor					reduce	19
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	19
+end conflict
+
+State 38
+	expr -> Lident Lopar . args Lcpar 
+
+	Lbool					shift	25
+	Lopar					shift	23
+	arg					goto	49
+	args					goto	48
+	Lident					shift	50
+
+State 39
+	block -> Ldef Lident Lopar names Lcpar Loacc body Lreturn names Lsc . Lcacc 
+
+	Lcacc					shift	51
+
+State 40
+	expr -> expr . Ladd expr 
+	expr -> expr Ladd expr . 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	12
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	12
+end conflict
+begin conflict:
+	Land					shift	33
+	Land					reduce	12
+end conflict
+begin conflict:
+	Lxor					shift	34
+	Lxor					reduce	12
+end conflict
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	12
+end conflict
+	Lsc					reduce	12
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	12
+end conflict
+begin conflict:
+	Lor					shift	35
+	Lor					reduce	12
+end conflict
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	12
+end conflict
+
+State 41
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr Lsub expr . 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	13
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	13
+end conflict
+begin conflict:
+	Land					shift	33
+	Land					reduce	13
+end conflict
+begin conflict:
+	Lxor					shift	34
+	Lxor					reduce	13
+end conflict
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	13
+end conflict
+	Lsc					reduce	13
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	13
+end conflict
+begin conflict:
+	Lor					shift	35
+	Lor					reduce	13
+end conflict
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	13
+end conflict
+
+State 42
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr Lmul expr . 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	14
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	14
+end conflict
+begin conflict:
+	Land					shift	33
+	Land					reduce	14
+end conflict
+begin conflict:
+	Lxor					shift	34
+	Lxor					reduce	14
+end conflict
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	14
+end conflict
+	Lsc					reduce	14
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	14
+end conflict
+begin conflict:
+	Lor					shift	35
+	Lor					reduce	14
+end conflict
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	14
+end conflict
+
+State 43
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr Ldiv expr . 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	15
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	15
+end conflict
+begin conflict:
+	Land					shift	33
+	Land					reduce	15
+end conflict
+begin conflict:
+	Lxor					shift	34
+	Lxor					reduce	15
+end conflict
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	15
+end conflict
+	Lsc					reduce	15
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	15
+end conflict
+begin conflict:
+	Lor					shift	35
+	Lor					reduce	15
+end conflict
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	15
+end conflict
+
+State 44
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr Land expr . 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	16
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	16
+end conflict
+	Land					reduce	16
+	Lxor					reduce	16
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	16
+end conflict
+	Lsc					reduce	16
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	16
+end conflict
+	Lor					reduce	16
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	16
+end conflict
+
+State 45
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr . Lxor expr 
+	expr -> expr Lxor expr . 
+
+	Lcpar					reduce	18
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	18
+end conflict
+	Land					shift	33
+	Lxor					reduce	18
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	18
+end conflict
+	Lsc					reduce	18
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	18
+end conflict
+	Lor					reduce	18
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	18
+end conflict
+
+State 46
+	expr -> expr . Ladd expr 
+	expr -> expr . Lsub expr 
+	expr -> expr . Lmul expr 
+	expr -> expr . Ldiv expr 
+	expr -> expr . Land expr 
+	expr -> expr . Lor expr 
+	expr -> expr Lor expr . 
+	expr -> expr . Lxor expr 
+
+	Lcpar					reduce	17
+begin conflict:
+	Ladd					shift	28
+	Ladd					reduce	17
+end conflict
+	Land					shift	33
+	Lxor					shift	34
+begin conflict:
+	Lmul					shift	30
+	Lmul					reduce	17
+end conflict
+	Lsc					reduce	17
+begin conflict:
+	Lsub					shift	29
+	Lsub					reduce	17
+end conflict
+	Lor					reduce	17
+begin conflict:
+	Ldiv					shift	31
+	Ldiv					reduce	17
+end conflict
+
+State 47
+	arg -> Lopar expr Lcpar . 
+
+	Lcpar					reduce	24
+	Ladd					reduce	24
+	Land					reduce	24
+	Lxor					reduce	24
+	Lmul					reduce	24
+	Lsc					reduce	24
+	Lsub					reduce	24
+	Lco					reduce	24
+	Lor					reduce	24
+	Ldiv					reduce	24
+
+State 48
+	expr -> Lident Lopar args . Lcpar 
+
+	Lcpar					shift	52
+
+State 49
+	args -> arg . 
+	args -> arg . Lco args 
+
+	Lcpar					reduce	20
+	Lco					shift	53
+
+State 50
+	arg -> Lident . 
+
+	Lcpar					reduce	22
+	Lco					reduce	22
+
+State 51
+	block -> Ldef Lident Lopar names Lcpar Loacc body Lreturn names Lsc Lcacc . 
+
+	Lend					reduce	4
+	Ldef					reduce	4
+
+State 52
+	expr -> Lident Lopar args Lcpar . 
+
+	Lcpar					reduce	11
+	Ladd					reduce	11
+	Land					reduce	11
+	Lxor					reduce	11
+	Lmul					reduce	11
+	Lsc					reduce	11
+	Lsub					reduce	11
+	Lor					reduce	11
+	Ldiv					reduce	11
+
+State 53
+	args -> arg Lco . args 
+
+	Lbool					shift	25
+	Lopar					shift	23
+	arg					goto	49
+	args					goto	54
+	Lident					shift	50
+
+State 54
+	args -> arg Lco args . 
+
+	Lcpar					reduce	21
+
+44 shift/reduce conflicts
