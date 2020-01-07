@@ -2,7 +2,7 @@ let newCadre=new CadreView()
 /* User Picture */
 let userImageContener=document.createElement('div')
 let img=document.createElement('img');
-img.src="../images/image"+5+".jpg"
+img.src="../images/image"+0+".jpg"
 img.className="imguser";
 userImageContener.className="userimagecontener";
 userImageContener.appendChild(img);
@@ -33,8 +33,8 @@ myDiscusDiv.appendChild(myDiscus);
 myLikes.innerText="My Likes";
 myDiscus.innerText="My Discussions";
 myLikes.href="../client/mylikes.html"
+//myDiscus.href="../client/discussions.html"
 myDiscus.href="../client/chat.html"
-
 myLikes.className="mylikes";
 myDiscus.className="mydiscus";
 myLikesDiv.className="mydiscuslikesdiv";

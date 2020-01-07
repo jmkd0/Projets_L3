@@ -13,14 +13,24 @@
 }
 .prochedivi{
     overflow: hidden;
-    -webkit-border-radius: 50px;
+    /*-webkit-border-radius: 50px;
     -moz-border-radius: 50px;
-    border-radius: 50px;
+    border-radius: 50px;*/
     background-color: #f0424b;
     width: 80px;
     height: 80px;
     margin:0px;
     padding: 0px;
+}
+.procheicone{
+    width: 10vh;
+    height: 6vh;
+    background-color: rgb(38, 212, 52);
+}
+.prochepseudo{
+    width: 10vh;
+    height: 2vh;
+    background-color: cadetblue;
 }
 
 </style>
@@ -38,11 +48,16 @@
             let i
             for(i=1; i<=6; i++){
                 let procheDivi=document.createElement('div')
+                let procheIcone=document.createElement('div')
+                let prochePseudo=document.createElement('div')
                 procheDivi.className="prochedivi"
+                procheIcone.className="procheicone"
+                prochePseudo.className="prochepseudo"
+                procheDivi.append(procheIcone, prochePseudo)
                 procheDiv.appendChild(procheDivi)   
             }
                 cadre.appendChild(procheDiv);
-                let element
+             /*   let element
                 let childs=procheDiv.children
                 for(i=1; i<6; i++){
                      element=childs[i]
@@ -50,7 +65,7 @@
                         element.style.backgroundColor="white"
                    // console.log(event.currentTarget)
                   }, true);
-                }
+                }*/
                 </script>
         </body>
 </html>

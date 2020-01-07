@@ -3,7 +3,7 @@ body {
     background-color: #474e5d;
   }
 .cadre{
-    width:320px; 
+    width:52vh; 
     min-height:85vh; 
     margin: 3% auto 0% 38%;
     border-radius: 1vh;
@@ -24,22 +24,24 @@ body {
     width:52vh; 
     min-height:5vh;
     border-radius: 1vh;
-    background-color:rgb(126, 27, 27);
+    background-color:rgb(48, 56, 83);
 }
 .cadredrag{
     width:52vh;  
-    min-height:70vh;
-    background-color:rgb(211, 198, 198);
+    min-height:70vh;background-color:rgb(78, 86, 114);
 }
 .navigation{
     width:52vh;
     height: 10vh;
     border-radius: 1vh;
-    background-color:white;
+    background-color:rgb(48, 56, 83);
 }
 img{
     width:8vh;
     height:8vh;
+    -webkit-border-radius: 8vh;
+    -moz-border-radius: 8vh;
+    border-radius: 8vh;
 }
 .imagedrag{
     width:52vh; 
@@ -67,81 +69,36 @@ img{
 .descprofil{
     width:50vh;
     height: 15vh;
-    position:absolute; top:58vh; left:1vh;
-    
+    position:absolute; top:55vh; left:1vh;
+    z-index: 1;
+    overflow: scroll;
+    /*Hide the scroll bar*/
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none; /* Firefox */
+}
+.descprofil::-webkit-scrollbar{ /* Chrome */
+    display: none;
+}
+.iconechat{
+    border-radius: 3vh ;
+    width:7vh;
+    height: 4vh;
+    z-index: 2;
+    position:absolute; bottom: 1vh; left:24vh;
 }
 .textstyle{
     color:white;
-    font-size: 2.5vh;
+    font-size: 2.6vh;
     text-align: center;
     text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
 }
-/* User profil */
-.userimagecontener{
-    width:27vh;
-    height: 27vh;
-    position:relative;
-    float: left;
-    margin-top:3vh;
-    margin-left: 25%;
-}
-.imguser{
-    overflow: hidden;
-    -webkit-border-radius: 25vh;
-    -moz-border-radius: 25vh;
-    border-radius: 25vh;
-    width: 25vh;
-    height: 25vh;
-    margin:0vh;
-    padding: 0vh;
-}
-.descprofiluser{
-    width:38vh;
-    height: 15vh;
-    position:relative;
-    float: left;
-    margin-top:3vh;
-    margin-left: 7vh; 
-}
-.textstyleuser{
+.commentstyle{
     color:white;
-    font-size: 2.5vh;
+    font-size: 2vh;
     text-align: center;
+    height: 10vh;
+    margin-top: 10vh;
     text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+
 }
-.disculikes{
-    width:38vh;
-    height: 17vh;
-    position:relative;
-    float: left;
-    margin-top:3vh;
-    margin-left: 8vh; 
-}
-.mylikes{
-    color: white;
-    font-size: 2.5vh;
-    text-decoration: none;
-    padding:1vh 11.9vh 1vh 11.9vh;
-    cursor: pointer;
-    position: relative;
-    width:38vh;
-    opacity: 0.9;
-    border: 0.6vh outset #c0c0c0;
-    background-color: #4CAF50;
-}
-.mydiscus{
-    color: white;
-    font-size: 2.5vh;
-    text-decoration: none;
-    padding:1vh 8.1vh 1vh 8.1vh;
-    cursor: pointer;
-    position: relative;
-    opacity: 0.9;
-    border: 0.6vh outset #c0c0c0;
-    background-color: #4CAF50;
-}
-.mydiscuslikesdiv{
-    width: 35vh;
-    height: 5vh;
-    margin-top: 1vh;
-}
+

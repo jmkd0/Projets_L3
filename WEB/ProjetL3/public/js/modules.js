@@ -1,16 +1,24 @@
-
 class ProfilMatchView{
-  constructor(nbreProfil){
-    this.index=1
-    this.nbreProfil=nbreProfil
+  constructor(index, model){
+    this.response=[]
+    this.index=index-1
+    this.nbreProfil
     this.newContener=document.createElement("div")
     this.contenerDrag=document.createElement("div")
-    this.drag=true
-    this.init()
+    this.model=model
+    this.drag=true;
+    this.chargeModel();
+    
   }
+  async chargeModel(){
+    await this.model.infosFreinds();
+    this.nbreProfil=this.response.length;
+    this.init();
+  }
+
   init(){
-    this.contenerDrag.style.position='absolute'
-    this.newContener.style.position='absolute'
+    this.contenerDrag.style.position='absolute';
+    this.newContener.style.position='absolute';
     this.contenerDrag.style.zIndex=3
     this.newContener.style.zIndex=2
     this.newContener.appendChild(document.createElement('li'))
@@ -21,11 +29,9 @@ class ProfilMatchView{
     this.suivantPrecedent()
   }
   
-  
   suivantPrecedent(){
-  let i;
-  if(this.index>this.nbreProfil) this.index=1
-  if(this.index<1) this.index=this.nbreProfil
+  if(this.index>this.nbreProfil-1) this.index=0
+  //if(this.index<1) this.index=this.nbreProfil
   let imageContener=document.createElement("div");
   let descProfil=document.createElement("div")
   let img=document.createElement('img')
@@ -41,31 +47,37 @@ class ProfilMatchView{
 this.contenerDrag.className="drag"
 this.newContener.className="drag"
 }
-creerImage(img, imageContener, descProfil){
+ creerImage(img, imageContener, descProfil){
   let pseudoProfil=document.createElement("div")
   let ageProfil=document.createElement("div")
   let regionProfil=document.createElement("div")
-  let socket=io.connect('http://localhost:8080');
-  let i=this.index-1;
-  socket.on('send-data', function(response) {
-    pseudoProfil.innerHTML=response[i].pseudo;
-    ageProfil.innerHTML=response[i].age+" ans";
-    regionProfil.innerHTML='Reside à '+response[i].region;
-  })
-  
- 
-
-  pseudoProfil.className="textstyle";
+  let commentProfil=document.createElement("div")
+  let i=this.index
+ pseudoProfil.innerHTML=this.response[i].pseudo;
+ ageProfil.innerHTML=this.response[i].age;
+ regionProfil.innerHTML=this.response[i].region;
+ commentProfil.innerHTML="jdfcdkvbcsd!qcuqbfdcqfvcb"+this.response[i].description;
+ pseudoProfil.className="textstyle";
   ageProfil.className="textstyle";
   regionProfil.className="textstyle";
- 
-  descProfil.append(pseudoProfil, ageProfil, regionProfil);
+  commentProfil.className="commentstyle";
+  descProfil.append(pseudoProfil, ageProfil, regionProfil,commentProfil);
   descProfil.className="descprofil"
-  img.appendChild(descProfil)
   img.className="imagedrag";
-  img.src="../images/image"+this.index+".jpg"
-  imageContener.appendChild(descProfil)
+  img.src="../images/image"+i+".jpg"
+  imageContener.append(descProfil, this.iconeChat())
   imageContener.appendChild(img)
+
+}
+iconeChat(){
+  
+  let aChat=document.createElement('a')
+  let imgIcone=document.createElement('img')
+  aChat.href="../client/chat.html";
+  imgIcone.className="iconechat";
+  imgIcone.src="../images/icon_chat.jpg"
+  aChat.appendChild(imgIcone)
+  return aChat;
 }
 }
 class UsersCadreView extends CadreView{

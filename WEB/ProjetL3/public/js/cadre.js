@@ -2,7 +2,7 @@ class CadreView{
     constructor(){
       this.cadreDrag=document.createElement("div")
       this.cadre=document.createElement("div")
-      let cadreTete=document.createElement("div")
+      this.cadreTete=document.createElement("div")
       
       let navigation=document.createElement("div")
       let aGlobe=document.createElement("a")
@@ -30,11 +30,11 @@ class CadreView{
       aProfil.appendChild(imgProfil)
       navigation.append(aGlobe,aMache,aProfil)
     
-      this.cadre.append(cadreTete, this.cadreDrag, navigation)
+      this.cadre.append(this.cadreTete, this.cadreDrag, navigation)
    
       document.body.appendChild(this.cadre)
   
-      cadreTete.className="cadretete"
+      this.cadreTete.className="cadretete"
       this.cadreDrag.className="cadredrag"
       navigation.className="navigation"
       this.cadre.className="cadre"

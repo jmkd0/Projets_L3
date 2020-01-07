@@ -6,10 +6,21 @@
 <meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1, width=device-width, height=device-height">
     
 <link rel="stylesheet" type="text/css" href="../css/style.css">
+<link rel="stylesheet" type="text/css" href="../css/style-chat.css">
 
 </head>
 <body>
+    <div id="form-chat">
+        <form action="/" method="post">
+            <textarea class="message" name="message" placeholder="Type your Message"></textarea>
+            <button  class="submiter" type="submit">Send</button>
+        </form>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
     <script src="../js/cadre.js"></script>
+    <script src="../js/module-model.js"></script>
     <script src="../js/chat.js"></script>
+    <script>
+    </script>
 </body>
 </html>

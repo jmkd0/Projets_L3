@@ -1,5 +1,4 @@
 let crypto      = require('crypto');
-let geolocation = require('geolocation')
 // password encryptation
 let genRandomString=function(length){
     return crypto.randomBytes(Math.ceil(length/2))
@@ -29,3 +28,12 @@ let calculateAge= function(birthday) { // birthday is a date
     return currentYear-birthday;
 }
 exports.calculateAge=calculateAge;
+
+let calculeDuistance = function(latt1, long1, latt2, long2){
+        latt1=latt1*Math.PI/180;
+        latt2=latt2*Math.PI/180;
+        long1=long1*Math.PI/180;
+        long2=long2*Math.PI/180;
+    return 6371*Math.acos(Math.sin(latt1)*Math.sin(latt2)+Math.cos(latt1)*Math.cos(latt2)*Math.cos(long1-long2));
+}
+exports.calculeDuistance = calculeDuistance;
