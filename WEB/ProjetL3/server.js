@@ -43,9 +43,5 @@ app.post('/client/index.html', (request, response, next)=>{
     configuser.createConnectUser(request);
     exports.answer= response.sendFile(path.join(__dirname+'/client/match.html'));
 })
-let answer= function(index, response){
-    response.sendFile(path.join(__dirname+'/client/match.html'));
-}
-exports.answer= answer;
 server.listen(8080);
 
