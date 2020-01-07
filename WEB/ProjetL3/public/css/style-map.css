@@ -1,0 +1,66 @@
+.prochediv{
+    width: 48vh;
+    height: 70vh;
+    margin: 0.6vh;
+    padding-left: 3vh;
+    display: grid;
+    overflow: scroll;
+    grid-template-columns: 1fr 1fr 1fr;
+    /*Hide the scroll bar*/
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none; /* Firefox */
+}
+.prochediv::-webkit-scrollbar{ /* Chrome */
+    display: none;
+}
+.prochedivi{
+    margin-right: 3vh;
+    padding-top: 1vh;
+    width: 12vh;
+    height: 14vh;
+}
+.procheicone{
+    width: 12vh;
+    height: 11.5vh;
+}
+.prochepseudo{
+    width: 12vh;
+    height: 3vh;
+    color:white;
+    font-size: 2vh;
+    text-align: center;
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+.connectdivi{
+    float: right;
+    width: 1vh;
+    height: 1vh;
+    background-color: rgb(49, 223, 86);
+    -webkit-border-radius: 12vh;
+    -moz-border-radius: 12vh;
+    border-radius: 12vh;
+}
+.prochedistance{
+    width: 12vh;
+    height: 2vh;
+    color:rgb(60, 192, 43);
+    font-size: 1.5vh;
+    text-align: center;
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+.imgicone{
+    width: 12vh;
+    height: 12vh;
+    -webkit-border-radius: 12vh;
+    -moz-border-radius: 12vh;
+    border-radius: 12vh;
+}
+.descriptete{
+    width: 52vh;
+    height: 3vh;
+    color:rgb(20, 230, 65);
+    padding-top: 1vh;
+    font-size: 2.5vh;
+    text-align: center;
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}

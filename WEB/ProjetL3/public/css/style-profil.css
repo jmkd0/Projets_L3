@@ -1,0 +1,69 @@
+/* User profil */
+.userimagecontener{
+    width:27vh;
+    height: 27vh;
+    position:relative;
+    float: left;
+    margin-top:3vh;
+    margin-left: 25%;
+}
+.imguser{
+    overflow: hidden;
+    -webkit-border-radius: 25vh;
+    -moz-border-radius: 25vh;
+    border-radius: 25vh;
+    width: 25vh;
+    height: 25vh;
+    margin:0vh;
+    padding: 0vh;
+}
+.descprofiluser{
+    width:38vh;
+    height: 15vh;
+    position:relative;
+    float: left;
+    margin-top:3vh;
+    margin-left: 7vh; 
+}
+.textstyleuser{
+    color:white;
+    font-size: 2.5vh;
+    text-align: center;
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
+}
+.disculikes{
+    width:38vh;
+    height: 17vh;
+    position:relative;
+    float: left;
+    margin-top:3vh;
+    margin-left: 8vh; 
+}
+.mylikes{
+    color: white;
+    font-size: 2.5vh;
+    text-decoration: none;
+    padding:1vh 11.9vh 1vh 11.9vh;
+    cursor: pointer;
+    position: relative;
+    width:38vh;
+    opacity: 0.9;
+    border: 0.6vh outset #c0c0c0;
+    background-color: #4CAF50;
+}
+.mydiscus{
+    color: white;
+    font-size: 2.5vh;
+    text-decoration: none;
+    padding:1vh 8.1vh 1vh 8.1vh;
+    cursor: pointer;
+    position: relative;
+    opacity: 0.9;
+    border: 0.6vh outset #c0c0c0;
+    background-color: #4CAF50;
+}
+.mydiscuslikesdiv{
+    width: 35vh;
+    height: 5vh;
+    margin-top: 1vh;
+}
