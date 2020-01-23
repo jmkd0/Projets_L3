@@ -40,6 +40,7 @@ let connectAccount=function(emailPass, userPass){
             if(passwordEncrypt == hashPass){
                 let age=modulePersonnal.calculateAge(result[0].birthday);
                 let data={
+                    id:             result[0].id,
                     pseudo:         result[0].pseudo,
                     gender:         result[0].gender,
                     age:            age,
@@ -51,6 +52,10 @@ let connectAccount=function(emailPass, userPass){
                 }
                 exports.userData = data;
                 console.log("Connected!");
+                //send data to the client
+                importserver.io.sockets.on('connection', function( socket, request){
+                    socket.emit("main-user-data", data);
+                });
                 identity=emailPass;
                 exports.identity =identity;
                 exports.server=importserver.server;

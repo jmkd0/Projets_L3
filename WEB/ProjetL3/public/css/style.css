@@ -23,6 +23,10 @@ body {
 .cadretete{
     width:52vh; 
     min-height:5vh;
+    color:rgb(192, 221, 233);
+    font-size: 2.6vh;
+    text-align: center;
+    text-shadow: #000000 1px 1px, #000000 -1px 1px, #000000 -1px -1px, #000000 1px -1px;
     border-radius: 1vh;
     background-color:rgb(48, 56, 83);
 }

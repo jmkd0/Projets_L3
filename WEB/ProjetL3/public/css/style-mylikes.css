@@ -1,0 +1,26 @@
+.ullikes{
+    width: 45vh;
+    height: 60vh;
+    margin-top: 0vh;
+    margin-bottom: 1vh;
+    overflow: scroll;
+    /*Hide the scroll bar*/
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none; /* Firefox */
+}
+.ullikes::-webkit-scrollbar{ /* Chrome */
+    display: none;
+}
+.lilikes{
+    width: 45vh;
+    height: 4vh;
+    margin-bottom: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    list-style-type: none;
+    color: white;
+    font-family:'Times New Roman';
+    font-size: 2.5vh;
+    border-radius: 1vh;
+    background-color: rgb(6, 53, 41);
+}

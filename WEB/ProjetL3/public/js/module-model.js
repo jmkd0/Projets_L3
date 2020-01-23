@@ -3,11 +3,17 @@ class Model{
       this.url='http://localhost:8080';
       this.socket = io.connect(this.url);
       this.geolocalisation();
+      this.val="moins"
+    }
+    dragSend(drag){
+      let socket = this.socket;
+      socket.emit('send-drag', drag);
     }
     infosFreinds=function(){
        let socket=this.socket;
       return new Promise(function(resolve){
         socket.on('send-data', function(receive) {
+          console.log(this.val)
           for(let i=0; i<receive.length; i++){
             profilMatchs.response[i]={
               id:     receive[i].id,
@@ -41,6 +47,23 @@ class Model{
        })
        })
      }
+     infoMainUser=function(){
+      let socket=this.socket;
+     return new Promise(function(resolve){
+       socket.on('main-user-data', function(receive) {
+          mainUser.response={
+             id:            receive.id,
+             pseudo:        receive.pseudo,
+             age:           receive.age+" ans",
+             region:        "Vous résidez à"+receive.region,
+             phone:         receive.phone,
+             description:   receive.description
+           }
+       resolve()
+     })
+     })
+   }
+     
   geolocalisation= function(){
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(this.geo)

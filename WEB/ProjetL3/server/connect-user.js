@@ -34,7 +34,7 @@ exports.displayFreinds=displayFreinds;
 let displayFreindsMap=function(){
     let userresponse;
     let response=[];
-    
+    //Select all users exept the main user
     con.query('SELECT id, pseudo, loclatt,loclong FROM users WHERE not email=?',[transfertData.identity], function(error, result, next){
         if(error) throw error;
         if(result && result.length){  
@@ -46,7 +46,7 @@ let displayFreindsMap=function(){
                     longitude:      result[i].loclong
                 }
             }
-        console.log(response[0].pseudo)
+            //Select the main user
             con.query("SELECT id, pseudo, loclatt, loclong FROM users WHERE email=?", [transfertData.identity], function (err, result, next) {
                 if (err) throw err;
                 userresponse=result[0];

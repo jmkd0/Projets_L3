@@ -56,7 +56,10 @@ this.newContener.className="drag"
  pseudoProfil.innerHTML=this.response[i].pseudo;
  ageProfil.innerHTML=this.response[i].age;
  regionProfil.innerHTML=this.response[i].region;
- commentProfil.innerHTML="jdfcdkvbcsd!qcuqbfdcqfvcb"+this.response[i].description;
+ commentProfil.innerHTML="J'aime faire le sport, danser"+
+ "Je suis passioné des nouvelles technologies"+
+ "Je IYTGOUHOPUYTIRTUYUHHIOUGUH"
+ +"huohhpdusqbuihpeiqyfbrehfnreufoerj^ni^"+this.response[i].description;
  pseudoProfil.className="textstyle";
   ageProfil.className="textstyle";
   regionProfil.className="textstyle";
@@ -114,9 +117,9 @@ rotation(element, x, y, degre){
 }
 
 class CadreController{
-  constructor(userCadreView){
-    this.userCadreView=userCadreView
-    //this.model=model
+  constructor(userCadreView, model){
+    this.userCadreView=userCadreView;
+    this.model=model;
     this.b=this.userCadreView.b
     this.a=this.userCadreView.a
     this.x=this.userCadreView.x
@@ -179,10 +182,21 @@ class CadreController{
         profilMatchs.index--
         profilMatchs.drag=true
         profilMatchs.suivantPrecedent()
-        this.userCadreView.rotation(profilMatchs.contenerDrag, this.x0, this.y0, 0)
+        this.userCadreView.rotation(profilMatchs.contenerDrag, this.x0, this.y0, 0);
+        let i= profilMatchs.index-2;
+        let drag={
+          to:     i,
+          pseudo: profilMatchs.response[i].pseudo,
+          type:   null
+        };
        if(angleRetour<0){
-        console.log("dragg gauche")
-      }else console.log("dragg droite")
+         //drag left
+         drag.type="left";
+        }else{
+        //dragg right
+          drag.type="right";   
+      }
+      this.model.dragSend(drag);
        }
     }
   }

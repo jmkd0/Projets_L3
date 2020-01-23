@@ -23,7 +23,8 @@ app.get('/',(request, response, next)=>{
     response.sendFile(path.join(__dirname+'/client/index.html'));
 })
 app.get('/client/match.html',(request, response, next)=>{
-    configuser.upDateInfo()
+    configuser.upDateInfo();
+    usermanage.listenLikes();
     response.sendFile(path.join(__dirname+'/client/match.html'));
 })
 app.get('/client/match_map.html',(request, response, next)=>{
@@ -45,6 +46,7 @@ app.get('/client/mylikes.html',(request, response, next)=>{
 })
 app.post('/client/index.html', (request, response, next)=>{ 
     configuser.createConnectUser(request);
+    usermanage.listenLikes();
     exports.answer= response.sendFile(path.join(__dirname+'/client/match.html'));
 })
 server.listen(8080);
