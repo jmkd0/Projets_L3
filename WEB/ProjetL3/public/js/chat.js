@@ -8,29 +8,44 @@ divChat.append(discussArea, form)
 newCadre.cadreDrag.append(divChat);
 class Chat{
     constructor(model){
-        this.model= model;
+        this.model      = model;
+        this.ulMessage  =document.createElement('ul');
         this.send;
         this.receive;
-        this.messages=[];
-        this.sendMessage()
-
+        this.messages   =[];
+        this.init();
     }
     init(){
-        let ul=document.createElement('ul');
-        let divMessage=document.createElement('sdiv');
-
+        this.ulMessage.className="ulmessage";
+        discussArea.appendChild(this.ulMessage);
+    }
+    sendMessage(value){
+        this.model.sendMessage(value);
+        let liMessage=document.createElement('li');
+        liMessage.className="limessage1";
+        liMessage.innerHTML=value;
+        this.ulMessage.appendChild(liMessage);
+    }
+    
+    
+   setMessage(){
+        let liMessage=document.createElement('li');
+        liMessage.className="limessage2";
         
-    }
-    sendMessage(){
-        let button= document.getElementsByClassName("submiter");
-        let message= document.getElementsByClassName("message");
-        //let button= document.getElementById('idsubmiter')
-        button.onclick=function(){
-            
-            console.log("jfkglh:j")
-            //this.model.sendMessage()
-            }
-        console.log("hghc,tug")
-    }
+          liMessage.innerHTML=  this.receive;
+        
+        this.ulMessage.appendChild(liMessage);
+   }
 }
 let chat= new Chat(new Model);
+let socket = io.connect('http://localhost:8080');
+socket.on('server-send-message', function(receive) {
+    chat.setMessage();
+    chat.receive= receive;
+  })
+
+function valider(formular){
+    let text=formular.message.value;
+    chat.sendMessage(text);
+}
+

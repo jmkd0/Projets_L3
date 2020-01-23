@@ -80,5 +80,5 @@ let calculeUserNear = function( userresponse, response){
 let senderResponse=function(message, response){
     importserver.io.sockets.on('connection', function( socket, request){
             socket.emit(message, response);
-        })
+        });
 }

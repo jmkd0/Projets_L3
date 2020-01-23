@@ -7,20 +7,26 @@
     
 <link rel="stylesheet" type="text/css" href="../css/style.css">
 <link rel="stylesheet" type="text/css" href="../css/style-chat.css">
-
+<script language="javascript">
+   /* function valider(formulaire){
+        let test=document.formulaire.message.value;
+        console.log(test);
+    }*/
+</script>
 </head>
 <body>
-    <div id="form-chat">
-        <form action="/" method="post">
-            <textarea class="message" name="message" placeholder="Type your Message"></textarea>
-            <button  class="submiter" type="submit">Send</button>
-        </form>
-    </div>
+    
     <script src="/socket.io/socket.io.js"></script>
     <script src="../js/cadre.js"></script>
     <script src="../js/module-model.js"></script>
+    <div id="form-chat">
+        <form class="formulaire" name="formulaire" action="/client/chat.html" method="post">
+            <textarea class="message" name="message" placeholder="Type your Message" onFocus="javascript:this.value=''" required></textarea>
+            <button  class="submiter" type="button" onclick="valider(formulaire)">Send</button>
+        </form>
+    </div>
     <script src="../js/chat.js"></script>
-    <script>
-    </script>
+
+    
 </body>
 </html>

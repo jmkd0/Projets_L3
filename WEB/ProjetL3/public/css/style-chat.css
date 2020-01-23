@@ -2,7 +2,6 @@
     width: 50.5vh;
     height: 70vh;
     margin: 0.75vh;
-    background-color: cadetblue;
 }
 #form-chat{
     width:50.5vh;
@@ -11,7 +10,39 @@
 .discussarea{
     width: 50.5vh;
     height: 60vh;
-    background-color: rgb(109, 109, 110);
+}
+.ulmessage{
+    width: 45vh;
+    height: 60vh;
+    margin-top: 0vh;
+    margin-bottom: 1vh;
+    overflow: scroll;
+    /*Hide the scroll bar*/
+    -ms-overflow-style: none; /* Internet Explorer */
+    scrollbar-width: none; /* Firefox */
+}
+.ulmessage::-webkit-scrollbar{ /* Chrome */
+    display: none;
+}
+.limessage1, .limessage2{
+    width: 40vh;
+    margin-bottom: 1vh;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    list-style-type: none;
+    color: white;
+    font-family:'Times New Roman';
+    font-size: 2.5vh;
+    border-radius: 1vh;
+    
+}
+.limessage1{
+    color: white;
+    background-color: rgb(36, 82, 57);
+}
+.limessage2{
+    color: rgb(0, 0, 0);
+    background-color: rgb(166, 181, 190);
 }
 textarea{
     width:42vh;
@@ -34,4 +65,5 @@ textarea{
     -moz-border-radius: 12vh;
     border-radius: 12vh;
 }
+
 

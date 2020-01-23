@@ -4,7 +4,7 @@ class Model{
       this.socket = io.connect(this.url);
       this.geolocalisation();
     }
-     infosFreinds=function(){
+    infosFreinds=function(){
        let socket=this.socket;
       return new Promise(function(resolve){
         socket.on('send-data', function(receive) {
@@ -22,18 +22,9 @@ class Model{
       })
       })
     }
-    receiveMessage=function(){
-      let socket=this.socket;
-     return new Promise(function(resolve){
-       socket.on('receive-message', function(receive) {
-       chat.receive= receive;
-       resolve()
-     })
-     })
-   }
    sendMessage= function(message){
     let socket = io.connect('http://localhost:8080');
-    socket.emit('send-message', message);
+    socket.emit('client-send-message', message);
    }
     infosNearFreinds=function(){
         let socket=this.socket;
