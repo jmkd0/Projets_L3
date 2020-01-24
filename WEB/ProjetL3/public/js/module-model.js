@@ -1,19 +1,20 @@
+let socket = io.connect('http://localhost:8080');
 class Model{
     constructor(){
-      this.url='http://localhost:8080';
-      this.socket = io.connect(this.url);
+      //this.url='http://localhost:8080';
+      //this.socket = io.connect(this.url);
       this.geolocalisation();
-      this.val="moins"
+      //this.val="moins"
     }
     dragSend(drag){
-      let socket = this.socket;
+      //let socket = this.socket;
       socket.emit('send-drag', drag);
     }
     infosFreinds=function(){
-       let socket=this.socket;
+       //let socket=this.socket;
       return new Promise(function(resolve){
         socket.on('send-data', function(receive) {
-          console.log(this.val)
+          //console.log(val)
           for(let i=0; i<receive.length; i++){
             profilMatchs.response[i]={
               id:     receive[i].id,
@@ -29,11 +30,11 @@ class Model{
       })
     }
    sendMessage= function(message){
-    let socket = io.connect('http://localhost:8080');
+    //let socket = io.connect('http://localhost:8080');
     socket.emit('client-send-message', message);
    }
     infosNearFreinds=function(){
-        let socket=this.socket;
+        //let socket=this.socket;
        return new Promise(function(resolve){
          socket.on('send-near-users', function(receive) {
            for(let i=0; i<receive.length; i++){
@@ -48,7 +49,7 @@ class Model{
        })
      }
      infoMainUser=function(){
-      let socket=this.socket;
+      //let socket=this.socket;
      return new Promise(function(resolve){
        socket.on('main-user-data', function(receive) {
           mainUser.response={
@@ -74,7 +75,7 @@ class Model{
       latt: position.coords.latitude,
       long: position.coords.longitude
     }
-    let socket = io.connect('http://localhost:8080');
+    //let socket = io.connect('http://localhost:8080');
     socket.emit('send-location', local);
   }
   

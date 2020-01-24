@@ -38,7 +38,7 @@ class Chat{
    }
 }
 let chat= new Chat(new Model);
-let socket = io.connect('http://localhost:8080');
+//let socket = io.connect('http://localhost:8080');
 socket.on('server-send-message', function(receive) {
     chat.setMessage();
     chat.receive= receive;

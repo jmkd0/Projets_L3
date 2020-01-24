@@ -20,7 +20,7 @@ class Likes{
    }
 }
 let likes= new Likes();
-let socket = io.connect('http://localhost:8080');
+//let socket = io.connect('http://localhost:8080');
 socket.on('send-likes', function(receive) {
     likes.receive= receive;
     likes.setLike();
