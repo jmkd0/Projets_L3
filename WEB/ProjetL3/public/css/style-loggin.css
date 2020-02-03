@@ -1,126 +1,161 @@
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: #474e5d;
-  }
-  * {box-sizing: border-box;}
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #474e5d;
+}
+* {box-sizing: border-box;}
+
+.principal{
+  width: 50vh;
+  height: 30vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+.copyright{
+  text-align: center;
+  padding-top: 40vh;
+  color: white;
+  font-size: 2vh;
+}
+#demo{
+  width: 100vh;
+  height: 70vh;
+  margin-left: auto;
+  margin-right: auto;
+}
+#demobtn{
+  font-size: 2.5vh;
+  border-radius: 1vh;
+}
+video{
+  width: 100vh;
+  height: 70vh;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 1vh;
+  border: 0.4vh outset #c0c0c0;
+}
+h1{
+  font-size: 4vh;
+}
+b{
+  font-size: 2.5vh;
+}
+p{
+  font-size: 2.5vh;
+}
+form>div>h1{
+  color: rgb(25, 14, 87);
+  text-align: center;
+}
+input[type=text], input[type=password],input[type=date],  input[type=tel] {
+  width: 100%;
+  padding: 2vh;
+  margin: 1vh 0vh 2vh 0vh;
+  font-size: 2.5vh;
+  display: inline-block;
+  border: none;
+  background: #bebebe;
+}
+
+input[type=text]:focus, input[type=password]:focus,input[type=date]:focus, input[type=tel]:focus {
+  background-color: rgb(182, 179, 179);
+  font-size: 2.5vh;
+  outline: none;
+}
+.gender, .descript{
+  width: 100%;
+  padding: 2vh;
+  margin: 1vh 0vh 2vh 0vh;
+  display: inline-block;
+  border: none;
+  background: #bebebe;
+}
+.gender:focus, .descript:focus{
+  background-color: #ddd;
+  outline: none;
+}
+
+#signup, #signin, #signupbtncon,#cancelbtncon,#signupbtn, #cancelbtn{
+  color: white;
+  padding: 1.5vh 1vh 1.5vh 1vh ;
+  font-size: 2.4vh;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  opacity: 0.9;
+  border-radius: 1vh;
+  border: 0.4vh outset #c0c0c0;
+}
+
+button:hover {
+  opacity:1;
+}
+
+#cancelbtn, #cancelbtncon {
+  padding: 1.5vh 1vh 1.5vh 1vh ;
+  background-color: #cc9724;
+}
+#signupbtn,#signupbtncon{
+  padding: 1.5vh 1vh 1.5vh 1vh ;
+  float: right;
+  background-color: #4CAF50;
+}
+
+#signupbtncon,#cancelbtncon,#signupbtn, #cancelbtn{
+  width: 12vh;
+}
+
+.container {
+  padding: 1vh;
+}
+
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: #474e5d;
+  padding-top: 10vh;
   
-  .principal{
-    width: 50%;
-    height: 30%;
-    margin: 5% auto 15% 30%;
-  }
-  
-  input[type=text], input[type=password],input[type=date],  input[type=tel] {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #bebebe;
-  }
-  
-  input[type=text]:focus, input[type=password]:focus,input[type=date]:focus, input[type=tel]:focus {
-    background-color: rgb(182, 179, 179);
-    outline: none;
-  }
-  .gender, .descript{
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    display: inline-block;
-    border: none;
-    background: #bebebe;
-  }
-  .gender:focus, .descript:focus{
-    background-color: #ddd;
-    outline: none;
-  }
-  
-  button {
+}
+
+
+.modal-content {
+  width: 50vh;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #fefefe;
+  border: 0.5vh solid #888;
+  border-radius: 3vh;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 2vh;
+}
+ 
+
+
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+.text-welcom{ 
+  text-align: center;
+  color: white;
+  font-size: 3vh;
+}
+img{
     
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    opacity: 0.9;
-    border-radius: 5px;
-    border: 3px outset #c0c0c0;
-  }
-  
-  button:hover {
-    opacity:1;
-  }
-  
-  .cancelbtn {
-    padding: 15px 5px 15px 5px;
-  
-    background-color: #cc9724;
-  }
-  .signupbtn {
-    padding: 15px 5px 15px 5px;
-    
-    float: right;
-    background-color: #4CAF50;
-  }
-  
-  .cancelbtn, .signupbtn {
-    
-    width: 25%;
-  }
-  
-  .container {
-    padding: 16px;
-  }
-  
-  
-  .modal {
-    display: none; 
-    position: fixed; 
-    z-index: 1; 
-    left: 0;
-    top: 0;
-    width: 100%; 
-    height: 100%; 
-    overflow: auto;
-    background-color: #474e5d;
-    padding-top: 50px;
-    
-  }
-  
-  
-  .modal-content {
-    background-color: #fefefe;
-    margin: 5% auto 15% auto; 
-    border: 1px solid #888;
-    width: 50%;
-    border-radius: 20px;
-  }
-  
-  hr {
-    border: 1px solid #f1f1f1;
-    margin-bottom: 25px;
-  }
-   
-  
-  
-  
-  /* Clear floats */
-  .clearfix::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  .text-welcom{
-     
-       left:25%;
-      color: white;
-      margin: 30px auto auto 30% ;
-  }
-  img{
-      
-       border-radius: 20px;
-       width: 80%;
-       height: 50%;
-  }
+     border-radius: 3vh;
+     width: 50vh;
+     height: 50vh;
+}

@@ -40,7 +40,7 @@ let displayFreindsMap=function(){
         if(result && result.length){  
             for(let i=0; i<result.length; i++){
                 response[i]={
-                    id:             result[i].id,
+                    id:             result[i].id,  
                     pseudo:         result[i].pseudo,
                     latitude:      result[i].loclatt,
                     longitude:      result[i].loclong

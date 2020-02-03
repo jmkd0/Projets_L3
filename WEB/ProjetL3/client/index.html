@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Site de rencontre</title>
+<title>Famille Solidaire</title>
 <meta http-equiv="content-type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="initial-scale=1, user-scalable=no, maximum-scale=1, width=device-width, height=device-height">
 <link rel="stylesheet" type="text/css" href="/css/style-loggin.css">
 </head>
 <body>
-<div class="text-welcom"><h1>Welcome to your date panel</h1></div>
+  <button  type="button" id="demobtn" style=" float: right;" onclick="displaydemo('demo','demobtn','buttoncontener')">Play demo</button>
+  <div class="text-welcom"><h1>Welcome to your date panel</h1></div>
 
-<div id="button-contener" class="principal" style="position:relative">
-  <div style="position:absolute;z-index:1">
+  <div id="demo" style="position: relative; z-index:4; display: none;">
+    <video controls preload="metadata" loop autoplay>
+      <source src="http://afrikappshome.net/jmkd/video.mp4">video can't play
+    </video>
+  </div>
+<div id="buttoncontener" class="principal" style="position:relative">
+  <div style="position:absolute; z-index:1">
      <img src="images/acc-image.jpg" >
   </div>
-  <div style="position:relative; top:10%; width:80%;  z-index:2;">
-  <button onclick="disappereAppeare('button-contener','id-register')" style="width:auto; background-color: rgb(22, 22, 160);">Sign Up</button>
-  <button onclick="disappereAppeare('button-contener','id-login')" style="width:auto; background-color:rgb(173, 18, 70) ; float: right;">Sign In</button>
   
-   </div> 
+  <div style="position:relative; z-index:2;">
+  <button id="signup" onclick="disappereAppeare('buttoncontener','id-register')" style="width:auto; background-color: rgb(22, 22, 160);">Sign Up</button>
+  <button id="signin" onclick="disappereAppeare('buttoncontener','id-login')" style="width:auto; background-color:rgb(173, 18, 70) ; float: right;">Sign In</button>
+  
+  </div> 
+  
 </div>
 
 <div id="id-login" class="modal">
@@ -34,8 +42,8 @@
       <input type="password" placeholder="Enter Password" name="password" required>
       <select name="form" required><option value="1"></option></select>
       <div class="clearfix">
-        <button type="button" onclick="disappereAppeare('id-login','button-contener')" class="cancelbtn">Go back</button>
-        <button type="submit" class="signupbtn">Connect</button>
+        <button type="button" onclick="disappereAppeare('id-login','buttoncontener')" id="cancelbtncon">Go back</button>
+        <button type="submit" id="signupbtncon">Connect</button>
       </div>
     </div>
   </form>
@@ -84,15 +92,33 @@
       <p>By creating an account you agree to our <a href="#" style="color:dodgerblue">Terms & Privacy</a>.</p>
       <select name="form" required><option value="2"></option></select>
       <div class="clearfix">
-        <button type="button" onclick="disappereAppeare('id-register','button-contener')" class="cancelbtn">Go back</button>
-        <button type="submit" class="signupbtn">Sign Up</button>
+        <button type="button" onclick="disappereAppeare('id-register','buttoncontener')" id="cancelbtn">Go back</button>
+        <button type="submit" id="signupbtn">Sign Up</button>
       </div>
     </div>
   </form>
+  
+</div>
 </div>
 
+
+
+
+
+<p class="copyright">Janvier-2020-Copyright Komlan Jean-Marie Dantodji</p>
 <script>
-  console.log("Bonjour")
+  let displaydemo=(demo, demobtn, buttoncontener)=>{
+    if(document.getElementById(demo).style.display=='none'){
+      document.getElementById(buttoncontener).style.display='none';
+      document.getElementById(demo).style.display='block';
+      document.getElementById(demobtn).innerHTML="Leave demo";
+    }else{ 
+      document.getElementById(demo).style.display='none';
+      document.getElementById(buttoncontener).style.display='block';
+      document.getElementById(demobtn).innerHTML="Play demo";
+  }
+  }
+  console.log("Bonjour");
   function disappereAppeare(disappere, appere){
     document.getElementById(disappere).style.display='none'
     document.getElementById(appere).style.display='block'
