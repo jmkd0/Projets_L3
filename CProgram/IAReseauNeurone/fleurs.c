@@ -2,90 +2,109 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#define linesize 100
-#define nbreline 3
-#define nbreneuronne 60
-#define nbrecolonne 4
+#include <time.h>
+#define lineSize 100
+#define nbreLine 150
+#define nbreNeuronne 60
+#define nbreColonne 4
 
 typedef struct{
-    double iris[nbrecolonne];
-    double normalize[nbrecolonne];
-    char  name[linesize];
-}DatasIris;
+    double dataIris[nbreColonne];
+    double normalizeDataIris[nbreColonne];
+    char  nameIris[lineSize];
+}DataIris;
 
 typedef struct{
-    double moyenne[nbrecolonne];
-    double neuronne[nbrecolonne][nbreneuronne];
-}DatasNeuronne;
-void chargeDatabase(DatasIris *datas, int colonne){
+    double moyenne[nbreColonne];
+    double neuronne[nbreColonne][nbreNeuronne];
+}DataNeuronne;
+
+void ChargeDatabase(DataIris *data, int colonne){
     FILE* fichier ;
-    char ligne[linesize];
-    char *endvalue=",";
+    char ligne[lineSize];
+    char *endValue=",";
     char *chaine;
-    int compterline=0, comptercolonne;
-    fichier= fopen("test.data", "r") ;/*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
+    int compterLine=0, compterColonne;
+    fichier= fopen("iris.data", "r") ;/*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
     if (fichier != NULL){
-        while ( fgets( ligne, linesize, fichier) != NULL ){
-            comptercolonne=0;
-            chaine=strtok(ligne, endvalue);
-            while(comptercolonne < colonne){
-                datas[compterline].iris[comptercolonne]=atof(chaine);
-                chaine=strtok(NULL, endvalue);
-                comptercolonne++;
+        while ( fgets( ligne, lineSize, fichier) != NULL ){
+            compterColonne=0;
+            chaine=strtok(ligne, endValue);
+            while(compterColonne < colonne){
+                data[compterLine].dataIris[compterColonne] = atof(chaine);
+                chaine=strtok(NULL, endValue);
+                compterColonne++;
             }
-            strcpy(datas[compterline].name, chaine);
-           compterline++;
-    }
+            strcpy(data[compterLine].nameIris, chaine);
+           compterLine++;  
+    } 
     fclose( fichier ) ;
     }
+    
 }
-
-
-void normalizeMatrix(DatasIris *datas, int ligne, int colonne){
+void NormalizeMatrix(DataIris *data, int ligne, int colonne){
     int i,j;
     double norme;
     for(j=0; j<colonne; j++){
-        norme=0;
-        for(i=0; i<ligne; i++)
-                norme += pow(datas[i].iris[j],2);
+        norme = 0;
+        for(i= 0; i < ligne; i++)
+                norme += pow(data[i].dataIris[j],2);
         norme = sqrt(norme);
         for(i=0; i<ligne; i++)
-            datas[i].normalize[j] = datas[i].iris[j]/norme;
+            data[i].normalizeDataIris[j] = data[i].dataIris[j]/norme;
     }
 }
-void moyenneMatrix(DatasIris *datas, DatasNeuronne dataneuronne, int ligne, int colonne){
+DataNeuronne* MoyenneMatrix(DataIris *data, int ligne, int colonne){
+    DataNeuronne* dataNeuronne;
     double mean;
     int i,j;
     for(j=0; j< colonne; j++){
         mean=0;
-        for(i=0; i< ligne; i++){
-            mean += datas[i].normalize[j];
-            
-        }
+        for(i=0; i< ligne; i++)
+            mean += data[i].normalizeDataIris[j];
         mean /= ligne;
-        dataneuronne.moyenne[j] = mean;
-        printf("%f", dataneuronne.moyenne[j]);
+        dataNeuronne->moyenne[j] = mean;
     }
-
+    return dataNeuronne;
 }
-
-int main(){
-    DatasIris datas[nbreline];
-    DatasNeuronne dataneuronne;
-    chargeDatabase(datas, nbrecolonne);
-    normalizeMatrix(datas, nbreline, nbrecolonne);
-    moyenneMatrix(datas, dataneuronne, nbreline, nbrecolonne);
-
+void EnvDonneeNeuronne (DataNeuronne* dataNeuronne, int ligne, int colonne){
+    srand(time(NULL));
     int i,j;
-    /*for(i=0; i<nbreline; i++){
-        for(j=0; j<nbrecolonne; j++){
-            printf("%f  ",datas[i].normalize[j]);
+    double minimum, maximum;
+    for( j=0; j< colonne; j++){
+        minimum = dataNeuronne->moyenne[j] - 0.005;
+        maximum = dataNeuronne->moyenne[j] + 0.002;
+        for( i=0; i< ligne; i++){
+            dataNeuronne->neuronne[i][j] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
+        }
+        printf("[%f, %f]  ",minimum, maximum);
+    }
+}
+int main(){
+    int i,j;
+    DataIris* data = (DataIris*) malloc(nbreLine*sizeof(DataIris));
+    DataNeuronne*  dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
+
+    ChargeDatabase (data, nbreColonne);
+    NormalizeMatrix (data, nbreLine, nbreColonne);
+    dataNeuronne = MoyenneMatrix (data, nbreLine, nbreColonne);
+    EnvDonneeNeuronne (dataNeuronne , nbreNeuronne, nbreColonne);
+        for(i=0; i<nbreLine; i++){
+        // printf("%s ",data[i].nameIris);
+        }
+    
+    
+    for(i=0; i<nbreColonne; i++){
+         printf("%f ",dataNeuronne->moyenne[i]);
+    }
+    printf("\n\n");
+    for(i=0; i<nbreNeuronne; i++){
+        for(j=0; j<nbreColonne; j++){
+            printf("%f  ",dataNeuronne->neuronne[i][j]);
+            //printf("%f  ",data[i].dataIris[j]);
         }
         printf("\n");
-    }*/
-    for(i=0; i<nbrecolonne; i++){
-        printf("%f ",dataneuronne.moyenne[i]);
     }
-    
+    free(data);
     return 0;
 }
