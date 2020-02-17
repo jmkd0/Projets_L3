@@ -77,11 +77,11 @@ void EnvDonneeNeuronne (DataNeuronne* dataNeuronne, int ligne, int colonne){
         for( i=0; i< ligne; i++){
             dataNeuronne->neuronne[i][j] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
         }
-        printf("[%f, %f]  ",minimum, maximum);
     }
 }
 int main(){
     int i,j;
+    int tabAleatoire[nbreLine];
     DataIris* data = (DataIris*) malloc(nbreLine*sizeof(DataIris));
     DataNeuronne*  dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
 
@@ -89,22 +89,13 @@ int main(){
     NormalizeMatrix (data, nbreLine, nbreColonne);
     dataNeuronne = MoyenneMatrix (data, nbreLine, nbreColonne);
     EnvDonneeNeuronne (dataNeuronne , nbreNeuronne, nbreColonne);
-        for(i=0; i<nbreLine; i++){
-        // printf("%s ",data[i].nameIris);
-        }
-    
-    
-    for(i=0; i<nbreColonne; i++){
-         printf("%f ",dataNeuronne->moyenne[i]);
+    for(i=0; i<nbreLine; i++){
+        tabAleatoire[i] = i+1;
     }
-    printf("\n\n");
-    for(i=0; i<nbreNeuronne; i++){
-        for(j=0; j<nbreColonne; j++){
-            printf("%f  ",dataNeuronne->neuronne[i][j]);
-            //printf("%f  ",data[i].dataIris[j]);
-        }
-        printf("\n");
+    for(i=0; i<nbreLine; i++){
+        printf("%d ", tabAleatoire[i]);
     }
+
     free(data);
     return 0;
 }
