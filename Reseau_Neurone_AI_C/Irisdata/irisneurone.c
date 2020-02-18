@@ -3,21 +3,7 @@
 #include <string.h>
 #include <math.h>
 #include <time.h>
-#define lineSize 100
-#define nbreLine 150
-#define nbreNeuronne 60
-#define nbreColonne 4
-
-typedef struct{
-    double dataIris[nbreColonne];
-    double normalizeDataIris[nbreColonne];
-    char  nameIris[lineSize];
-}DataIris;
-
-typedef struct{
-    double moyenne[nbreColonne];
-    double neuronne[nbreColonne][nbreNeuronne];
-}DataNeuronne;
+#include "irisneurone.h"
 
 void ChargeDatabase(DataIris *data, int colonne){
     FILE* fichier ;
@@ -40,22 +26,21 @@ void ChargeDatabase(DataIris *data, int colonne){
     } 
     fclose( fichier ) ;
     }
-    
 }
 void NormalizeMatrix(DataIris *data, int ligne, int colonne){
     int i,j;
     double norme;
-    for(j=0; j<colonne; j++){
+    for(i=0; i< ligne; i++){
         norme = 0;
-        for(i= 0; i < ligne; i++)
+        for(j= 0; j < colonne; j++)
                 norme += pow(data[i].dataIris[j],2);
         norme = sqrt(norme);
-        for(i=0; i<ligne; i++)
+        for(j=0; j< colonne; j++)
             data[i].normalizeDataIris[j] = data[i].dataIris[j]/norme;
     }
 }
 DataNeuronne* MoyenneMatrix(DataIris *data, int ligne, int colonne){
-    DataNeuronne* dataNeuronne;
+    DataNeuronne* dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
     double mean;
     int i,j;
     for(j=0; j< colonne; j++){
@@ -79,23 +64,51 @@ void EnvDonneeNeuronne (DataNeuronne* dataNeuronne, int ligne, int colonne){
         }
     }
 }
-int main(){
+
+//Displays
+void display_database (DataIris *data, int ligne, int colonne ){
     int i,j;
-    int tabAleatoire[nbreLine];
-    DataIris* data = (DataIris*) malloc(nbreLine*sizeof(DataIris));
-    DataNeuronne*  dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
-
-    ChargeDatabase (data, nbreColonne);
-    NormalizeMatrix (data, nbreLine, nbreColonne);
-    dataNeuronne = MoyenneMatrix (data, nbreLine, nbreColonne);
-    EnvDonneeNeuronne (dataNeuronne , nbreNeuronne, nbreColonne);
-    for(i=0; i<nbreLine; i++){
-        tabAleatoire[i] = i+1;
+    printf("Espace de données:\n");
+    for( i=0; i< ligne; i++){
+        for( j=0; j< colonne; j++){
+            printf("%f  ", data[i].dataIris[j]);
+        }
+        printf("\n");
     }
-    for(i=0; i<nbreLine; i++){
-        printf("%d ", tabAleatoire[i]);
+}
+void display_nameflower (DataIris *data, int ligne){
+    int i;
+     printf("\nNoms des fleurs:\n");
+    for( i=0; i< ligne; i++){
+            printf("%s", data[i].nameIris);
     }
-
-    free(data);
-    return 0;
+    printf("\n");
+}
+void display_normalise (DataIris *data, int ligne, int colonne){
+    int i,j;
+    printf("\nDonnées Normalisées:\n");
+    for( i=0; i< ligne; i++){
+        for( j=0; j< colonne; j++){
+            printf("%f  ", data[i].normalizeDataIris[j]);
+        }
+        printf("\n");
+    }
+}
+void display_moyenne ( DataNeuronne* dataNeuronne, int colonne){
+    int i;
+    printf("\nMoyenne des données:\n");
+    for( i=0; i< colonne; i++){
+            printf("%f  ", dataNeuronne->moyenne[i]);
+    }
+    printf("\n");
+}
+void display_neuronne_space (DataNeuronne* dataNeuronne, int ligne, int colonne){
+    int i,j;
+    printf("\nEspace de Neuronne:\n");
+     for( i=0; i< ligne; i++){
+        for( j=0; j< colonne; j++){
+            printf("%f  ", dataNeuronne->neuronne[i][j]);
+        }
+        printf("\n");
+    } 
 }
