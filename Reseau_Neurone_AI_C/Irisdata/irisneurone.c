@@ -11,7 +11,7 @@ void ChargeDatabase(DataIris *data, int colonne){
     char *endValue=",";
     char *chaine;
     int compterLine=0, compterColonne;
-    fichier= fopen("iris.data", "r") ;/*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
+    fichier= fopen("test.data", "r") ;/*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
     if (fichier != NULL){
         while ( fgets( ligne, lineSize, fichier) != NULL ){
             compterColonne=0;
@@ -65,6 +65,53 @@ void EnvDonneeNeuronne (DataNeuronne* dataNeuronne, int ligne, int colonne){
     }
 }
 
+/* Mise en place de tableau de valeurs aléatoires */
+
+int* Rand_Table ( int b ){
+    
+    srand(time(NULL));
+    int *Rand = (int*) malloc(b*sizeof(int));
+    int i, random, t, a=0;
+    for( i=0; i<b; i++) Rand[i] = i;
+    for( i= 0; i<b; i++){
+        random = rand()%(b-a)+a;
+        t= Rand[i];
+        Rand[i]=Rand[random];
+        Rand[random]=t;
+    }
+    return Rand;
+} 
+
+double distance_neuronne ( double *Tab1, double *Tab2, int ligne){
+    int i;
+    double distance = 0;
+    for (i=0; i < ligne; i++)
+        distance += pow (Tab1[i]-Tab2[i], 2);
+    distance = sqrt (distance);
+    return distance;
+}
+
+void Winners_Neuronnes ( DataIris *data, DataNeuronne* dataNeuronne, int ligne_iris,  int ligne_neuronne, int colonne ){
+
+    int i,j, i_winner;
+    double distance, distance_0;
+
+    int *Rand = Rand_Table ( ligne_iris );
+    
+    for (i=0; i < ligne_iris; i++){
+        distance_0 = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->neuronne[0], colonne);
+        printf("Iris %d et neuronne %d ont pour distance:  %f\n",  Rand[i], 0, distance_0);
+        for (j=1; j < ligne_neuronne; j++){
+            distance = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->neuronne[j], colonne);
+            printf("Iris %d et neuronne %d ont pour distance:  %f\n", Rand[i], j, distance);
+            if(distance < distance_0 ){
+                distance_0 = distance;
+                i_winner = j;
+            } 
+        }
+        printf( "\nneunonne %d win iris %d\n\n", i_winner, Rand[i]);
+    }
+}
 //Displays
 void display_database (DataIris *data, int ligne, int colonne ){
     int i,j;
