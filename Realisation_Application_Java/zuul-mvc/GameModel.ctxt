@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=class\ GameModel
+comment0.text=\nGameModel\ represents\ the\ model\ of\ the\ game.\ This\ \n\n@author\ Poul\ Henriksen\n@version\ \ 1.0\ (February\ 2005)\n\n
+comment1.params=
+comment1.target=void\ createRooms()
+comment1.text=\nCreate\ all\ the\ rooms\ and\ link\ their\ exits\ together.\n\n
+comment2.params=nextRoom
+comment2.target=void\ goRoom(Room)
+comment3.params=
+comment3.target=GameModel()
+comment4.params=
+comment4.target=Room\ getCurrentRoom()
+comment5.params=
+comment5.target=String\ getGoodByeString()
+comment6.target=currentRoom
+comment7.params=
+comment7.target=String\ getLocationInfo()
+comment8.params=
+comment8.target=String\ getWelcomeString()
+comment9.params=
+comment9.target=String\ getHelpString()
+numComments=10

@@ -21,15 +21,15 @@ void dls_solve(std::string _strboard, int _depth) {
     int next_start_col = 0;
     set_next(next_moves, next_size, next_start_line, next_start_col);
     for(int j = 0; j < next_size; j++) {
-    play(next_moves[j], next_start_line, next_start_col);
-    std::string new_strboard = mkH();
-    std::unordered_map<std::string, int>::iterator ii = H.find(new_strboard);
-    if(ii == H.end() || ii->second > _depth) {
-        sol[_depth] = next_moves[j];
-        dls_solve(new_strboard, _depth+1);
-    }
-    unplay(next_moves[j], next_start_line, next_start_col);
-    if(sol_size != 0) break;
+        play(next_moves[j], next_start_line, next_start_col);
+        std::string new_strboard = mkH();
+        std::unordered_map<std::string, int>::iterator ii = H.find(new_strboard);
+        if(ii == H.end() || ii->second > _depth) {
+            sol[_depth] = next_moves[j];
+            dls_solve(new_strboard, _depth+1);
+        }
+        unplay(next_moves[j], next_start_line, next_start_col);
+        if(sol_size != 0) break;
     }
 }
 

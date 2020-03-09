@@ -26,8 +26,8 @@ void print_board() {
       if(board[i][j] == NBL*NBC) printf("* ");
       else printf("%d ", board[i][j]);
 
-}
-printf("\n");
+   }
+ printf("\n");
 }
 
 bool can_move_U(int _i, int _j) {
