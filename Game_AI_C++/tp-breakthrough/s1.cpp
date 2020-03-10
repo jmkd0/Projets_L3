@@ -41,10 +41,11 @@ int main_random(int _ac, char** _av) {
 //resolution avec Monte Carlo
 int main_monte_carlo(int _ac, char** _av) {
   srand(time(NULL));
+  int nb_playout=100000;
   bt_t N;
   N.init(6,6);
   N.print_board();
-  N.monte_carlo(1);
+  N.monte_carlo(1, nb_playout);
   printf("score (BLACK) : %f\n", N.score(BLACK) );
   return 0;
 }
@@ -61,8 +62,8 @@ int main_monte_carlo_tree_search(int _ac, char** _av) {
 int main(int _ac, char** _av) {
   //main_simple_random_query(_ac, _av);
   //main_simple_playout(_ac, _av);
-  main_random (_ac, _av);
-  //main_monte_carlo (_ac, _av);
+  //main_random (_ac, _av);
+  main_monte_carlo (_ac, _av);
   //main_monte_carlo_tree_search (_ac, _av);
   return 0;
 }
