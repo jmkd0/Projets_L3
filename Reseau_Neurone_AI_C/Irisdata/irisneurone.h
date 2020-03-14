@@ -11,7 +11,7 @@
 //Les trois elements suivant à modifier en changeant de base de donnée
 #define nbreIris 150
 #define nbreNeuronne 60
-char* fileName = "iris.data";
+char* fileName = "iris.data"; /*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
 
 
 typedef struct{
@@ -31,7 +31,7 @@ void ChargeDatabase(DataIris *data, int colonne){
     char *endValue=",";
     char *chaine;
     int compterLine=0, compterColonne;
-    fichier= fopen(fileName, "r") ;/*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
+    fichier= fopen(fileName, "r") ;
     if (fichier != NULL){
         while ( fgets( ligne, lineSize, fichier) != NULL ){
             compterColonne=0;
