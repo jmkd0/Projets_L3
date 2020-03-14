@@ -274,7 +274,7 @@ struct nng_t {
   nng_move_t get_rand_move() {
     nng_move_t ret;
     int r = ((int)rand())%((nbl*nbc)-nb_val_set);
-    printf("%d ", r);
+    //printf("%d ", r);
     for(int i = 0; i < nbl; i++) {
       for(int j = 0; j < nbc; j++) {
         if(r == 0 && board[i][j] == WHITE) {
@@ -357,6 +357,7 @@ struct nng_t {
   void playout() {
     while( ! terminal()) {
       nng_move_t m = get_rand_move();
+      
       play(m);
     }
   }

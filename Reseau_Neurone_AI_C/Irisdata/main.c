@@ -26,7 +26,7 @@ int main(){
 //Displays
     //display_database (data, nbreIris, nbreColonne );
     //display_nameflower (data, nbreIris);
-    display_normalise (data, nbreIris, nbreColonne);
+    //display_normalise (data, nbreIris, nbreColonne);
     //display_moyenne ( dataNeuronne, nbreColonne);
     display_neuronne_space ( dataNeuronne, nbreNeuronne, nbreColonne);
   
