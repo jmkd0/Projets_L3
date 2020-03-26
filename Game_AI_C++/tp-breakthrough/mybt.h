@@ -302,9 +302,10 @@ struct bt_t {
     memcpy(white_pieces_mc, white_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
     bt_piece_t black_pieces_mc[2*MAX_LINES];
     memcpy(black_pieces_mc, black_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
-    
+
     int r = MC(_nb_playout );
     //on retablie le plateau
+    
     memcpy(moves, moves_mc , sizeof(bt_move_t)*3*2*MAX_LINES);  
     memcpy(board, board_mc, sizeof(int)*MAX_LINES*MAX_COLS);
     nb_white_pieces = nb_white_pieces_mc;
@@ -353,6 +354,55 @@ struct bt_t {
       play(m);
       if(_log) {printf("\n"); m.print(); print_board();}
     }
+  }
+
+
+
+  //Résolutions avec Nested Monte Carlo Search
+  void nested_monte_carlo(int _log=0, int level) {
+    while(terminal() == EMPTY) {
+      bt_move_t m = get_nested_monte_carlo_move( level_max );
+      play(m);
+      if(_log) {printf("\n"); m.print(); print_board();}
+    }
+  }
+  bt_move_t  get_nested_monte_carlo_move (int level){
+    update_moves();
+    //On memorise le plateau et les moves
+    bt_move_t  moves_nmcs[3*2*MAX_LINES];
+    memcpy(moves_nmcs, moves, sizeof(bt_move_t)*3*2*MAX_LINES); 
+    int board_nmcs[MAX_LINES][MAX_COLS];
+    memcpy(board_nmcs, board, sizeof(int)*MAX_LINES*MAX_COLS);
+    int nb_white_pieces_nmcs = nb_white_pieces;
+    int nb_black_pieces_nmcs = nb_black_pieces;
+    int turn_nmcs = turn;
+    bt_piece_t white_pieces_nmcs[2*MAX_LINES];
+    memcpy(white_pieces_nmcs, white_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
+    bt_piece_t black_pieces_nmcs[2*MAX_LINES];
+    memcpy(black_pieces_nmcs, black_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
+
+    int r = NMCS(level_max); //application de la methode de NESTED MONTE CARLO SEARCH
+    //on retablie le plateau
+    
+    memcpy(moves, moves_nmcs , sizeof(bt_move_t)*3*2*MAX_LINES);  
+    memcpy(board, board_nmcs, sizeof(int)*MAX_LINES*MAX_COLS);
+    nb_white_pieces = nb_white_pieces_nmcs;
+    nb_black_pieces = nb_black_pieces_nmcs;
+    turn = turn_nmcs;
+    memcpy(white_pieces, white_pieces_nmcs, sizeof(bt_piece_t)*2*MAX_LINES);
+    memcpy(black_pieces, black_pieces_nmcs, sizeof(bt_piece_t)*2*MAX_LINES);
+    return moves[r];
+  }
+
+  int NMCS(){
+      while(terminal() == EMPTY) {
+        for (int i=0; i< nb_moves; i++){
+          bt_move_t  m = moves[i];
+          play(m);
+        }
+          m = get_rand_move_1();
+          play(m);
+        }
   }
 };
 #endif /* MYBT_H */
