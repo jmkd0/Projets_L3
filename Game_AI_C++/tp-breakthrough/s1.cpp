@@ -67,7 +67,7 @@ int main_NMCS(int _ac, char** _av) {
   bt_t N;
   N.init(6,6);
   N.print_board();
-  N.nested_monte_carlo(1, LEVEL_MAX);
+  N.nested_monte_carlo(1);
   printf("score (BLACK) : %f\n", N.score(BLACK) );
   return 0;
 }
@@ -77,6 +77,7 @@ int main(int _ac, char** _av) {
   main_random (_ac, _av);
   //main_monte_carlo (_ac, _av);
   //main_monte_carlo_tree_search (_ac, _av);
+  main_NMCS ( _ac, _av );
   return 0;
 }
 

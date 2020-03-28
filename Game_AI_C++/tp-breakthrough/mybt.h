@@ -3,6 +3,10 @@
 #include <cstdio>
 #include <cstdlib>
 #include <string.h>
+#include <utility>
+#include <vector>
+#include <limits.h>
+using namespace std;
 #define WHITE 0
 #define BLACK 1
 #define EMPTY 2
@@ -359,14 +363,14 @@ struct bt_t {
 
 
   //Résolutions avec Nested Monte Carlo Search
-  void nested_monte_carlo(int _log=0, int level) {
+  void nested_monte_carlo(int _log=0) {
     while(terminal() == EMPTY) {
-      bt_move_t m = get_nested_monte_carlo_move( level_max );
+      bt_move_t m = get_nested_monte_carlo_move();
       play(m);
       if(_log) {printf("\n"); m.print(); print_board();}
     }
   }
-  bt_move_t  get_nested_monte_carlo_move (int level){
+  bt_move_t  get_nested_monte_carlo_move (){
     update_moves();
     //On memorise le plateau et les moves
     bt_move_t  moves_nmcs[3*2*MAX_LINES];
@@ -381,9 +385,9 @@ struct bt_t {
     bt_piece_t black_pieces_nmcs[2*MAX_LINES];
     memcpy(black_pieces_nmcs, black_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
 
-    int r = NMCS(level_max); //application de la methode de NESTED MONTE CARLO SEARCH
+    int r = NMCS(); //application de la methode de NESTED MONTE CARLO SEARCH
     //on retablie le plateau
-    
+    printf("%d   ",r);
     memcpy(moves, moves_nmcs , sizeof(bt_move_t)*3*2*MAX_LINES);  
     memcpy(board, board_nmcs, sizeof(int)*MAX_LINES*MAX_COLS);
     nb_white_pieces = nb_white_pieces_nmcs;
@@ -395,14 +399,83 @@ struct bt_t {
   }
 
   int NMCS(){
-      while(terminal() == EMPTY) {
-        for (int i=0; i< nb_moves; i++){
-          bt_move_t  m = moves[i];
+    int MAX_LEVEL, level, nb_moves_1, etat;
+    int max = 0, best = 0;
+    vector<pair<int,int>> H; // paire<score, best>
+    bt_move_t  moves_1[3*2*MAX_LINES];
+    memcpy(moves_1, moves, sizeof(bt_move_t)*3*2*MAX_LINES); 
+      MAX_LEVEL = level = nb_moves_1 = nb_moves;
+    
+      while(terminal() == EMPTY) {  //Till Win or full game table
+        for (int i=0; i< nb_moves_1; i++){
+          bt_move_t  m = moves_1[i];
           play(m);
+          update_moves();
+          
+          etat = i;
+          nested_MC (H, etat, level-1, MAX_LEVEL);
+          if(H[i].first > max){
+            max  = H[i].first;
+            best = i;
+          }
         }
-          m = get_rand_move_1();
+        }
+      return best;
+  }
+  int nested_MC (vector<pair<int,int>> &H, int etat, int level, int MAX_LEVEL){
+      update_moves();
+      if (nb_moves == 0){
+        if (level == MAX_LEVEL){
+          if( etat > (int)H.size()-1) H.push_back(make_pair(score(BLACK), 0)); 
+        }
+        return score(BLACK);
+      }else{
+        if( level != MAX_LEVEL){
+          if (level == 0) return playout_nmcs();
+          int max = 0;
+          for (int i=0; i< nb_moves; i++){
+            bt_move_t  m = moves[i];
+            play(m);
+            update_moves();
+            int v = nested_MC (H, i, level-1, MAX_LEVEL);
+            if (v > max) max = v;
+          }
+          return max;
+        }else{
+          int max = INT_MIN;
+          int best = 0;
+          for (int i=0; i< nb_moves; i++){
+            bt_move_t  m = moves[i];
+            play(m);
+            update_moves();
+            int v = nested_MC (H, i , level-1, MAX_LEVEL);
+            if (v > max){
+              max = v;
+              best = i;
+            } 
+          }
+          if( etat > (int)H.size()-1){
+            H.push_back(make_pair(max, best)); 
+          }else{
+            int a = H[etat].first;
+            int b = H[etat].second;
+            if (max > a){
+              H[etat] = make_pair(max, best);
+            }else best = b;
+          }
+            bt_move_t  m = moves[etat];
+            play(m);
+            update_moves();
+          return nested_MC (H, etat , level, MAX_LEVEL);
+        }
+      }
+  }
+  int playout_nmcs(){
+    while(terminal() == EMPTY) {
+      bt_move_t m = get_rand_move_1();
           play(m);
-        }
+    }
+    return score(BLACK);
   }
 };
 #endif /* MYBT_H */
