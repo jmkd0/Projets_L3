@@ -101,10 +101,11 @@ Tree* create_perfect_tree_by_bfs(Tree* tree, int i, int n) {
 } 
 void Prefixe(Tree* arbre){
 	if(arbre==NULL) return;
-    printf("%d   ",arbre->value);
+    
 	Prefixe(arbre->left);
     //printf("%c   ",arbre->data);
 	Prefixe(arbre->right);
+    printf("%c   ",arbre->data);
 }
 void addFront(List *list,  int value){
     List *node= (List*)malloc(sizeof(List));

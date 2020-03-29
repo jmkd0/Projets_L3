@@ -19,20 +19,20 @@ int main(){
 
         //Question 4
     char bfs[]={'H', 'I', 'D', 'J', 'K', 'E', 'B', 'L', 'F', 'G', 'C', 'A'};
-    //Tree* treebfs = create_tree_by_bfs(treebfs, bfs, 0, sizeof(bfs)/sizeof(bfs[0])); 
-    //Prefixe (treebfs);
+    Tree* treebfs = create_tree_by_bfs(treebfs, bfs, 0, sizeof(bfs)/sizeof(bfs[0])); 
+    Prefixe (treebfs);
 
     /*----------------------------EXERCICE 4---------------------------*/
-    int height = 3;
+    /* int height = 3;
     int node_number = pow(2, height+1)+5;
     Tree* treebin = create_perfect_tree_by_bfs(treebin, 1, node_number);
-    
+     */
 
     /*----------------------------EXERCICE 5---------------------------*/
     //Question 1
-    Prefixe (treebin);
+    //Prefixe (treebin);
     //Question 2
-    parcoursLargeur ( treebin );
+    //parcoursLargeur ( treebin );
     printf(" \n");
     return 0;
 }
