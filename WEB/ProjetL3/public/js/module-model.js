@@ -14,7 +14,6 @@ class Model{
        //let socket=this.socket;
       return new Promise(function(resolve){
         socket.on('send-data', function(receive) {
-          //console.log(val)
           for(let i=0; i<receive.length; i++){
             profilMatchs.response[i]={
               id:     receive[i].id,
