@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=gameEngine
+comment0.target=UserInterface(GameEngine)
+comment0.text=\nConstruct\ a\ UserInterface.\ As\ a\ parameter,\ a\ Game\ Engine\n(an\ object\ processing\ and\ executing\ the\ game\ commands)\ is\nneeded.\n\n@param\ gameEngine\ \ The\ GameEngine\ object\ implementing\ the\ game\ logic.\n\n
+comment1.params=text
+comment1.target=void\ print(String)
+comment1.text=\nPrint\ out\ some\ text\ into\ the\ text\ area.\n\n
+comment2.params=text
+comment2.target=void\ println(String)
+comment2.text=\nPrint\ out\ some\ text\ into\ the\ text\ area,\ followed\ by\ a\ line\ break.\n\n
+comment3.params=imageName
+comment3.target=void\ showImage(String)
+comment3.text=\nShow\ an\ image\ file\ in\ the\ interface.\n\n
+comment4.params=on
+comment4.target=void\ enable(boolean)
+comment4.text=\nEnable\ or\ disable\ input\ in\ the\ input\ field.\n\n
+comment5.target=void\ createGUI()
+comment5.text=\nSet\ up\ graphical\ user\ interface.\n\n
+comment6.params=e
+comment6.target=void\ actionPerformed(ActionEvent)
+comment6.text=\nActionlistener\ interface\ for\ entry\ textfield.\n\n
+comment7.target=void\ processCommand()
+comment7.text=\nA\ command\ has\ been\ entered.\ Read\ the\ command\ and\ do\ whatever\ is\ \nnecessary\ to\ process\ it.\n\n
+numComments=8

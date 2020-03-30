@@ -1,0 +1,19 @@
+#BlueJ class context
+comment0.target=GameEngine()
+comment0.text=\nConstructor\ for\ objects\ of\ class\ GameEngine\n\n
+comment1.params=userInterface
+comment1.target=void\ setGUI(UserInterface)
+comment2.target=void\ printWelcome()
+comment2.text=\nPrint\ out\ the\ opening\ message\ for\ the\ player.\n\n
+comment3.target=void\ createRooms()
+comment3.text=\nCreate\ all\ the\ rooms\ and\ link\ their\ exits\ together.\n\n
+comment4.params=commandLine
+comment4.target=void\ interpretCommand(String)
+comment4.text=\nGiven\ a\ command,\ process\ (that\ is\:\ execute)\ the\ command.\nIf\ this\ command\ ends\ the\ game,\ true\ is\ returned,\ otherwise\ false\ is\nreturned.\n\n
+comment5.target=void\ printHelp()
+comment5.text=\nPrint\ out\ some\ help\ information.\nHere\ we\ print\ some\ stupid,\ cryptic\ message\ and\ a\ list\ of\ the\ \ncommand\ words.\n\n
+comment6.params=command
+comment6.target=void\ goRoom(Command)
+comment6.text=\nTry\ to\ go\ to\ one\ direction.\ If\ there\ is\ an\ exit,\ enter\ the\ new\nroom,\ otherwise\ print\ an\ error\ message.\n\n
+comment7.target=void\ endGame()
+numComments=8
