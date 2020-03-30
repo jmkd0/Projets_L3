@@ -6,16 +6,11 @@
 
 typedef struct Tree{
     int value;
-    char data;
     struct Tree *left;
     struct Tree *right;
 } Tree;
-typedef struct List{
-    int value;
-    struct List *next;
-} List;
 
-char* create_tree_by_prefix (Tree** tree, char* prefix ){
+/* char* create_tree_by_prefix (Tree** tree, char* prefix ){
     int i, size = strlen(prefix);
     
     //if()
@@ -82,7 +77,7 @@ Tree* create_tree_by_bfs(Tree* tree, char* bfs, int i, int n) {
         tree->right = create_tree_by_bfs(tree->right, bfs, 2 * i + 2, n); 
     } 
     return tree; 
-} 
+}  */
 Tree* create_perfect_tree_by_bfs(Tree* tree, int i, int n) { 
     if (i < n) { 
         Tree* node = (Tree*)malloc(sizeof(Tree)); 
@@ -99,21 +94,24 @@ Tree* create_perfect_tree_by_bfs(Tree* tree, int i, int n) {
     } 
     return tree; 
 } 
-void Prefixe(Tree* arbre){
+void Prefixev(Tree* arbre){
 	if(arbre==NULL) return;
-    
-	Prefixe(arbre->left);
+    printf("%d   ",arbre->value);
+	Prefixev(arbre->left);
     //printf("%c   ",arbre->data);
-	Prefixe(arbre->right);
-    printf("%c   ",arbre->data);
+	Prefixev(arbre->right);
+    //printf("%c   ",arbre->data);
 }
-void addFront(List *list,  int value){
+/* void addBack (List* list, int value){
     List *node= (List*)malloc(sizeof(List));
     if(node == NULL) return;
+    List* end = list;
+    while(end->next != NULL) end =end->next;
     node->value = value;
-    node->next = list->next;
-    list->next = node;
+    node->next = NULL;
+    end->next = node;
 }
+
 int eraseFront (List* list){
      List* first = list->next;
     if ( first == NULL) exit( EXIT_FAILURE) ;
@@ -123,12 +121,13 @@ int eraseFront (List* list){
    return front;
 }
 void parcoursLargeur (Tree* tree){
-    List  *pile = &(List){0, NULL};
-    addFront (pile, tree->value);
-    while( pile->next != NULL){
-        printf("%d ", eraseFront (pile));
-        if( tree->left != NULL) addFront (pile, tree->left->value);
-        if( tree->right != NULL) addFront (pile, tree->right->value);
+    if( tree == NULL) return;
+    List  *file = &(List){0, NULL};
+    addBack (file, tree->data);
+    while( file->next != NULL){
+        printf("%c ", eraseFront (file));
+        if( tree->left != NULL) addBack (file, tree->left->data);
+        if( tree->right != NULL) addBack (file, tree->right->data);
     }
-}
+} */
 #endif

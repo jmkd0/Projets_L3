@@ -1,32 +1,89 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 
-typedef struct Liste{
-    int valeur;
-    struct Liste *suivant;
-} Liste;
+typedef struct List{
+    int value;
+    struct List *next;
+} List;
 
-void AjoutDebut(Liste *liste,  int nouveau){
-    //printf("%d  ", debut);
-    Liste *element= (Liste*)malloc(sizeof(Liste));
-    if(element==NULL) return;
-    element->valeur = nouveau;
-    element->suivant = liste->suivant;
-    liste->suivant = element;
+void addFront(List *list,  int value){
+    
+    List *node= (List*)malloc(sizeof(List));
+    if(list == NULL){
+        node->next = NULL;
+    }else node->next = list->next;
+    if(node == NULL) return;
+    node->value = value;
+    
+    
+    //node->next = list->next;
+    //list->next = node;
 }
-void Affichage(Liste *liste){
-    while(liste!=NULL){
-        printf("%d   ",liste->valeur);
-        liste=liste->suivant;
+/* void addBack (List* list, int value){
+    List *node= (List*)malloc(sizeof(List));
+    if(node == NULL) return;
+    List* end = list;
+    while(end->next != NULL) end =end->next;
+    node->value = value;
+    node->next = NULL;
+    end->next = node;
+}
+
+void addEnd1(List** end,  int value){
+    List *node = (List*)malloc(sizeof(List));
+    if(node == NULL) return;
+    node->value = value;
+    node->next = NULL;
+    (*end)->next = node;
+    *end = node;
+}
+ int eraseFront (List* list){
+     List* first = list->next;
+    if ( first == NULL) exit( EXIT_FAILURE) ;
+    int front = first->value;
+    list->next = list->next->next;
+    free(first);
+   return front;
+}
+int eraseBack (List* list){
+    List* last = list;
+    int back ;
+    if(list->next == NULL) exit( EXIT_FAILURE);
+    if(last->next->next == NULL) back = last->next->value;
+    while(last->next->next != NULL) last = last->next;
+    back = last->next->value;
+    free(last->next->next);
+    last->next = NULL;
+  return back;
+} */
+void display(List *list){
+    //list = list->next;
+    while(list != NULL){
+        printf("%d   ",list->value);
+        list = list->next;
     }
 }
-
 void main(){
-    int i, data[]={45,58,76,19};
+    int i, data[]={5,8,9,4,45,58,76,19};
     int size = sizeof(data)/sizeof(int);
-    Liste  *liste = &(Liste){0, NULL};;
+    List  *list = NULL; //&(List){0, NULL};
+    
+   addFront(list, 4);
+    //for(i=0; i< 4; i++) addFront(list, data[i]); //4 9 8 5
+    //for(i=4; i< size; i++) addBack(list, data[i]);//45 58 76 19
+    /*List  *end = list;
+    addEnd1(&end, 23);*/
 
-    for(i=0; i< size; i++) AjoutDebut(liste, data[i]);
+  //display(list) ;//>>4 9 8 5 45 58 76 19 23
 
-  Affichage(liste->suivant) ;
+  /* //Erase Front
+  int front = eraseFront (list);
+  printf("\ncancel front %d\n ", front);
+  display(list) ;//>>9 8 5 45 58 76 19 23
+  //Erase End
+  int back = eraseBack (list);
+  printf("\ncancel back %d\n ", back);
+  display(list) ;//>>9 8 5 45 58 76 19 */
+  printf("\n");
 }

@@ -1,21 +1,24 @@
+#ifndef TP4
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
-typedef struct Tree{
+typedef struct Tree3{
     char data;
-    struct Tree *left;
-    struct Tree *right;
-} Tree;
+    struct Tree3 *left;
+    struct Tree3 *right;
+} Tree3;
 
 typedef struct List{
-    Tree* tree;
+    Tree3* tree;
     struct List *next;
 } List;
 
-Tree* create_tree_by_pre_in (char* preorder, char* inorder, int begin, int end, int *k){
+//Creation d'arbre avec parcours Prefix
+Tree3* create_tree_by_pre_in (char* preorder, char* inorder, int begin, int end, int *k){
     if (begin > end) return NULL;
-    Tree* node = (Tree*)malloc(sizeof(Tree));
+    Tree3* node = (Tree3*)malloc(sizeof(Tree3));
         node->data   = preorder[*k];
         node->left  = NULL;
         node->right = NULL;
@@ -29,9 +32,10 @@ Tree* create_tree_by_pre_in (char* preorder, char* inorder, int begin, int end, 
     node->right = create_tree_by_pre_in (preorder, inorder, index + 1, end, k);
     return node;
 }
-Tree* create_tree_by_pos_in (char* posorder, char* inorder, int begin, int end, int* k){
+//Creation d'arbre avec parcours Postfix
+Tree3* create_tree_by_pos_in (char* posorder, char* inorder, int begin, int end, int* k){
     if (begin > end) return NULL;
-    Tree* node = (Tree*)malloc(sizeof(Tree));
+    Tree3* node = (Tree3*)malloc(sizeof(Tree3));
         node->data   = posorder[*k];
         node->left  = NULL;
         node->right = NULL;
@@ -45,9 +49,10 @@ Tree* create_tree_by_pos_in (char* posorder, char* inorder, int begin, int end, 
     node->left = create_tree_by_pos_in (posorder, inorder, begin, index - 1, k);
     return node;
 }
-Tree* create_tree_by_level_in(char* level, char* inorder, int begin, int end, int k) { 
+//Creation d'arbre avec parcours en largeur
+Tree3* create_tree_by_level_in(char* level, char* inorder, int begin, int end, int k) { 
     if (k <= 0) return NULL;
-        Tree* node = (Tree*)malloc(sizeof(Tree)); 
+        Tree3* node = (Tree3*)malloc(sizeof(Tree3)); 
         node->data = level[0]; 
         node->left =  NULL;
         node->right = NULL;
@@ -73,15 +78,9 @@ Tree* create_tree_by_level_in(char* level, char* inorder, int begin, int end, in
         free(inInorder); free(leftLevel); free(rightLevel);
     return node; 
 } 
-void Prefixe(Tree* arbre){
-	if(arbre==NULL) return;
-    //printf("%c   ",arbre->data);
-	Prefixe(arbre->left);
-    printf("%c   ",arbre->data);
-	Prefixe(arbre->right);
-    //printf("%d   ",arbre->data);
-}
-void addBack (List* list, Tree* tree){
+//Verification de sorties
+//Fonction pour enfiler
+void addBack (List* list, Tree3* tree){
     List *node= (List*)malloc(sizeof(List));
     if(node == NULL) return;
     List* end = list;
@@ -90,45 +89,51 @@ void addBack (List* list, Tree* tree){
     node->next = NULL;
     end->next = node;
 }
-
-Tree* eraseFront (List* list){
+//Fonction de défiler
+Tree3* eraseFront (List* list){
      List* first = list->next;
     if ( first == NULL) exit( EXIT_FAILURE) ;
-    Tree* front = first->tree;
+    Tree3* front = first->tree;
     list->next = list->next->next;
     free(first);
    return front;
 }
-void parcoursLargeur (Tree* tree){
+void parcoursLargeur (Tree3* tree){
     if( tree == NULL) return;
     List  *file = &(List){NULL, NULL};
     addBack (file, tree);
     while( file->next != NULL){
-        Tree* node = eraseFront( file );
-        printf("%c ", node->data);
+        Tree3* node = eraseFront( file );
+        printf("%c   ", node->data);
         if( node->left != NULL) addBack (file, node->left);
         if( node->right != NULL) addBack (file, node->right);
     }
 }
-void main(){
-    char prefix[]=  {'A', 'B', 'D', 'E', 'C', 'F'}; 
-    //char postfix[]= {'D', 'E', 'B', 'F', 'C', 'A'};
-    //char level[]=   {'A', 'B', 'C', 'D', 'E', 'F'};
-    //char infix[]=   {'D', 'B', 'E', 'A', 'F', 'C'};  
-   char postfix[]={'H', 'I', 'D', 'J', 'K', 'E', 'B', 'L', 'F', 'G', 'C', 'A'};
-    char infix[]=  {'H', 'J', 'I', 'D', 'E', 'K', 'A', 'B', 'C', 'L', 'G', 'F'};
-    int size = sizeof(infix)/sizeof(infix[0]);
-    int k = 0;
-    /* Tree* nodepre = create_tree_by_pre_in (prefix, infix, 0, size-1, &k);
-    Prefixe (nodepre);
-        printf("\n");*/
-    k = size -1;
-    Tree* nodepos = create_tree_by_pos_in (postfix, infix, 0, size-1, &k);
-    Prefixe (nodepos);
-        printf("\n");
-    //k = size;
-    //Tree* nodelevel = create_tree_by_level_in(level, infix, 0, k-1, k); 
-    //Prefixe (nodelevel);
-        //printf("\n"); 
-    //parcoursLargeur (nodelevel);
+void Prefixe(Tree3* arbre){
+	if(arbre==NULL) return;
+    printf("%c   ",arbre->data);
+	Prefixe(arbre->left);
+	Prefixe(arbre->right);
 }
+void Infixe(Tree3* arbre){
+	if(arbre==NULL) return;
+	Infixe(arbre->left);
+    printf("%c   ",arbre->data);
+	Infixe(arbre->right);
+}
+void Postfixe(Tree3* arbre){
+	if(arbre==NULL) return;
+	Postfixe(arbre->left);
+	Postfixe(arbre->right);
+    printf("%c   ",arbre->data);
+}
+int NombreNod(Tree3* arbre){
+	if(arbre==NULL) return 0;
+    static int nombre = 0;
+    nombre++;
+	NombreNod(arbre->left);
+	NombreNod(arbre->right);
+    return nombre;
+}
+
+#endif
