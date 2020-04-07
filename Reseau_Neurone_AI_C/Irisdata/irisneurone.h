@@ -9,9 +9,9 @@
 #define lineSize 100
 #define nbreColonne 4
 //Les trois elements suivant à modifier en changeant de base de donnée
-#define nbreIris 150
-#define nbreNeuronne 60
-char* fileName = "iris.data"; /*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
+#define nbreIris 3
+#define nbreNeuronne 8
+char* fileName = "test.data"; /*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
 
 
 typedef struct{
@@ -22,8 +22,10 @@ typedef struct{
 
 typedef struct{
     double moyenne[nbreColonne];
-    double neuronne[nbreNeuronne][nbreColonne];
+    double random_neuronne[nbreNeuronne][nbreColonne];
 }DataNeuronne;
+
+Liste
 
 void ChargeDatabase(DataIris *data, int colonne){
     FILE* fichier ;
@@ -80,7 +82,7 @@ void EnvDonneeNeuronne (DataNeuronne* dataNeuronne, int ligne, int colonne){
         minimum = dataNeuronne->moyenne[j] - 0.005;
         maximum = dataNeuronne->moyenne[j] + 0.002;
         for( i=0; i< ligne; i++){
-            dataNeuronne->neuronne[i][j] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
+            dataNeuronne->random_neuronne[i][j] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
         }
     }
 }
@@ -119,10 +121,10 @@ void Winners_Neuronnes ( DataIris *data, DataNeuronne* dataNeuronne, int ligne_i
     int *Rand = Rand_Table ( ligne_iris );
     
     for (i=0; i < ligne_iris; i++){
-        distance_0 = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->neuronne[0], colonne);
+        distance_0 = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->random_neuronne[0], colonne);
         //printf("Iris %d et neuronne %d ont pour distance:  %f\n",  Rand[i], 0, distance_0);
         for (j=1; j < ligne_neuronne; j++){
-            distance = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->neuronne[j], colonne);
+            distance = distance_neuronne (data[Rand[i]].normalizeDataIris, dataNeuronne->random_neuronne[j], colonne);
             //printf("Iris %d et neuronne %d ont pour distance:  %f\n", Rand[i], j, distance);
             if(distance < distance_0 ){
                 distance_0 = distance;
@@ -174,7 +176,7 @@ void display_neuronne_space (DataNeuronne* dataNeuronne, int ligne, int colonne)
     printf("\nEspace de Neuronne:\n");
      for( i=0; i< ligne; i++){
         for( j=0; j< colonne; j++){
-            printf("%f  ", dataNeuronne->neuronne[i][j]);
+            printf("%f  ", dataNeuronne->random_neuronne[i][j]);
         }
         printf("\n");
     } 

@@ -363,14 +363,14 @@ struct bt_t {
 
 
   //Résolutions avec Nested Monte Carlo Search
-  void nested_monte_carlo(int _log=0) {
+  void nested_monte_carlo(int _log=0, int level=2) {
     while(terminal() == EMPTY) {
-      bt_move_t m = get_nested_monte_carlo_move();
+      bt_move_t m = get_nested_monte_carlo_move(level);
       play(m);
       if(_log) {printf("\n"); m.print(); print_board();}
     }
   }
-  bt_move_t  get_nested_monte_carlo_move (){
+  bt_move_t  get_nested_monte_carlo_move (int level){
     update_moves();
     //On memorise le plateau et les moves
     bt_move_t  moves_nmcs[3*2*MAX_LINES];
@@ -385,9 +385,9 @@ struct bt_t {
     bt_piece_t black_pieces_nmcs[2*MAX_LINES];
     memcpy(black_pieces_nmcs, black_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
 
-    int r = NMCS(); //application de la methode de NESTED MONTE CARLO SEARCH
+    int r = NMCS(level); //application de la methode de NESTED MONTE CARLO SEARCH
     //on retablie le plateau
-    printf("%d   ",r);
+    
     memcpy(moves, moves_nmcs , sizeof(bt_move_t)*3*2*MAX_LINES);  
     memcpy(board, board_nmcs, sizeof(int)*MAX_LINES*MAX_COLS);
     nb_white_pieces = nb_white_pieces_nmcs;
@@ -398,13 +398,13 @@ struct bt_t {
     return moves[r];
   }
 
-  int NMCS(){
-    int MAX_LEVEL, level, nb_moves_1, etat;
+  int NMCS(int level){
+    int MAX_LEVEL = level, nb_moves_1, etat;
     int max = 0, best = 0;
     vector<pair<int,int>> H; // paire<score, best>
     bt_move_t  moves_1[3*2*MAX_LINES];
     memcpy(moves_1, moves, sizeof(bt_move_t)*3*2*MAX_LINES); 
-      MAX_LEVEL = level = nb_moves_1 = nb_moves;
+       nb_moves_1 = nb_moves;
     
       while(terminal() == EMPTY) {  //Till Win or full game table
         for (int i=0; i< nb_moves_1; i++){
@@ -414,10 +414,10 @@ struct bt_t {
           
           etat = i;
           nested_MC (H, etat, level-1, MAX_LEVEL);
-          if(H[i].first > max){
+          /* if(H[i].first > max){
             max  = H[i].first;
             best = i;
-          }
+          } */
         }
         }
       return best;
@@ -438,6 +438,7 @@ struct bt_t {
             play(m);
             update_moves();
             int v = nested_MC (H, i, level-1, MAX_LEVEL);
+            
             if (v > max) max = v;
           }
           return max;
@@ -476,6 +477,54 @@ struct bt_t {
           play(m);
     }
     return score(BLACK);
+  }
+  //Résolutions avec Nested Roullout Policy Adaptation
+  void nested_rollout_adaptation(int _log=0, int level=2, int nbre_playout=1000) {
+    while(terminal() == EMPTY) {
+      bt_move_t m = get_nested_rollout_policy(level, N);
+      play(m);
+      if(_log) {printf("\n"); m.print(); print_board();}
+    }
+  }
+  bt_move_t  get_nested_rollout_policy(int level, int N_playout){
+    update_moves();
+    //On memorise le plateau et les moves
+    bt_move_t  moves_nmcs[3*2*MAX_LINES];
+    memcpy(moves_nmcs, moves, sizeof(bt_move_t)*3*2*MAX_LINES); 
+    int board_nmcs[MAX_LINES][MAX_COLS];
+    memcpy(board_nmcs, board, sizeof(int)*MAX_LINES*MAX_COLS);
+    int nb_white_pieces_nmcs = nb_white_pieces;
+    int nb_black_pieces_nmcs = nb_black_pieces;
+    int turn_nmcs = turn;
+    bt_piece_t white_pieces_nmcs[2*MAX_LINES];
+    memcpy(white_pieces_nmcs, white_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
+    bt_piece_t black_pieces_nmcs[2*MAX_LINES];
+    memcpy(black_pieces_nmcs, black_pieces, sizeof(bt_piece_t)*2*MAX_LINES);
+
+    vector<pair<int,double>> P; //<etat, policy>
+    int r = NRPA(P, level, N); //application de la methode de NESTED ROLLOUT POLICY ADAPTATION
+    //on retablie le plateau
+    
+    memcpy(moves, moves_nmcs , sizeof(bt_move_t)*3*2*MAX_LINES);  
+    memcpy(board, board_nmcs, sizeof(int)*MAX_LINES*MAX_COLS);
+    nb_white_pieces = nb_white_pieces_nmcs;
+    nb_black_pieces = nb_black_pieces_nmcs;
+    turn = turn_nmcs;
+    memcpy(white_pieces, white_pieces_nmcs, sizeof(bt_piece_t)*2*MAX_LINES);
+    memcpy(black_pieces, black_pieces_nmcs, sizeof(bt_piece_t)*2*MAX_LINES);
+    return moves[r];
+  }
+  int NRPA (vector<pair<int,double>> &P, int level, int N){
+    if( level == 0) return playout_NRPA (P, N);
+      else{
+          int max = INT_MIN;
+          int best_seq = 0;
+          for( int i=0; i <= N; i++){
+
+          }
+
+      }
+    return 0;
   }
 };
 #endif /* MYBT_H */

@@ -4,7 +4,6 @@
 #include <string>
 #include <unordered_map>
 #include "mybt.h"
-#include "monte_carlo.h"
 
 /* g++ -std=c++11 s1.cpp */
 
@@ -63,21 +62,34 @@ int main_monte_carlo_tree_search(int _ac, char** _av) {
 //resolution avec Nested Monte Carlo Search (NMCS)
 int main_NMCS(int _ac, char** _av) {
   srand(time(NULL));
-  int LEVEL_MAX = 4;
+  int level = 2;
   bt_t N;
   N.init(6,6);
   N.print_board();
-  N.nested_monte_carlo(1);
+  N.nested_monte_carlo(1, level);
+  printf("score (BLACK) : %f\n", N.score(BLACK) );
+  return 0;
+}
+//resolution avec Nested Rollout Adaptation (NRPA)
+int main_NRPA(int _ac, char** _av) {
+  srand(time(NULL));
+  int nb_playout=100000;
+  int level = 2;
+  bt_t N;
+  N.init(6,6);
+  N.print_board();
+  N.nested_rollout_adaptation(1, level, nb_playout);
   printf("score (BLACK) : %f\n", N.score(BLACK) );
   return 0;
 }
 int main(int _ac, char** _av) {
   //main_simple_random_query(_ac, _av);
   //main_simple_playout(_ac, _av);
-  main_random (_ac, _av);
+  //main_random (_ac, _av);
   //main_monte_carlo (_ac, _av);
   //main_monte_carlo_tree_search (_ac, _av);
-  main_NMCS ( _ac, _av );
+  //main_NMCS ( _ac, _av );
+  main_NRPA ( _ac, _av );
   return 0;
 }
 
