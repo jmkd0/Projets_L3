@@ -21,8 +21,8 @@ f.visible = "on";
 function hiderButton_callback(handles)
 //Write your callback for  hiderButton  here
 fn = uigetfile('*');
-hider = imread(fn);
-
+hider = imread (fn);
+imshow(hider);
 endfunction
 
 
