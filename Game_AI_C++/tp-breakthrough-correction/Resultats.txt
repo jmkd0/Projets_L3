@@ -1,0 +1,18 @@
+
+[nombre de victoires]
+MC vs MCTS
+       MCTS as x     MCTS as o   
+1k     4/5           3/5
+10k    4/5           3/5
+100k   4/5           5/5
+
+
+[temps moyens de décision pour MCTS]
+[ g++ -O3 ]
+[ i7 CPU @2.60GHz 12 cores ]
+       moyenne [ecart-type]
+1k     0.006   [0.004]
+10k    0.069   [0.019]
+100k   0.975   [0.276]
+
+
