@@ -13,21 +13,30 @@ struct Size{
     int nbreNeuronne;
     int horizontal;
     int vertical;
-}size = {0, 0, 0, 4, 0}; 
+    int ordonnencement;
+    int affinage;
+    int voisinage;
+    double alpha_ordonn;
+    double alpha_affin;
+}size = {.horizontal=6, .ordonnencement=500, .affinage=1500, .alpha_ordonn=0.9, .alpha_affin=0.07}; 
 
 typedef struct{
     double* dataIris;
     double* normalizeDataIris;
     char*  nameIris;
-    double distance_to_the_bmu;
-    int     i_bmu;
-    int     j_bmu;
 }DataIris;
 
 typedef struct{
     double* average;
+    int ** result;
     DataIris** neuronne;
 }DataNeuronne;
+
+typedef struct{
+    double distance_to_the_bmu;
+    int     i_bmu;
+    int     j_bmu;
+}BestMatchUnit;
 
 //Function to find the size (line and column ) of datas in database
 void SetSizeDataIris (char* fileName){
@@ -55,6 +64,10 @@ void SetSizeDataIris (char* fileName){
     //Nombre neuronne
     size.nbreNeuronne = (int)(5 * sqrt(size.lineIris));
     size.vertical = size.nbreNeuronne / size.horizontal;
+    //Calculate the "voisinage" contening the 50% neuronne
+    int k = 1;
+    while (pow(2 * k + 1, 2) -1 < (int)(size.horizontal * size.vertical / 2)) k ++;
+    size.voisinage = k;
 }
 //Function to reserve space for DataIris
 DataIris* reserveSpaceDataIris (DataIris* data){
@@ -70,10 +83,15 @@ DataIris* reserveSpaceDataIris (DataIris* data){
 DataNeuronne* reserveSpaceDataNeuronne (DataNeuronne* dataNeuronne){
     dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
     dataNeuronne->average =  (double*) malloc (size.columnIris * sizeof(double));
+
+    dataNeuronne->result =  (int**) malloc (size.horizontal * sizeof(int));
+    for(int i=0; i< size.horizontal; i++)
+        dataNeuronne->result[i] = (int*) malloc (size.vertical * sizeof(int));
+
     dataNeuronne->neuronne =  (DataIris**) malloc (size.horizontal * sizeof(DataIris));
     for(int i=0; i< size.horizontal; i++){
         dataNeuronne->neuronne[i] = (DataIris*) malloc (size.vertical * sizeof(DataIris));
-        for(int j=0; j< size.columnIris; j++){
+        for(int j=0; j< size.vertical; j++){
             dataNeuronne->neuronne[i][j].dataIris = (double*) malloc (size.columnIris * sizeof(double));
         }
     }
@@ -150,8 +168,6 @@ DataNeuronne* EnvDonneeNeuronne (DataNeuronne* dataNeuronne){
 /* Mise en place de tableau de valeurs aléatoires */
 
 int* Rand_Table ( int b ){
-    
-    srand(time(NULL));
     int *Rand = (int*) malloc(b*sizeof(int));
     int i, random, t, a=0;
     for( i=0; i<b; i++) Rand[i] = i;
@@ -172,25 +188,85 @@ double distance_neuronne ( double *Tab1, double *Tab2, int ligne){
     distance = sqrt (distance);
     return distance;
 }
-
-DataIris * Winners_Neuronnes ( DataIris *data, DataNeuronne* dataNeuronne ){
+//Find the Best Match Unit
+BestMatchUnit* Winner_Neuronne (BestMatchUnit* bmu, double* normalizeIris, DataIris** neuronne, int k){
     double distance;
-    int *Rand = Rand_Table ( size.lineIris );
-    for(int k=0; k< size.lineIris; k++){
-        data[Rand[k]].distance_to_the_bmu = DBL_MAX;
-        for(int i=0; i< size.horizontal; i++){
-             for(int j=0; j< size.vertical; j++){
-                 distance = distance_neuronne (data[Rand[k]].normalizeDataIris, dataNeuronne->neuronne[i][j].dataIris, size.columnIris);
-                 if(distance < data[Rand[k]].distance_to_the_bmu ){
-                     data[Rand[k]].distance_to_the_bmu = distance;
-                     data[Rand[k]].i_bmu = i;
-                     data[Rand[k]].j_bmu = j;
-                 } 
-             }
+    bmu->distance_to_the_bmu = DBL_MAX;
+    for(int i=0; i< size.horizontal; i++){
+         for(int j=0; j< size.vertical; j++){
+             distance = distance_neuronne (normalizeIris, neuronne[i][j].dataIris, size.columnIris);
+             //printf("Iris %d and (%d,%d) are with distance: %f\n", k, i, j, distance);
+             if(distance < bmu->distance_to_the_bmu ){
+                 bmu->distance_to_the_bmu = distance;
+                 bmu->i_bmu = i;
+                 bmu->j_bmu = j;
+             } 
          }
     }
-   return data;
+   return bmu;
 } 
+//Propagation to neighbor
+void propagation (DataNeuronne* dataNeuronne, double* normalizeIris, BestMatchUnit* bmu, double alpha, int neighbor){
+    int i_start, i_end, j_start, j_end;
+    //Top
+    if(bmu->i_bmu < neighbor) i_start = 0;
+        else i_start = bmu->i_bmu - neighbor;
+    //Bottom
+    if(bmu->i_bmu >= size.horizontal - neighbor) i_end = size.horizontal - 1;
+        else i_end = bmu->i_bmu + neighbor;
+    //Right
+    if(bmu->j_bmu < neighbor) j_start = 0;
+        else j_start = bmu->j_bmu - neighbor;
+    //Left
+    if(bmu->j_bmu >= size.vertical - neighbor) j_end = size.vertical - 1;
+        else j_end = bmu->j_bmu + neighbor;
+    //printf("de i=%d - i=%d et j=%d -j=%d\n", i_start, i_end, j_start, j_end);
+        //propagation to neighbor
+    for(int i=i_start; i<= i_end; i++){
+        for(int j=j_start; j<= j_end; j++){
+            for(int k=0; k< size.columnIris; k++){
+                dataNeuronne->neuronne[i][j].dataIris[k] += alpha * (normalizeIris[k] - dataNeuronne->neuronne[i][j].dataIris[k]);
+            }
+        }
+    }
+}
+//Learnning
+DataNeuronne* Learning_Neuronnes (DataIris *data, DataNeuronne* dataNeuronne, BestMatchUnit* bmu, int* Rand, int itteration, int neighbor, double alpha){
+    srand(time(NULL));
+    for(int i=0; i< itteration; i++){
+        alpha = alpha - (double)i / (double)itteration;
+        for(int k=0; k< size.lineIris; k++){
+            bmu = Winner_Neuronne (bmu, data[Rand[k]].normalizeDataIris, dataNeuronne->neuronne, Rand[k]);
+            //printf("Iris %d win (%d,%d) with distance: %f\n", Rand[k], bmu->i_bmu, bmu->j_bmu, bmu->distance_to_the_bmu);
+            propagation (dataNeuronne, data[Rand[k]].normalizeDataIris, bmu, alpha, neighbor);
+        }
+        //printf("\n");
+    }
+    return dataNeuronne;
+}
+//Etiquettage
+void Etiquettage (DataIris *data, DataNeuronne* dataNeuronne, int* Rand){
+    /* for(int i=0; i< size.horizontal; i++)
+        for(int j=0; j< size.vertical; j++)
+                dataNeuronne->result[i][j] = 0; */
+
+    for(int i=0; i< size.horizontal; i++){
+         for(int j=0; j< size.vertical; j++){
+             for(int k=0; k< size.lineIris; k++){
+                int count = 0;
+                for(int l=0; l< size.columnIris; l++)
+                     if(dataNeuronne->neuronne[i][j].dataIris[l] == data[Rand[k]].normalizeDataIris[l]) count ++;
+                if(count == size.columnIris){
+                    if(strcmp(data[Rand[k]].nameIris, "Iris-setosta") == 0) dataNeuronne->result[i][j] = 1;
+                    if(strcmp(data[Rand[k]].nameIris, "Iris-versicolor") == 0) dataNeuronne->result[i][j] = 2;
+                    if(strcmp(data[Rand[k]].nameIris, "Iris-virginica") == 0) dataNeuronne->result[i][j] = 3;
+                        else dataNeuronne->result[i][j] = 0;
+                }
+            }
+        }
+    }
+}
+
 //Displays
 void display_database (DataIris *data, int ligne, int colonne ){
     int i,j;
@@ -241,19 +317,34 @@ void display_neuronne_space (DataNeuronne* dataNeuronne){
      }         
 } 
 
-void display_winner_neuronne (DataIris* data){
-    printf("\nWinner Neuronnes\n");
-    for(int i=0; i< size.lineIris; i++){
-        printf("Iris %d proche de Neuronne (%d,%d) avec distance: %f",i, data[i].i_bmu, data[i].j_bmu, data[i].distance_to_the_bmu);
-        printf("\n");
-    }
+void display_result_neuronne (DataNeuronne *dataNeuronne){
+    printf("\nResult Neuronnes\n");
+    for(int i=0; i< size.horizontal; i++){
+         for(int j=0; j< size.vertical; j++)
+             printf("%d ", dataNeuronne->result[i][j]);
+         printf("\n");
 }
-
-void freeSpace (DataIris* data, DataNeuronne* dataNeuronne){
+}
+void freeSpace (DataIris* data, DataNeuronne* dataNeuronne, BestMatchUnit* bmu){
+    //free dataIris
     for(int i=0; i< size.lineIris; i++){
         free(data[i].dataIris);
         free(data[i].normalizeDataIris); 
     }
     free(data);
+
+    //free dataNeuronne
+    //for(int i=0; i< size.horizontal; i++) free(dataNeuronne->result[i]);
+
+    for(int i=0; i< size.horizontal; i++){
+        for(int j=0; j< size.vertical; j++){
+            free(dataNeuronne->neuronne[i][j].dataIris);
+        }
+        free(dataNeuronne->neuronne[i]);
+    }
+    free(dataNeuronne);
+    
+    //free best match unit
+    free(bmu);
 }
 #endif
