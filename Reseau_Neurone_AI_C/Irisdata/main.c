@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "irisneurone.h"
-
+typedef struct S{
+    int** M;
+}S;
 int main(){
     int j;
     char* fileName = "iris.data"; /*https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data*/
@@ -20,10 +22,7 @@ int main(){
 
         /* Set space for DataNeuronne */
     DataNeuronne*  dataNeuronne = reserveSpaceDataNeuronne (dataNeuronne);
-for(int i=0; i< size.horizontal; i++){
-        for(int j=0; j< size.vertical; j++)
-                dataNeuronne->result[i][j] = 0;
-}
+  
         /*  Calculate the average of vectors */
     dataNeuronne = AverageMatrix (dataNeuronne, data, size.lineIris, size.columnIris);
     
@@ -31,11 +30,12 @@ for(int i=0; i< size.horizontal; i++){
     dataNeuronne = EnvDonneeNeuronne (dataNeuronne);
 
         /*  Parcours aléatoire */
-        int *Rand = Rand_Table ( size.lineIris );
+    int *Rand = Rand_Table ( size.lineIris );
 
         /*  Déterminer les neuronnes gagnants */
     BestMatchUnit* bmu = (BestMatchUnit*) malloc (sizeof(BestMatchUnit));
     dataNeuronne = Learning_Neuronnes (data, dataNeuronne, bmu, Rand, size.ordonnencement, size.voisinage, size.alpha_ordonn);
+    dataNeuronne = Learning_Neuronnes (data, dataNeuronne, bmu, Rand, size.affinage, 1 , size.alpha_affin);
 
         /* Etquettage */
     Etiquettage (data, dataNeuronne, Rand);

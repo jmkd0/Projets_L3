@@ -28,7 +28,7 @@ typedef struct{
 
 typedef struct{
     double* average;
-    int ** result;
+    int** result;
     DataIris** neuronne;
 }DataNeuronne;
 
@@ -37,6 +37,8 @@ typedef struct{
     int     i_bmu;
     int     j_bmu;
 }BestMatchUnit;
+
+
 
 //Function to find the size (line and column ) of datas in database
 void SetSizeDataIris (char* fileName){
@@ -84,17 +86,18 @@ DataNeuronne* reserveSpaceDataNeuronne (DataNeuronne* dataNeuronne){
     dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
     dataNeuronne->average =  (double*) malloc (size.columnIris * sizeof(double));
 
-    dataNeuronne->result =  (int**) malloc (size.horizontal * sizeof(int));
-    for(int i=0; i< size.horizontal; i++)
-        dataNeuronne->result[i] = (int*) malloc (size.vertical * sizeof(int));
-
-    dataNeuronne->neuronne =  (DataIris**) malloc (size.horizontal * sizeof(DataIris));
+    dataNeuronne->result =  (int**) calloc ( size.horizontal, sizeof(int*));
+    dataNeuronne->neuronne =  (DataIris**) malloc (size.horizontal * sizeof(DataIris*));
+    
     for(int i=0; i< size.horizontal; i++){
+        dataNeuronne->result[i] = (int*) calloc ( size.vertical, sizeof(int));
         dataNeuronne->neuronne[i] = (DataIris*) malloc (size.vertical * sizeof(DataIris));
         for(int j=0; j< size.vertical; j++){
             dataNeuronne->neuronne[i][j].dataIris = (double*) malloc (size.columnIris * sizeof(double));
         }
     }
+    
+    
     return dataNeuronne;
 }
 //Function to charge all datas from the database
@@ -158,7 +161,6 @@ DataNeuronne* EnvDonneeNeuronne (DataNeuronne* dataNeuronne){
        for(int i=0; i< size.horizontal; i++){
             for(int j=0; j< size.vertical; j++){
                 dataNeuronne->neuronne[i][j].dataIris[k] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
-
             }
         }         
     }
@@ -233,8 +235,9 @@ void propagation (DataNeuronne* dataNeuronne, double* normalizeIris, BestMatchUn
 //Learnning
 DataNeuronne* Learning_Neuronnes (DataIris *data, DataNeuronne* dataNeuronne, BestMatchUnit* bmu, int* Rand, int itteration, int neighbor, double alpha){
     srand(time(NULL));
+    double alpha_max = alpha;
     for(int i=0; i< itteration; i++){
-        alpha = alpha - (double)i / (double)itteration;
+        alpha = alpha_max * (1 - (double)i / (double)itteration);
         for(int k=0; k< size.lineIris; k++){
             bmu = Winner_Neuronne (bmu, data[Rand[k]].normalizeDataIris, dataNeuronne->neuronne, Rand[k]);
             //printf("Iris %d win (%d,%d) with distance: %f\n", Rand[k], bmu->i_bmu, bmu->j_bmu, bmu->distance_to_the_bmu);
@@ -246,21 +249,22 @@ DataNeuronne* Learning_Neuronnes (DataIris *data, DataNeuronne* dataNeuronne, Be
 }
 //Etiquettage
 void Etiquettage (DataIris *data, DataNeuronne* dataNeuronne, int* Rand){
-    /* for(int i=0; i< size.horizontal; i++)
-        for(int j=0; j< size.vertical; j++)
-                dataNeuronne->result[i][j] = 0; */
-
+    double d1, d2;
     for(int i=0; i< size.horizontal; i++){
          for(int j=0; j< size.vertical; j++){
              for(int k=0; k< size.lineIris; k++){
                 int count = 0;
-                for(int l=0; l< size.columnIris; l++)
-                     if(dataNeuronne->neuronne[i][j].dataIris[l] == data[Rand[k]].normalizeDataIris[l]) count ++;
+                for(int l=0; l< size.columnIris; l++){
+                    d1 = (int)(dataNeuronne->neuronne[i][j].dataIris[l]*10)/(double)10;
+                    d2 = (int)(data[Rand[k]].normalizeDataIris[l]*10)/(double)10;
+                    if( d1 == d2 ) count ++;
+                    //if(i==0 && j==0) printf("%f       %f\n", dataNeuronne->neuronne[i][j].dataIris[l], data[Rand[k]].normalizeDataIris[l]);
+                }      
+                //if(count != 0) printf("%d \n", count);
                 if(count == size.columnIris){
                     if(strcmp(data[Rand[k]].nameIris, "Iris-setosta") == 0) dataNeuronne->result[i][j] = 1;
                     if(strcmp(data[Rand[k]].nameIris, "Iris-versicolor") == 0) dataNeuronne->result[i][j] = 2;
                     if(strcmp(data[Rand[k]].nameIris, "Iris-virginica") == 0) dataNeuronne->result[i][j] = 3;
-                        else dataNeuronne->result[i][j] = 0;
                 }
             }
         }
