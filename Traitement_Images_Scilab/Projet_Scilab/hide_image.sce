@@ -19,6 +19,6 @@ function [resultRGB] = hide_couche_rgb(hiderRGB, hiddenRGB)
     result    = double (zeros(dimension));
     hiderRGB  = double (hiderRGB);
     hiddenRGB = double (hiddenRGB);
-    result    = floor (hiderRGB/16)*16+floor (hiddenRGB/16);
+    result    = floor (hiderRGB/16)*16+floor(hiddenRGB/16);
     resultRGB = uint8 (result);
 endfunction
