@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "irisneurone.h"
+#include "iris_in.h"
+#include "learning.h"
+#include "iris_out.h"
 typedef struct S{
     int** M;
 }S;
@@ -29,22 +31,22 @@ int main(){
         /*  Drow the neuronal space */
     dataNeuronne = EnvDonneeNeuronne (dataNeuronne);
 
-        /*  Parcours aléatoire */
-    int *Rand = Rand_Table ( size.lineIris );
-
         /*  Déterminer les neuronnes gagnants */
+        //display_neuronne_space ( dataNeuronne);
+    int *Rand = Rand_Table ( size.lineIris );
+    
     BestMatchUnit* bmu = (BestMatchUnit*) malloc (sizeof(BestMatchUnit));
-    dataNeuronne = Learning_Neuronnes (data, dataNeuronne, bmu, Rand, size.ordonnencement, size.voisinage, size.alpha_ordonn);
-    dataNeuronne = Learning_Neuronnes (data, dataNeuronne, bmu, Rand, size.affinage, 1 , size.alpha_affin);
+    Learning_Neuronnes (data, dataNeuronne->neuronne, bmu, Rand, size.ordonnencement, size.voisinage, size.alpha_ordonn);
+    //Learning_Neuronnes (data, dataNeuronne->neuronne, bmu, Rand, size.affinage, 3 , size.alpha_affin);
 
         /* Etquettage */
     Etiquettage (data, dataNeuronne, Rand);
     //Displays
-    //display_database (data, size.lineIris, size.columnIris );
+    //sdisplay_database (data, size.lineIris, size.columnIris );
     //display_nameflower (data, size.lineIris);
-    //display_normalise (data, size.lineIris, size.columnIris);
-    //display_average ( dataNeuronne, size.columnIris);
-    //display_neuronne_space ( dataNeuronne);
+    display_normalise (data, size.lineIris, size.columnIris);
+    display_average ( dataNeuronne, size.columnIris);
+    display_neuronne_space ( dataNeuronne );
     display_result_neuronne ( dataNeuronne );
     
     //Free space
