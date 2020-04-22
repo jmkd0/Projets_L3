@@ -1,0 +1,3 @@
+Bonjour monsieur, cette application permet 
+de cacher un text ou une image dans 
+une autre image.
