@@ -2,43 +2,52 @@
 #define __ISIS__H_
 
 //Displays
-void display_database (DataIris *data, int ligne, int colonne ){
+/* Donnée de la database */
+void display_database (DataIris *data ){
     int i,j;
     printf("Espace de données:\n");
-    for( i=0; i< ligne; i++){
-        for( j=0; j< colonne; j++){
+    for( i=0; i< size.lineIris; i++){
+        for( j=0; j< size.columnIris; j++){
             printf("%f  ", data[i].dataIris[j]);
         }
         printf("%s\n", data[i].nameIris);
     }
 }
-void display_nameflower (DataIris *data, int ligne){
+
+/* Noms des fleurs */
+void display_nameflower (DataIris *data ){
     int i;
      printf("\nNoms des fleurs:\n");
-    for( i=0; i< ligne; i++){
-            printf("%s", data[i].nameIris);
+    for( i=0; i< size.lineIris; i++){
+            printf("%s \n", data[i].nameIris);
     }
     printf("\n");
 }
-void display_normalise (DataIris *data, int ligne, int colonne){
+
+/* Données normalisés */
+void display_normalise (DataIris *data ){
     int i,j;
     printf("\nDonnées Normalisées:\n");
-    for( i=0; i< ligne; i++){
+    for( i=0; i< size.lineIris; i++){
         printf("Iris %d: ",i);
-        for( j=0; j< colonne; j++){
+        for( j=0; j< size.columnIris; j++){
             printf("%f  ", data[i].normalized[j]);
         }
         printf("\n");
     }
 }
- void display_average ( DataNeuronne* dataNeuronne, int colonne){
+
+/* Moyenne des données */
+ void display_average ( double* average){
     int i;
     printf("\nMoyenne des données:\n");
-    for( i=0; i< colonne; i++){
-            printf("%f  ", dataNeuronne->average[i]);
+    for( i=0; i< size.columnIris; i++){
+            printf("%f  ", average[i]);
     }
     printf("\n");
 }
+
+/* Espace de neuronne */
 void display_neuronne_space (DataNeuronne* dataNeuronne){
     printf("\nEspace de Neuronne:\n");
     for(int i=0; i< size.vertical; i++){
@@ -52,8 +61,12 @@ void display_neuronne_space (DataNeuronne* dataNeuronne){
      }         
 } 
 
+/* Sortie des neuronnes */
 void display_result_neuronne (DataNeuronne *dataNeuronne){
     printf("\nResult Neuronnes\n");
+    printf("\n\033[22;31mIris-setosa\n");
+	printf("\033[22;32mIris-versicolor\n");
+	printf("\033[22;34mIris-virginica\033[22;37m\n");
     int value;
     for(int i=0; i< size.vertical; i++){
          for(int j=0; j< size.horizontal; j++){
@@ -71,16 +84,14 @@ void display_result_neuronne (DataNeuronne *dataNeuronne){
          printf("\n");
     }
 }
-void freeSpace (DataIris* data, DataNeuronne* dataNeuronne, BestMatchUnit* bmu){
-    //free dataIris
+
+/* Libération de l'espace */
+void freeSpace (DataIris* data, DataNeuronne* dataNeuronne, double* average, BMU* bmu){
     for(int i=0; i< size.lineIris; i++){
         free(data[i].dataIris);
         free(data[i].normalized); 
     }
     free(data);
-
-    //free dataNeuronne
-    //for(int i=0; i< size.horizontal; i++) free(dataNeuronne->result[i]);
 
     for(int i=0; i< size.vertical; i++){
         for(int j=0; j< size.horizontal; j++){
@@ -92,6 +103,7 @@ void freeSpace (DataIris* data, DataNeuronne* dataNeuronne, BestMatchUnit* bmu){
     
     //free best match unit
     free(bmu);
+    free(average);
 }
 
 #endif

@@ -7,42 +7,40 @@
 #include <math.h>
 #include <time.h>
 #include <float.h>
-struct Size{
-    int     columnIris;
-    int     lineIris;
-    int     nbreNeuronne;
-    int     vertical;
-    int     horizontal;
-    int     ordonnencement;
-    int     affinage;
-    int     voisinage;
-    double  alpha_ordonn;
-    double  alpha_affin;
-}size = {.vertical=6, .ordonnencement=500, .affinage=1500, .alpha_ordonn=1, .alpha_affin=1}; 
 
-char* categories[] = {"Iris-setosa", "Iris-versicolor", "Iris-virginica"};
+struct Size{
+    int     columnIris;                                     /* taille de vecteur d'un iris: 4 */
+    int     lineIris;                                      /* nombre totale d'iris:   150    */
+    int     nbreNeuronne;                                 /* nombre de neuronne:   60       */
+    int     vertical;                                    /* largeur de l'environnement: 6  */
+    int     horizontal;                                     /* longeur de l'environnement: 10 */
+    int     ordonnencement;                                /* itteration ordonnencement: 500 */
+    int     affinage;                                     /* itteration affinage: 1500      */
+    int     rayon;                                       /* rayon de voisinage: 3 au debut */
+    double  alpha_ordonn;                                   /* alpha ordonnencement   */
+    double  alpha_affin;                                   /* alpha affinage         */
+
+}   size    =  {.vertical=6, .ordonnencement=500, .affinage=1500, .alpha_ordonn= 1, .alpha_affin = 0.07}; 
+
+char*       categories[] = {"Iris-setosa", "Iris-versicolor", "Iris-virginica"};
+
 
 typedef struct{
-    double*     dataIris;
-    double*     normalized;
-    char*       nameIris;
+    double*     dataIris;                 /* contient les données brutes       */
+    double*     normalized;              /* contient les données normalisées  */
+    char*       nameIris;               /* contient les noms des iris        */
 }DataIris;
 
 typedef struct{
-    double*     average;
-    int**       result;
-    double***   neuronne;
+    int**       result;                 /* contient les catégories de neuronne 1, 2, 3 */
+    double***   neuronne;              /* contient l'espace de neuronne               */
 }DataNeuronne;
 
 typedef struct{
-    double  distance_to_the_bmu;
-    int     i_bmu;
-    int     j_bmu;
-}BestMatchUnit;
-
-
-
-
+    double  distance;                   /* Best match Unit et sa distance */
+    int     i;
+    int     j;
+}BMU;
 
 //Function to find the size (line and column ) of datas in database
 void SetSizeDataIris (char* fileName){
@@ -67,29 +65,30 @@ void SetSizeDataIris (char* fileName){
         size.lineIris = line+1;
     }
     fclose( fichier ) ;
+
     //Nombre neuronne
     size.nbreNeuronne = (int)(5 * sqrt(size.lineIris));
     size.horizontal = size.nbreNeuronne / size.vertical;
+
     //Calculate the "voisinage" contening the 50% neuronne
     int k = 1;
     while (pow(2 * k + 1, 2) -1 < (int)(size.vertical * size.horizontal / 2)) k ++;
-    size.voisinage = k;
+    size.rayon = k;
 }
+
 //Function to reserve space for DataIris
 DataIris* reserveSpaceDataIris (DataIris* data){
     data = malloc (size.lineIris * sizeof(DataIris));
     for(int i=0; i< size.lineIris; i++){
         data[i].dataIris = (double*) malloc (size.columnIris * sizeof(double));
         data[i].normalized = (double*) malloc (size.columnIris * sizeof(double));
-        
     }
     return data;
 }
+
 //Function to reserve space for DataNeuronne
 DataNeuronne* reserveSpaceDataNeuronne (DataNeuronne* dataNeuronne){
     dataNeuronne = ( DataNeuronne* )malloc( sizeof( DataNeuronne ));
-    dataNeuronne->average =  (double*) malloc (size.columnIris * sizeof(double));
-
     dataNeuronne->result =  (int**) calloc ( size.vertical, sizeof(int*));
     dataNeuronne->neuronne =  (double***) malloc (size.vertical * sizeof(double**));
     
@@ -101,9 +100,9 @@ DataNeuronne* reserveSpaceDataNeuronne (DataNeuronne* dataNeuronne){
         }
     }
     
-    
     return dataNeuronne;
 }
+
 //Function to charge all datas from the database
 DataIris * ChargeDatabase(char* fileName, DataIris *data){
     int     lineSize = 100;
@@ -129,46 +128,42 @@ DataIris * ChargeDatabase(char* fileName, DataIris *data){
     }
     return data;
 } 
+
 //Function to normalize the datas
-DataIris* NormalizeMatrix(DataIris *data, int ligne, int colonne){
-    int i,j;
-    double norme;
-    norme = 0;
-        for(j= 0; j < colonne; j++)
-                norme += pow(data[i].dataIris[j],2);
-        norme = sqrt(norme);
-        
-    for(i=0; i< ligne; i++){
-        /* norme = 0;
-        for(j= 0; j < colonne; j++)
-                norme += pow(data[i].dataIris[j],2);
-        norme = sqrt(norme); */
-        for(j=0; j< colonne; j++)
-            data[i].normalized[j] = data[i].dataIris[j]/norme;
-    }
-    return data;
+void NormalizeMatrix(DataIris *data) {
+	double norm = 0;
+	for (int i = 0; i < size.lineIris; i++) {
+		norm = 0;
+        for(int j= 0; j < size.columnIris; j++)
+                norm += pow(data[i].dataIris[j],2);
+        norm = sqrt(norm);
+		for (int j = 0; j < size.columnIris; j++) {
+			data[i].normalized[j] = data[i].dataIris[j] / norm; 
+		}
+	}
 }
+
 //Function to calculate the average of datas
- DataNeuronne* AverageMatrix(DataNeuronne* dataNeuronne, DataIris *data, int ligne, int colonne){
+ double* AverageMatrix(DataIris *data){
+    double* average =  (double*) malloc (size.columnIris * sizeof(double));
     double mean;
-    int i,j;
-    for(j=0; j< colonne; j++){
+    for(int j=0; j< size.columnIris; j++){
         mean=0;
-        for(i=0; i< ligne; i++)
+        for(int i=0; i< size.lineIris; i++)
             mean += data[i].normalized[j];
-        mean /= ligne;
-        dataNeuronne->average[j] = mean;
+        mean /= size.lineIris;
+        average[j] = mean;
     }
-    return dataNeuronne;
+    return average;
  }
+
  //Function to create random neuronne between the average
-DataNeuronne* EnvDonneeNeuronne (DataNeuronne* dataNeuronne){
+DataNeuronne* EnvDonneeNeuronne (DataNeuronne* dataNeuronne, double* average){
     srand(time(NULL));
-    int i,j;
     double minimum, maximum;
     for(int k=0; k< size.columnIris; k++){
-        minimum = dataNeuronne->average[k] - 0.1;//0.05;
-        maximum = dataNeuronne->average[k] + 0.1;//0.025;
+        minimum = average[k] - 0.05;
+        maximum = average[k] + 0.025;
        for(int i=0; i< size.vertical; i++){
             for(int j=0; j< size.horizontal; j++){
                 dataNeuronne->neuronne[i][j][k] = (rand()/(double)RAND_MAX)*(maximum-minimum)+minimum;
@@ -177,7 +172,5 @@ DataNeuronne* EnvDonneeNeuronne (DataNeuronne* dataNeuronne){
     }
     return dataNeuronne;
 } 
-
-
 
 #endif
