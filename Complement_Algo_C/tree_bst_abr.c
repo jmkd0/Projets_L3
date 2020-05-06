@@ -65,6 +65,7 @@ Tree* create_abr_by_level (Tree* node, int* arr, int n) {
       
     return node; 
 } 
+/* Create a tree with sequential insert  */
 void create_abr_by_seq (Tree** tree, int value){
     if(!(*tree)){
         Tree* node = (Tree*)malloc(sizeof(Tree));
@@ -78,6 +79,38 @@ void create_abr_by_seq (Tree** tree, int value){
         create_abr_by_seq (&(*tree)->left, value);
     else if(value > (*tree)->data)
         create_abr_by_seq (&(*tree)->right, value);
+}
+/* Research in a tree*/
+Tree* research (Tree* tree, int data){
+    if(tree == NULL || tree->data == data) return tree;
+    if(data < tree->data) research (tree->left, data);
+    else research (tree->right, data);
+}
+
+/* Delete in a tree */
+Tree* delete_node (Tree* tree, int data){
+    if(tree == NULL) return tree;
+    if(data < tree->data) tree->left  = delete_node (tree->left, data);
+    else if(data > tree->data) tree->right = delete_node (tree->right, data);
+    else{//tree->data == data
+        if(tree->left == NULL){ //no left child
+            Tree* node = tree->right;
+            free(tree);
+            return node;
+        }else
+        if(tree->right == NULL){ //no right child
+            Tree* node = tree->left;
+            free(tree);
+            return node;
+        }else{
+        //node with two child
+        Tree* node = tree->right;
+        while(node != NULL && node->left != NULL) node = node->left;//search the next inorder in the right tree
+        tree->data = node->data; //swap the two content 
+        tree->right = delete_node (tree->right, node->data);//delete in right tree the next inorder
+        }
+    }
+    return tree;
 }
 
 void Prefixe(Tree* tree){
@@ -93,24 +126,37 @@ int main(){
     int level[]     = {10, 5, 40, 1, 7, 50};  
     int sequence[]  = {10, 40, 50, 5, 7, 1};  
     int size, i;
+    //Tree with Prefix
        printf("with Preorder:  ");
     size = sizeof(preorder)/sizeof(preorder[0]);
     Tree* treepre = create_abr_by_pre (preorder, 0, size-1);
     Prefixe (treepre);
+    //Rechercher
+    Tree* seek = research(treepre, 1);
+        printf("\nThe serached value is %d",seek->data);
+    //Delete node in tree
+        printf("\nwith Preorder after delete 10: ");
+    Tree* treedelete = delete_node (treepre, 10);
+    Prefixe (treedelete);
+
+    //Tree with Postfix
         printf("\nwith Postorder: ");
     size = sizeof(postorder)/sizeof(postorder[0]);
     Tree* treepos = create_abr_by_pos (postorder, 0, size-1);
     Prefixe (treepos);
+    //Tree with Largeur
         printf("\nWith Level:     ");
     size = sizeof(level)/sizeof(level[0]);
     Tree* treelevel = NULL;
      treelevel = create_abr_by_level (treelevel, level, size); 
     Prefixe (treelevel);
+    //Tree with Sequentiel
         printf("\nWith Sequence:  ");
     size = sizeof(sequence)/sizeof(sequence[0]);
     Tree* treeseq = NULL;
     for(i=0; i<size; i++) create_abr_by_seq (&treeseq, sequence[i]); 
     Prefixe (treeseq);
+
     printf("\n");
     return 0;
 }
