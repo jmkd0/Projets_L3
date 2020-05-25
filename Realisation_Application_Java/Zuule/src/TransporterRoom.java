@@ -7,11 +7,9 @@ public class TransporterRoom {
 
     public TransporterRoom(UserInterface gui, Room[] rooms)
     {
-    	gui.println("He are been transported succefully1 "+rooms.length);
     	for(int i=0; i<rooms.length; i++) {
     		this.rooms[i] = rooms[i];
     	}
-    	gui.println("He are been transported succefully");
     	this.gui = gui;
     	Room nextRoom = getExit();
     	setTransport(nextRoom);

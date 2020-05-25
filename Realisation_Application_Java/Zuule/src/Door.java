@@ -68,13 +68,12 @@ public class Door {
 		int intKey = Integer.parseInt(key);
 		int intInput = Integer.parseInt(input);
 		if(intKey == intInput ) {
-			Room nextRoom = currentRoom.getExit(direction);
+			Room nextRoom = gui.engine.currentRoom.getExit(direction);
 			gui.engine.currentRoom = nextRoom;
 			gui.println("The door is opened succefully");
-			gui.println(currentRoom.getLongDescription());
+			gui.println(gui.engine.currentRoom.getLongDescription());
 	        if(currentRoom.getImageName() != null)
-	           gui.showImage(currentRoom.getImageName());
-			this.key = getKey();
+	           gui.showImage(gui.engine.currentRoom.getImageName());
 			
 		}else {
 			gui.println("You have entered a bad key, retry");
