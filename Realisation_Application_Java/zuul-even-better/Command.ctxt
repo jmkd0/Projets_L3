@@ -1,0 +1,20 @@
+#BlueJ class context
+comment0.target=class\ Command
+comment0.text=\nThis\ class\ is\ an\ abstract\ superclass\ for\ all\ command\ classes\ in\ the\ game.\nEach\ user\ command\ is\ implemented\ by\ a\ specific\ command\ subclass.\n\nObjects\ of\ class\ Command\ can\ store\ an\ optional\ argument\ word\ (a\ second\nword\ entered\ on\ the\ command\ line).\ If\ the\ command\ had\ only\ one\ word,\ \nthen\ the\ second\ word\ is\ <null>.\n\n@author\ \ Michael\ Kolling\ and\ David\ J.\ Barnes\n@version\ 2.0\ (December\ 2002)\n\n
+comment1.params=
+comment1.target=String\ getSecondWord()
+comment1.text=\nReturn\ the\ second\ word\ of\ this\ command.\ If\ no\nsecond\ word\ was\ entered,\ the\ result\ is\ null.\n\n
+comment2.params=secondWord
+comment2.target=void\ setSecondWord(String)
+comment2.text=\nDefine\ the\ second\ word\ of\ this\ command\ (the\ word\nentered\ after\ the\ command\ word).\ Null\ indicates\ that\ \nthere\ was\ no\ second\ word.\n\n
+comment3.params=player
+comment3.target=boolean\ execute(Player)
+comment3.text=\nExecute\ this\ command.\ A\ flag\ is\ returned\ indicating\ whether\nthe\ game\ is\ over\ as\ a\ result\ of\ this\ command.\n\n@return\ True,\ if\ game\ should\ exit;\ false\ otherwise.\n\n
+comment4.params=
+comment4.target=Command()
+comment4.text=\nCreate\ a\ command\ object.\ First\ and\ second\ word\ must\ be\ supplied,\ but\neither\ one\ (or\ both)\ can\ be\ null.\ The\ command\ word\ should\ be\ null\ to\nindicate\ that\ this\ was\ a\ command\ that\ is\ not\ recognised\ by\ this\ game.\n\n
+comment5.target=secondWord
+comment6.params=
+comment6.target=boolean\ hasSecondWord()
+comment6.text=\nCheck\ whether\ a\ second\ word\ was\ entered\ for\ this\ \ncommand.\n\n
+numComments=7

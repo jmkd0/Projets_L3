@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.target=class\ Room
+comment0.text=Class\ Room\ -\ a\ room\ in\ an\ adventure\ game.\n\nThis\ class\ is\ the\ main\ class\ of\ the\ "World\ of\ Zuul"\ application.\ \n"World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ \n\nA\ "Room"\ represents\ one\ location\ in\ the\ scenery\ of\ the\ game.\ \ It\ is\ \nconnected\ to\ other\ rooms\ via\ exits.\ \ For\ each\ existing\ exit,\ the\ room\ \nstores\ a\ reference\ to\ the\ neighboring\ room.\n\n@author\ \ Michael\ Kolling\ and\ David\ J.\ Barnes\n@version\ 1.0\ (February\ 2002)\n\n
+comment1.params=description
+comment1.target=Room(String)
+comment1.text=\nCreate\ a\ room\ described\ "description".\ Initially,\ it\ has\ no\ exits.\n"description"\ is\ something\ like\ "in\ a\ kitchen"\ or\ "in\ an\ open\ court\ \nyard".\n\n
+comment2.params=
+comment2.target=String\ getLongDescription()
+comment2.text=\nReturn\ a\ long\ description\ of\ this\ room,\ in\ the\ form\:\nYou\ are\ in\ the\ kitchen.\nExits\:\ north\ west\n\n
+comment3.target=description
+comment4.params=direction
+comment4.target=Room\ getExit(String)
+comment4.text=\nReturn\ the\ room\ that\ is\ reached\ if\ we\ go\ from\ this\ room\ in\ direction\n"direction".\ If\ there\ is\ no\ room\ in\ that\ direction,\ return\ null.\n\n
+comment5.params=
+comment5.target=String\ getShortDescription()
+comment5.text=\nReturn\ the\ description\ of\ the\ room\ (the\ one\ that\ was\ defined\ in\ the\nconstructor).\n\n
+comment6.params=direction\ neighbor
+comment6.target=void\ setExit(String,Room)
+comment6.text=\nDefine\ an\ exit\ from\ this\ room.\n\n
+comment7.target=exits
+comment8.params=
+comment8.target=String\ getExitString()
+comment8.text=\nReturn\ a\ string\ describing\ the\ room's\ exits,\ for\ example\n"Exits\:\ north\ west".\n\n
+numComments=9

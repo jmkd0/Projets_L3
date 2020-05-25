@@ -1,0 +1,18 @@
+#BlueJ class context
+comment0.target=class\ Game
+comment0.text=\nThis\ class\ is\ the\ main\ class\ of\ the\ "World\ of\ Zuul"\ application.\ \n"World\ of\ Zuul"\ is\ a\ very\ simple,\ text\ based\ adventure\ game.\ \ Users\ \ncan\ walk\ around\ some\ scenery.\ That's\ all.\ It\ should\ really\ be\ extended\ \nto\ make\ it\ more\ interesting\!\n\nTo\ play\ this\ game,\ create\ an\ instance\ of\ this\ class\ and\ call\ the\ "play"\nmethod.\n\nThis\ main\ class\ creates\ and\ initialises\ all\ the\ others\:\ it\ creates\ all\nrooms,\ creates\ the\ parser\ and\ starts\ the\ game.\n\n@author\ \ Michael\ Kolling\ and\ David\ J.\ Barnes\n@version\ 1.1\ (December\ 2002)\n\n
+comment1.target=player
+comment2.params=
+comment2.target=void\ play()
+comment2.text=\nMain\ play\ routine.\ \ Loops\ until\ end\ of\ play.\n\n
+comment3.params=
+comment3.target=void\ printWelcome()
+comment3.text=\nPrint\ out\ the\ opening\ message\ for\ the\ player.\n\n
+comment4.params=
+comment4.target=void\ createRooms()
+comment4.text=\nCreate\ all\ the\ rooms\ and\ link\ their\ exits\ together.\n\n
+comment5.params=
+comment5.target=Game()
+comment5.text=\nCreate\ the\ game\ and\ initialise\ its\ internal\ map.\n\n
+comment6.target=parser
+numComments=7

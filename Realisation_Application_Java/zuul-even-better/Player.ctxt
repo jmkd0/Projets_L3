@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=class\ Player
+comment0.text=\nThis\ class\ represents\ players\ in\ the\ game.\ Each\ player\ has\ \na\ current\ location.\n\n@author\ Michael\ Kolling\n@version\ 1.0\ (December\ 2002)\n\n
+comment1.params=direction
+comment1.target=void\ walk(String)
+comment1.text=\nTry\ to\ walk\ in\ a\ given\ direction.\ If\ there\ is\ a\ door\nthis\ will\ change\ the\ player's\ location.\n\n
+comment2.params=room
+comment2.target=void\ setCurrentRoom(Room)
+comment2.text=\nSet\ the\ current\ room\ for\ this\ player.\n\n
+comment3.params=
+comment3.target=Player()
+comment3.text=\nConstructor\ for\ objects\ of\ class\ Player\n\n
+comment4.params=
+comment4.target=Room\ getCurrentRoom()
+comment4.text=\nReturn\ the\ current\ room\ for\ this\ player.\n\n
+comment5.target=currentRoom
+numComments=6

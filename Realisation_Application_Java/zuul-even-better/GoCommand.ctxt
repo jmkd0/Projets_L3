@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=class\ GoCommand
+comment0.text=\nImplementation\ of\ the\ 'go'\ user\ command.\n\n@author\ Michael\ Kolling\n@version\ 1.0\ (December\ 2002)\n\n
+comment1.params=
+comment1.target=GoCommand()
+comment1.text=\nConstructor\ for\ objects\ of\ class\ GoCommand\n\n
+comment2.params=player
+comment2.target=boolean\ execute(Player)
+comment2.text=\nTry\ to\ go\ to\ one\ direction.\ If\ there\ is\ an\ exit,\ enter\ the\ new\nroom,\ otherwise\ print\ an\ error\ message.\ Returns\ always\ 'false'.\n\n
+numComments=3
