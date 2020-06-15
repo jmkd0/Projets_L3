@@ -1,0 +1,58 @@
+{
+    "glossary": {
+        "title": "example glossary",
+		"GlossDiv": {
+            "title": "S",
+			"GlossList": {
+                "Actions": {
+                    "Id": "5643",
+					"Label": "SGML",
+					"FrontLabel": "Standard Generalized Markup Language",
+					"Position": "97",
+					"Priority": "ISO 8879:1986",
+					"Metadata": "15/08/1995",
+					"HtmlContent": "<div><h2>Petit encart</h2>",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+            }
+        },
+        "GlossDin": {
+            "title": "S",
+			"GlossList": {
+                "Actions": {
+                    "Id": "1209",
+					"Label": "PACL",
+					"FrontLabel": "This a front",
+					"Position": "97",
+					"Priority": "ISO 0000:1986",
+					"Metadata": "17/08/1995",
+					"HtmlContent": "<div><h2>Petit encart</h2>",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+            }
+        },
+        "Actions": {
+                    "Id": "1209",
+					"Label": "PACL",
+					"FrontLabel": "This a front",
+					"Position": "97",
+					"Priority": "ISO 0000:1986",
+					"Metadata": "17/08/1995",
+					"HtmlContent": "<div><h2>Petit encart</h2>",
+					"GlossDef": {
+                        "para": "A meta-markup language, used to create markup languages such as DocBook.",
+						"GlossSeeAlso": ["GML", "XML"]
+                    },
+					"GlossSee": "markup"
+                }
+        
+    }
+}

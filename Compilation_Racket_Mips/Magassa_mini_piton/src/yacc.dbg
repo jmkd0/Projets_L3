@@ -1,0 +1,2014 @@
+0	parser1931	=	(parser1932)
+1	parser1932	=	(prog Leof)
+2	prog	=	(definition prog)
+3	prog	=	(definition)
+4	definition	=	(type Lident Lassign sexpr Lsc)
+5	definition	=	(Lident Lassign sexpr Lsc)
+6	definition	=	(type Lident Lopar argtypes Lcol fargs Lcpar fblock)
+7	definition	=	(Lrec type Lident Lopar argtypes Lcol fargs Lcpar fblock)
+8	type	=	(type Llist)
+9	type	=	(Ltype)
+10	argtypes	=	(type Lcom argtypes)
+11	argtypes	=	(type)
+12	fargs	=	(Lident Lcom fargs)
+13	fargs	=	(Lident)
+14	fargs	=	(Lnil)
+15	fblock	=	(Locbra exprs Lreturn sexpr Lsc Lccbra)
+16	expr	=	(definition)
+17	expr	=	(funcall)
+18	expr	=	(test)
+19	expr	=	(loop)
+20	expr	=	(Lopar expr Lcpar)
+21	expr	=	(Locbra exprs Lccbra)
+22	exprs	=	(expr exprs)
+23	exprs	=	(expr)
+24	loop	=	(Lwhile Lopar sexpr Lcpar expr)
+25	test	=	(Lif Lopar sexpr Lcpar expr Lelse expr)
+26	funcall	=	(Lident Lopar args Lcpar Lsc)
+27	args	=	(sexpr Lcom args)
+28	args	=	(sexpr)
+29	sexpr	=	(atom)
+30	sexpr	=	(funcall)
+31	sexpr	=	(operation)
+32	sexpr	=	(Lopar sexpr Lcpar)
+33	operation	=	(sexpr Ladd sexpr)
+34	operation	=	(sexpr Lsub sexpr)
+35	operation	=	(sexpr Lmul sexpr)
+36	operation	=	(sexpr Ldiv sexpr)
+37	operation	=	(sexpr Lmod sexpr)
+38	operation	=	(sexpr Leq sexpr)
+39	operation	=	(sexpr Lneq sexpr)
+40	operation	=	(sexpr Llt sexpr)
+41	operation	=	(sexpr Lgt sexpr)
+42	operation	=	(sexpr Llte sexpr)
+43	operation	=	(sexpr Lgte sexpr)
+44	operation	=	(sexpr Land sexpr)
+45	operation	=	(sexpr Lor sexpr)
+46	operation	=	(Lnot sexpr)
+47	atom	=	(Lnil)
+48	atom	=	(Lbool)
+49	atom	=	(Lnum)
+50	atom	=	(Lstr)
+51	atom	=	(Lident)
+52	atom	=	(Locbra elem Lccbra)
+53	elem	=	(sexpr Lcom elem)
+54	elem	=	(sexpr)
+55	elem	=	()
+State 0
+	parser1931 -> . parser1932 
+
+	definition					goto	3
+	parser1932					goto	1
+	Lident					shift	6
+	Ltype					shift	7
+	type					goto	4
+	Lrec					shift	5
+	prog					goto	2
+
+State 1
+	parser1931 -> parser1932 . 
+
+
+State 2
+	parser1932 -> prog . Leof 
+
+	Leof					accept	
+
+State 3
+	prog -> definition . prog 
+	prog -> definition . 
+
+	Lrec					shift	5
+	definition					goto	3
+	Lident					shift	6
+	Ltype					shift	7
+	type					goto	4
+	prog					goto	9
+	Leof					reduce	3
+
+State 4
+	definition -> type . Lident Lassign sexpr Lsc 
+	definition -> type . Lident Lopar argtypes Lcol fargs Lcpar fblock 
+	type -> type . Llist 
+
+	Llist					shift	10
+	Lident					shift	11
+
+State 5
+	definition -> Lrec . type Lident Lopar argtypes Lcol fargs Lcpar fblock 
+
+	Ltype					shift	7
+	type					goto	12
+
+State 6
+	definition -> Lident . Lassign sexpr Lsc 
+
+	Lassign					shift	13
+
+State 7
+	type -> Ltype . 
+
+	Lcom					reduce	9
+	Lcol					reduce	9
+	Llist					reduce	9
+	Lident					reduce	9
+
+State 8
+	parser1932 -> prog Leof . 
+
+
+State 9
+	prog -> definition prog . 
+
+	Leof					reduce	2
+
+State 10
+	type -> type Llist . 
+
+	Lcom					reduce	8
+	Lcol					reduce	8
+	Llist					reduce	8
+	Lident					reduce	8
+
+State 11
+	definition -> type Lident . Lassign sexpr Lsc 
+	definition -> type Lident . Lopar argtypes Lcol fargs Lcpar fblock 
+
+	Lassign					shift	14
+	Lopar					shift	15
+
+State 12
+	definition -> Lrec type . Lident Lopar argtypes Lcol fargs Lcpar fblock 
+	type -> type . Llist 
+
+	Llist					shift	10
+	Lident					shift	16
+
+State 13
+	definition -> Lident Lassign . sexpr Lsc 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	18
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 14
+	definition -> type Lident Lassign . sexpr Lsc 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	29
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 15
+	definition -> type Lident Lopar . argtypes Lcol fargs Lcpar fblock 
+
+	Ltype					shift	7
+	type					goto	30
+	argtypes					goto	31
+
+State 16
+	definition -> Lrec type Lident . Lopar argtypes Lcol fargs Lcpar fblock 
+
+	Lopar					shift	32
+
+State 17
+	sexpr -> funcall . 
+
+	Ladd					reduce	30
+	Lgt					reduce	30
+	Lgte					reduce	30
+	Lneq					reduce	30
+	Lsub					reduce	30
+	Lor					reduce	30
+	Ldiv					reduce	30
+	Lcpar					reduce	30
+	Lccbra					reduce	30
+	Lmod					reduce	30
+	Lsc					reduce	30
+	Llt					reduce	30
+	Leq					reduce	30
+	Land					reduce	30
+	Lcom					reduce	30
+	Lmul					reduce	30
+	Llte					reduce	30
+
+State 18
+	definition -> Lident Lassign sexpr . Lsc 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lsc					shift	46
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 19
+	sexpr -> operation . 
+
+	Ladd					reduce	31
+	Lgt					reduce	31
+	Lgte					reduce	31
+	Lneq					reduce	31
+	Lsub					reduce	31
+	Lor					reduce	31
+	Ldiv					reduce	31
+	Lcpar					reduce	31
+	Lccbra					reduce	31
+	Lmod					reduce	31
+	Lsc					reduce	31
+	Llt					reduce	31
+	Leq					reduce	31
+	Land					reduce	31
+	Lcom					reduce	31
+	Lmul					reduce	31
+	Llte					reduce	31
+
+State 20
+	sexpr -> atom . 
+
+	Ladd					reduce	29
+	Lgt					reduce	29
+	Lgte					reduce	29
+	Lneq					reduce	29
+	Lsub					reduce	29
+	Lor					reduce	29
+	Ldiv					reduce	29
+	Lcpar					reduce	29
+	Lccbra					reduce	29
+	Lmod					reduce	29
+	Lsc					reduce	29
+	Llt					reduce	29
+	Leq					reduce	29
+	Land					reduce	29
+	Lcom					reduce	29
+	Lmul					reduce	29
+	Llte					reduce	29
+
+State 21
+	atom -> Lnil . 
+
+	Ladd					reduce	47
+	Lgt					reduce	47
+	Lgte					reduce	47
+	Lneq					reduce	47
+	Lsub					reduce	47
+	Lor					reduce	47
+	Ldiv					reduce	47
+	Lcpar					reduce	47
+	Lccbra					reduce	47
+	Lmod					reduce	47
+	Lsc					reduce	47
+	Llt					reduce	47
+	Leq					reduce	47
+	Land					reduce	47
+	Lcom					reduce	47
+	Lmul					reduce	47
+	Llte					reduce	47
+
+State 22
+	operation -> Lnot . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	47
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 23
+	sexpr -> Lopar . sexpr Lcpar 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	48
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 24
+	atom -> Locbra . elem Lccbra 
+
+	operation					goto	19
+	Lopar					shift	23
+	Lident					shift	25
+	Lnil					shift	21
+	Locbra					shift	24
+	Lstr					shift	27
+	atom					goto	20
+	Lbool					shift	28
+	Lccbra					reduce	55
+	elem					goto	50
+	sexpr					goto	49
+	funcall					goto	17
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 25
+	funcall -> Lident . Lopar args Lcpar Lsc 
+	atom -> Lident . 
+
+	Ladd					reduce	51
+	Lgt					reduce	51
+	Lgte					reduce	51
+	Lneq					reduce	51
+	Lsub					reduce	51
+	Lopar					shift	51
+	Lor					reduce	51
+	Ldiv					reduce	51
+	Lcpar					reduce	51
+	Lccbra					reduce	51
+	Lmod					reduce	51
+	Lsc					reduce	51
+	Llt					reduce	51
+	Leq					reduce	51
+	Land					reduce	51
+	Lcom					reduce	51
+	Lmul					reduce	51
+	Llte					reduce	51
+
+State 26
+	atom -> Lnum . 
+
+	Ladd					reduce	49
+	Lgt					reduce	49
+	Lgte					reduce	49
+	Lneq					reduce	49
+	Lsub					reduce	49
+	Lor					reduce	49
+	Ldiv					reduce	49
+	Lcpar					reduce	49
+	Lccbra					reduce	49
+	Lmod					reduce	49
+	Lsc					reduce	49
+	Llt					reduce	49
+	Leq					reduce	49
+	Land					reduce	49
+	Lcom					reduce	49
+	Lmul					reduce	49
+	Llte					reduce	49
+
+State 27
+	atom -> Lstr . 
+
+	Ladd					reduce	50
+	Lgt					reduce	50
+	Lgte					reduce	50
+	Lneq					reduce	50
+	Lsub					reduce	50
+	Lor					reduce	50
+	Ldiv					reduce	50
+	Lcpar					reduce	50
+	Lccbra					reduce	50
+	Lmod					reduce	50
+	Lsc					reduce	50
+	Llt					reduce	50
+	Leq					reduce	50
+	Land					reduce	50
+	Lcom					reduce	50
+	Lmul					reduce	50
+	Llte					reduce	50
+
+State 28
+	atom -> Lbool . 
+
+	Ladd					reduce	48
+	Lgt					reduce	48
+	Lgte					reduce	48
+	Lneq					reduce	48
+	Lsub					reduce	48
+	Lor					reduce	48
+	Ldiv					reduce	48
+	Lcpar					reduce	48
+	Lccbra					reduce	48
+	Lmod					reduce	48
+	Lsc					reduce	48
+	Llt					reduce	48
+	Leq					reduce	48
+	Land					reduce	48
+	Lcom					reduce	48
+	Lmul					reduce	48
+	Llte					reduce	48
+
+State 29
+	definition -> type Lident Lassign sexpr . Lsc 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lsc					shift	52
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 30
+	type -> type . Llist 
+	argtypes -> type . Lcom argtypes 
+	argtypes -> type . 
+
+	Lcol					reduce	11
+	Lcom					shift	53
+	Llist					shift	10
+
+State 31
+	definition -> type Lident Lopar argtypes . Lcol fargs Lcpar fblock 
+
+	Lcol					shift	54
+
+State 32
+	definition -> Lrec type Lident Lopar . argtypes Lcol fargs Lcpar fblock 
+
+	Ltype					shift	7
+	type					goto	30
+	argtypes					goto	55
+
+State 33
+	operation -> sexpr Leq . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	56
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 34
+	operation -> sexpr Lneq . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	57
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 35
+	operation -> sexpr Llt . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	58
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 36
+	operation -> sexpr Lgt . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	59
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 37
+	operation -> sexpr Llte . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	60
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 38
+	operation -> sexpr Lgte . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	61
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 39
+	operation -> sexpr Ladd . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	62
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 40
+	operation -> sexpr Lsub . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	63
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 41
+	operation -> sexpr Lmul . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	64
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 42
+	operation -> sexpr Ldiv . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	65
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 43
+	operation -> sexpr Lmod . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	66
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 44
+	operation -> sexpr Land . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	67
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 45
+	operation -> sexpr Lor . sexpr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	68
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 46
+	definition -> Lident Lassign sexpr Lsc . 
+
+	Lccbra					reduce	5
+	Leof					reduce	5
+	Lrec					reduce	5
+	Lwhile					reduce	5
+	Lopar					reduce	5
+	Lident					reduce	5
+	Ltype					reduce	5
+	Locbra					reduce	5
+	Lreturn					reduce	5
+	Lif					reduce	5
+	Lelse					reduce	5
+	Lcpar					reduce	5
+
+State 47
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+	operation -> Lnot sexpr . 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					shift	34
+	Lsub					shift	40
+	Lor					reduce	46
+	Ldiv					shift	42
+	Lcpar					reduce	46
+	Lccbra					reduce	46
+	Lmod					shift	43
+	Lsc					reduce	46
+	Llt					shift	35
+	Leq					shift	33
+	Land					reduce	46
+	Lcom					reduce	46
+	Lmul					shift	41
+	Llte					shift	37
+
+State 48
+	sexpr -> Lopar sexpr . Lcpar 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Lcpar					shift	69
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 49
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+	elem -> sexpr . Lcom elem 
+	elem -> sexpr . 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Land					shift	44
+	Lcom					shift	70
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Lccbra					reduce	54
+	Lgte					shift	38
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 50
+	atom -> Locbra elem . Lccbra 
+
+	Lccbra					shift	71
+
+State 51
+	funcall -> Lident Lopar . args Lcpar Lsc 
+
+	operation					goto	19
+	Lopar					shift	23
+	Lident					shift	25
+	Lnil					shift	21
+	Locbra					shift	24
+	Lstr					shift	27
+	Lbool					shift	28
+	atom					goto	20
+	funcall					goto	17
+	sexpr					goto	73
+	args					goto	72
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 52
+	definition -> type Lident Lassign sexpr Lsc . 
+
+	Lccbra					reduce	4
+	Leof					reduce	4
+	Lrec					reduce	4
+	Lwhile					reduce	4
+	Lopar					reduce	4
+	Lident					reduce	4
+	Ltype					reduce	4
+	Locbra					reduce	4
+	Lreturn					reduce	4
+	Lif					reduce	4
+	Lelse					reduce	4
+	Lcpar					reduce	4
+
+State 53
+	argtypes -> type Lcom . argtypes 
+
+	Ltype					shift	7
+	type					goto	30
+	argtypes					goto	74
+
+State 54
+	definition -> type Lident Lopar argtypes Lcol . fargs Lcpar fblock 
+
+	Lnil					shift	76
+	fargs					goto	75
+	Lident					shift	77
+
+State 55
+	definition -> Lrec type Lident Lopar argtypes . Lcol fargs Lcpar fblock 
+
+	Lcol					shift	78
+
+State 56
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr Leq sexpr . 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					shift	34
+	Lsub					shift	40
+	Lor					reduce	38
+	Ldiv					shift	42
+	Lcpar					reduce	38
+	Lccbra					reduce	38
+	Lmod					shift	43
+	Lsc					reduce	38
+	Llt					shift	35
+	Leq					reduce	38
+	Land					reduce	38
+	Lcom					reduce	38
+	Lmul					shift	41
+	Llte					shift	37
+
+State 57
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr Lneq sexpr . 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					reduce	39
+	Lsub					shift	40
+	Lor					reduce	39
+	Ldiv					shift	42
+	Lcpar					reduce	39
+	Lccbra					reduce	39
+	Lmod					shift	43
+	Lsc					reduce	39
+	Llt					shift	35
+	Leq					reduce	39
+	Land					reduce	39
+	Lcom					reduce	39
+	Lmul					shift	41
+	Llte					shift	37
+
+State 58
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr Llt sexpr . 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					reduce	40
+	Lsub					shift	40
+	Lor					reduce	40
+	Ldiv					shift	42
+	Lcpar					reduce	40
+	Lccbra					reduce	40
+	Lmod					shift	43
+	Lsc					reduce	40
+	Llt					reduce	40
+	Leq					reduce	40
+	Land					reduce	40
+	Lcom					reduce	40
+	Lmul					shift	41
+	Llte					shift	37
+
+State 59
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr Lgt sexpr . 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					reduce	41
+	Lgte					shift	38
+	Lneq					reduce	41
+	Lsub					shift	40
+	Lor					reduce	41
+	Ldiv					shift	42
+	Lcpar					reduce	41
+	Lccbra					reduce	41
+	Lmod					shift	43
+	Lsc					reduce	41
+	Llt					reduce	41
+	Leq					reduce	41
+	Land					reduce	41
+	Lcom					reduce	41
+	Lmul					shift	41
+	Llte					shift	37
+
+State 60
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr Llte sexpr . 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					reduce	42
+	Lgte					shift	38
+	Lneq					reduce	42
+	Lsub					shift	40
+	Lor					reduce	42
+	Ldiv					shift	42
+	Lcpar					reduce	42
+	Lccbra					reduce	42
+	Lmod					shift	43
+	Lsc					reduce	42
+	Llt					reduce	42
+	Leq					reduce	42
+	Land					reduce	42
+	Lcom					reduce	42
+	Lmul					shift	41
+	Llte					reduce	42
+
+State 61
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr Lgte sexpr . 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					reduce	43
+	Lgte					reduce	43
+	Lneq					reduce	43
+	Lsub					shift	40
+	Lor					reduce	43
+	Ldiv					shift	42
+	Lcpar					reduce	43
+	Lccbra					reduce	43
+	Lmod					shift	43
+	Lsc					reduce	43
+	Llt					reduce	43
+	Leq					reduce	43
+	Land					reduce	43
+	Lcom					reduce	43
+	Lmul					shift	41
+	Llte					reduce	43
+
+State 62
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr Ladd sexpr . 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					reduce	33
+	Lgt					reduce	33
+	Lgte					reduce	33
+	Lneq					reduce	33
+	Lsub					shift	40
+	Lor					reduce	33
+	Ldiv					shift	42
+	Lcpar					reduce	33
+	Lccbra					reduce	33
+	Lmod					reduce	33
+	Lsc					reduce	33
+	Llt					reduce	33
+	Leq					reduce	33
+	Land					reduce	33
+	Lcom					reduce	33
+	Lmul					shift	41
+	Llte					reduce	33
+
+State 63
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr Lsub sexpr . 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					reduce	34
+	Lgt					reduce	34
+	Lgte					reduce	34
+	Lneq					reduce	34
+	Lsub					reduce	34
+	Lor					reduce	34
+	Ldiv					shift	42
+	Lcpar					reduce	34
+	Lccbra					reduce	34
+	Lmod					reduce	34
+	Lsc					reduce	34
+	Llt					reduce	34
+	Leq					reduce	34
+	Land					reduce	34
+	Lcom					reduce	34
+	Lmul					shift	41
+	Llte					reduce	34
+
+State 64
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr Lmul sexpr . 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					reduce	35
+	Lgt					reduce	35
+	Lgte					reduce	35
+	Lneq					reduce	35
+	Lsub					reduce	35
+	Lor					reduce	35
+	Ldiv					shift	42
+	Lcpar					reduce	35
+	Lccbra					reduce	35
+	Lmod					reduce	35
+	Lsc					reduce	35
+	Llt					reduce	35
+	Leq					reduce	35
+	Land					reduce	35
+	Lcom					reduce	35
+	Lmul					reduce	35
+	Llte					reduce	35
+
+State 65
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr Ldiv sexpr . 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					reduce	36
+	Lgt					reduce	36
+	Lgte					reduce	36
+	Lneq					reduce	36
+	Lsub					reduce	36
+	Lor					reduce	36
+	Ldiv					reduce	36
+	Lcpar					reduce	36
+	Lccbra					reduce	36
+	Lmod					reduce	36
+	Lsc					reduce	36
+	Llt					reduce	36
+	Leq					reduce	36
+	Land					reduce	36
+	Lcom					reduce	36
+	Lmul					reduce	36
+	Llte					reduce	36
+
+State 66
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr Lmod sexpr . 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					reduce	37
+	Lgte					reduce	37
+	Lneq					reduce	37
+	Lsub					shift	40
+	Lor					reduce	37
+	Ldiv					shift	42
+	Lcpar					reduce	37
+	Lccbra					reduce	37
+	Lmod					reduce	37
+	Lsc					reduce	37
+	Llt					reduce	37
+	Leq					reduce	37
+	Land					reduce	37
+	Lcom					reduce	37
+	Lmul					shift	41
+	Llte					reduce	37
+
+State 67
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr Land sexpr . 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					shift	34
+	Lsub					shift	40
+	Lor					reduce	44
+	Ldiv					shift	42
+	Lcpar					reduce	44
+	Lccbra					reduce	44
+	Lmod					shift	43
+	Lsc					reduce	44
+	Llt					shift	35
+	Leq					shift	33
+	Land					reduce	44
+	Lcom					reduce	44
+	Lmul					shift	41
+	Llte					shift	37
+
+State 68
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+	operation -> sexpr Lor sexpr . 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lneq					shift	34
+	Lsub					shift	40
+	Lor					reduce	45
+	Ldiv					shift	42
+	Lcpar					reduce	45
+	Lccbra					reduce	45
+	Lmod					shift	43
+	Lsc					reduce	45
+	Llt					shift	35
+	Leq					shift	33
+	Land					shift	44
+	Lcom					reduce	45
+	Lmul					shift	41
+	Llte					shift	37
+
+State 69
+	sexpr -> Lopar sexpr Lcpar . 
+
+	Ladd					reduce	32
+	Lgt					reduce	32
+	Lgte					reduce	32
+	Lneq					reduce	32
+	Lsub					reduce	32
+	Lor					reduce	32
+	Ldiv					reduce	32
+	Lcpar					reduce	32
+	Lccbra					reduce	32
+	Lmod					reduce	32
+	Lsc					reduce	32
+	Llt					reduce	32
+	Leq					reduce	32
+	Land					reduce	32
+	Lcom					reduce	32
+	Lmul					reduce	32
+	Llte					reduce	32
+
+State 70
+	elem -> sexpr Lcom . elem 
+
+	operation					goto	19
+	Lopar					shift	23
+	Lident					shift	25
+	Lnil					shift	21
+	Locbra					shift	24
+	Lstr					shift	27
+	atom					goto	20
+	Lbool					shift	28
+	Lccbra					reduce	55
+	elem					goto	79
+	sexpr					goto	49
+	funcall					goto	17
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 71
+	atom -> Locbra elem Lccbra . 
+
+	Ladd					reduce	52
+	Lgt					reduce	52
+	Lgte					reduce	52
+	Lneq					reduce	52
+	Lsub					reduce	52
+	Lor					reduce	52
+	Ldiv					reduce	52
+	Lcpar					reduce	52
+	Lccbra					reduce	52
+	Lmod					reduce	52
+	Lsc					reduce	52
+	Llt					reduce	52
+	Leq					reduce	52
+	Land					reduce	52
+	Lcom					reduce	52
+	Lmul					reduce	52
+	Llte					reduce	52
+
+State 72
+	funcall -> Lident Lopar args . Lcpar Lsc 
+
+	Lcpar					shift	80
+
+State 73
+	args -> sexpr . Lcom args 
+	args -> sexpr . 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Land					shift	44
+	Lcom					shift	81
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Lcpar					reduce	28
+	Lgte					shift	38
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 74
+	argtypes -> type Lcom argtypes . 
+
+	Lcol					reduce	10
+
+State 75
+	definition -> type Lident Lopar argtypes Lcol fargs . Lcpar fblock 
+
+	Lcpar					shift	82
+
+State 76
+	fargs -> Lnil . 
+
+	Lcpar					reduce	14
+
+State 77
+	fargs -> Lident . Lcom fargs 
+	fargs -> Lident . 
+
+	Lcom					shift	83
+	Lcpar					reduce	13
+
+State 78
+	definition -> Lrec type Lident Lopar argtypes Lcol . fargs Lcpar fblock 
+
+	Lnil					shift	76
+	fargs					goto	84
+	Lident					shift	77
+
+State 79
+	elem -> sexpr Lcom elem . 
+
+	Lccbra					reduce	53
+
+State 80
+	funcall -> Lident Lopar args Lcpar . Lsc 
+
+	Lsc					shift	85
+
+State 81
+	args -> sexpr Lcom . args 
+
+	operation					goto	19
+	Lopar					shift	23
+	Lident					shift	25
+	Lnil					shift	21
+	Locbra					shift	24
+	Lstr					shift	27
+	Lbool					shift	28
+	atom					goto	20
+	funcall					goto	17
+	sexpr					goto	73
+	args					goto	86
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 82
+	definition -> type Lident Lopar argtypes Lcol fargs Lcpar . fblock 
+
+	fblock					goto	87
+	Locbra					shift	88
+
+State 83
+	fargs -> Lident Lcom . fargs 
+
+	Lnil					shift	76
+	fargs					goto	89
+	Lident					shift	77
+
+State 84
+	definition -> Lrec type Lident Lopar argtypes Lcol fargs . Lcpar fblock 
+
+	Lcpar					shift	90
+
+State 85
+	funcall -> Lident Lopar args Lcpar Lsc . 
+
+	Lgte					reduce	26
+	Leq					reduce	26
+	Lident					reduce	26
+	Ltype					reduce	26
+	Llte					reduce	26
+	Lcpar					reduce	26
+	Lccbra					reduce	26
+	Lrec					reduce	26
+	Llt					reduce	26
+	Lsc					reduce	26
+	Lopar					reduce	26
+	Lcom					reduce	26
+	Lmul					reduce	26
+	Lif					reduce	26
+	Ladd					reduce	26
+	Lgt					reduce	26
+	Lreturn					reduce	26
+	Lsub					reduce	26
+	Locbra					reduce	26
+	Lor					reduce	26
+	Ldiv					reduce	26
+	Land					reduce	26
+	Lwhile					reduce	26
+	Lmod					reduce	26
+	Lneq					reduce	26
+	Lelse					reduce	26
+
+State 86
+	args -> sexpr Lcom args . 
+
+	Lcpar					reduce	27
+
+State 87
+	definition -> type Lident Lopar argtypes Lcol fargs Lcpar fblock . 
+
+	Lccbra					reduce	6
+	Leof					reduce	6
+	Lrec					reduce	6
+	Lwhile					reduce	6
+	Lopar					reduce	6
+	Lident					reduce	6
+	Ltype					reduce	6
+	Locbra					reduce	6
+	Lreturn					reduce	6
+	Lif					reduce	6
+	Lelse					reduce	6
+	Lcpar					reduce	6
+
+State 88
+	fblock -> Locbra . exprs Lreturn sexpr Lsc Lccbra 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	exprs					goto	93
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	92
+
+State 89
+	fargs -> Lident Lcom fargs . 
+
+	Lcpar					reduce	12
+
+State 90
+	definition -> Lrec type Lident Lopar argtypes Lcol fargs Lcpar . fblock 
+
+	fblock					goto	102
+	Locbra					shift	88
+
+State 91
+	expr -> definition . 
+
+	Lccbra					reduce	16
+	Lrec					reduce	16
+	Lwhile					reduce	16
+	Lopar					reduce	16
+	Lident					reduce	16
+	Ltype					reduce	16
+	Locbra					reduce	16
+	Lreturn					reduce	16
+	Lif					reduce	16
+	Lelse					reduce	16
+	Lcpar					reduce	16
+
+State 92
+	exprs -> expr . exprs 
+	exprs -> expr . 
+
+	test					goto	95
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	Lif					shift	97
+	exprs					goto	103
+	Lreturn					reduce	23
+	Lccbra					reduce	23
+	Lrec					shift	5
+	definition					goto	91
+	Lwhile					shift	98
+	loop					goto	94
+	funcall					goto	96
+	expr					goto	92
+
+State 93
+	fblock -> Locbra exprs . Lreturn sexpr Lsc Lccbra 
+
+	Lreturn					shift	104
+
+State 94
+	expr -> loop . 
+
+	Lccbra					reduce	19
+	Lrec					reduce	19
+	Lwhile					reduce	19
+	Lopar					reduce	19
+	Lident					reduce	19
+	Ltype					reduce	19
+	Locbra					reduce	19
+	Lreturn					reduce	19
+	Lif					reduce	19
+	Lelse					reduce	19
+	Lcpar					reduce	19
+
+State 95
+	expr -> test . 
+
+	Lccbra					reduce	18
+	Lrec					reduce	18
+	Lwhile					reduce	18
+	Lopar					reduce	18
+	Lident					reduce	18
+	Ltype					reduce	18
+	Locbra					reduce	18
+	Lreturn					reduce	18
+	Lif					reduce	18
+	Lelse					reduce	18
+	Lcpar					reduce	18
+
+State 96
+	expr -> funcall . 
+
+	Lccbra					reduce	17
+	Lrec					reduce	17
+	Lwhile					reduce	17
+	Lopar					reduce	17
+	Lident					reduce	17
+	Ltype					reduce	17
+	Locbra					reduce	17
+	Lreturn					reduce	17
+	Lif					reduce	17
+	Lelse					reduce	17
+	Lcpar					reduce	17
+
+State 97
+	test -> Lif . Lopar sexpr Lcpar expr Lelse expr 
+
+	Lopar					shift	105
+
+State 98
+	loop -> Lwhile . Lopar sexpr Lcpar expr 
+
+	Lopar					shift	106
+
+State 99
+	expr -> Lopar . expr Lcpar 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	107
+
+State 100
+	expr -> Locbra . exprs Lccbra 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	exprs					goto	108
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	92
+
+State 101
+	definition -> Lident . Lassign sexpr Lsc 
+	funcall -> Lident . Lopar args Lcpar Lsc 
+
+	Lassign					shift	13
+	Lopar					shift	51
+
+State 102
+	definition -> Lrec type Lident Lopar argtypes Lcol fargs Lcpar fblock . 
+
+	Lccbra					reduce	7
+	Leof					reduce	7
+	Lrec					reduce	7
+	Lwhile					reduce	7
+	Lopar					reduce	7
+	Lident					reduce	7
+	Ltype					reduce	7
+	Locbra					reduce	7
+	Lreturn					reduce	7
+	Lif					reduce	7
+	Lelse					reduce	7
+	Lcpar					reduce	7
+
+State 103
+	exprs -> expr exprs . 
+
+	Lccbra					reduce	22
+	Lreturn					reduce	22
+
+State 104
+	fblock -> Locbra exprs Lreturn . sexpr Lsc Lccbra 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	109
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 105
+	test -> Lif Lopar . sexpr Lcpar expr Lelse expr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	110
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 106
+	loop -> Lwhile Lopar . sexpr Lcpar expr 
+
+	atom					goto	20
+	Lstr					shift	27
+	Lbool					shift	28
+	operation					goto	19
+	sexpr					goto	111
+	Lident					shift	25
+	Lnil					shift	21
+	Lopar					shift	23
+	funcall					goto	17
+	Locbra					shift	24
+	Lnot					shift	22
+	Lnum					shift	26
+
+State 107
+	expr -> Lopar expr . Lcpar 
+
+	Lcpar					shift	112
+
+State 108
+	expr -> Locbra exprs . Lccbra 
+
+	Lccbra					shift	113
+
+State 109
+	fblock -> Locbra exprs Lreturn sexpr . Lsc Lccbra 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lsc					shift	114
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 110
+	test -> Lif Lopar sexpr . Lcpar expr Lelse expr 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Lcpar					shift	115
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 111
+	loop -> Lwhile Lopar sexpr . Lcpar expr 
+	operation -> sexpr . Ladd sexpr 
+	operation -> sexpr . Lsub sexpr 
+	operation -> sexpr . Lmul sexpr 
+	operation -> sexpr . Ldiv sexpr 
+	operation -> sexpr . Lmod sexpr 
+	operation -> sexpr . Leq sexpr 
+	operation -> sexpr . Lneq sexpr 
+	operation -> sexpr . Llt sexpr 
+	operation -> sexpr . Lgt sexpr 
+	operation -> sexpr . Llte sexpr 
+	operation -> sexpr . Lgte sexpr 
+	operation -> sexpr . Land sexpr 
+	operation -> sexpr . Lor sexpr 
+
+	Ladd					shift	39
+	Lgt					shift	36
+	Lgte					shift	38
+	Lsub					shift	40
+	Llte					shift	37
+	Ldiv					shift	42
+	Lcpar					shift	116
+	Land					shift	44
+	Llt					shift	35
+	Lmul					shift	41
+	Lmod					shift	43
+	Lneq					shift	34
+	Leq					shift	33
+	Lor					shift	45
+
+State 112
+	expr -> Lopar expr Lcpar . 
+
+	Lccbra					reduce	20
+	Lrec					reduce	20
+	Lwhile					reduce	20
+	Lopar					reduce	20
+	Lident					reduce	20
+	Ltype					reduce	20
+	Locbra					reduce	20
+	Lreturn					reduce	20
+	Lif					reduce	20
+	Lelse					reduce	20
+	Lcpar					reduce	20
+
+State 113
+	expr -> Locbra exprs Lccbra . 
+
+	Lccbra					reduce	21
+	Lrec					reduce	21
+	Lwhile					reduce	21
+	Lopar					reduce	21
+	Lident					reduce	21
+	Ltype					reduce	21
+	Locbra					reduce	21
+	Lreturn					reduce	21
+	Lif					reduce	21
+	Lelse					reduce	21
+	Lcpar					reduce	21
+
+State 114
+	fblock -> Locbra exprs Lreturn sexpr Lsc . Lccbra 
+
+	Lccbra					shift	117
+
+State 115
+	test -> Lif Lopar sexpr Lcpar . expr Lelse expr 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	118
+
+State 116
+	loop -> Lwhile Lopar sexpr Lcpar . expr 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	119
+
+State 117
+	fblock -> Locbra exprs Lreturn sexpr Lsc Lccbra . 
+
+	Lccbra					reduce	15
+	Leof					reduce	15
+	Lrec					reduce	15
+	Lwhile					reduce	15
+	Lopar					reduce	15
+	Lident					reduce	15
+	Ltype					reduce	15
+	Locbra					reduce	15
+	Lreturn					reduce	15
+	Lif					reduce	15
+	Lelse					reduce	15
+	Lcpar					reduce	15
+
+State 118
+	test -> Lif Lopar sexpr Lcpar expr . Lelse expr 
+
+	Lelse					shift	120
+
+State 119
+	loop -> Lwhile Lopar sexpr Lcpar expr . 
+
+	Lccbra					reduce	24
+	Lrec					reduce	24
+	Lwhile					reduce	24
+	Lopar					reduce	24
+	Lident					reduce	24
+	Ltype					reduce	24
+	Locbra					reduce	24
+	Lreturn					reduce	24
+	Lif					reduce	24
+	Lelse					reduce	24
+	Lcpar					reduce	24
+
+State 120
+	test -> Lif Lopar sexpr Lcpar expr Lelse . expr 
+
+	definition					goto	91
+	Lopar					shift	99
+	Lident					shift	101
+	Ltype					shift	7
+	type					goto	4
+	Locbra					shift	100
+	Lif					shift	97
+	Lrec					shift	5
+	Lwhile					shift	98
+	loop					goto	94
+	test					goto	95
+	funcall					goto	96
+	expr					goto	121
+
+State 121
+	test -> Lif Lopar sexpr Lcpar expr Lelse expr . 
+
+	Lccbra					reduce	25
+	Lrec					reduce	25
+	Lwhile					reduce	25
+	Lopar					reduce	25
+	Lident					reduce	25
+	Ltype					reduce	25
+	Locbra					reduce	25
+	Lreturn					reduce	25
+	Lif					reduce	25
+	Lelse					reduce	25
+	Lcpar					reduce	25
+

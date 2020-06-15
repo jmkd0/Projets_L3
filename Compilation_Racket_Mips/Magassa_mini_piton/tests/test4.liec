@@ -1,0 +1,10 @@
+
+int main(int, str list : argc, argv) {
+  print_num(2 + 2);       // Ret:4
+  print_num(2 + 3 - 5);   // Enchaînement de plusieurs calculs - Ret:0
+  print_num(2 + 2 * 2);   // Priorité multiplication - Ret:0
+  print_num((2 + 3 * (3 - 1)) / 2); // Parenthésage et priorité - Ret:4
+  print_num((2 - 3));   // Nombre négatif - Ret:-1
+  print_num(1/2); // A FAIRE: Nombre flottant - Ret:0 (car quotient)
+  return 0;
+}

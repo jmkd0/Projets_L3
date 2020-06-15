@@ -13,7 +13,6 @@
     "crypto": "^1.0.1",
     "ent": "^2.2.0",
     "express": "^4.17.1",
-    "fs": "0.0.1-security",
     "geolocation": "^0.2.0",
     "http": "0.0.0",
     "install": "^0.13.0",

@@ -1,0 +1,12 @@
+
+int main(int, str list : argc, argv) {
+	int a = 42;
+	if((a != 42))
+		print_num(1); // Affiche un 1, synonyme de vrai
+	else {
+		
+		print_num(0); // Affiche un 0, synonyme de faux
+	}
+
+	return 0;
+}

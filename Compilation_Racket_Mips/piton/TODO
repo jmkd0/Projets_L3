@@ -1,0 +1,12 @@
+- move lexer wrapper into lexer.rkt
+- fast-call
+- non-null-terminated strings
+- X86
+- float
+- inheritance for numbers
+- AST optimisations
+- generics
+- lists
+- functions as first-class citizens
+
+WONTDO: dicts

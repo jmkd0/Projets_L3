@@ -1,0 +1,9 @@
+
+int main(int, str list : argc, argv) {
+	int a = 42;
+	while(a == 42) {   // Pour lancer, le programme est censé afficher 1 à l'infini
+		print_num(1);
+		// a = 2
+	}
+  return 0;
+}

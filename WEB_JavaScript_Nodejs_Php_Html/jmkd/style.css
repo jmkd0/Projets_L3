@@ -1,0 +1,167 @@
+body {
+  			font-family: Arial, Helvetica, sans-serif;
+        background-image: url('ressource/image_ia.jpg');
+		}
+	    * {
+		box-sizing: border-box;
+		}
+    #title{
+      width: 100%;
+      height: 8vh;
+      color: #F0F0F0;
+      font-size:4vh;
+      font-family: "Times New Roman";/*Police du text: "Times New Roman",sans-serif*/ ;
+      font-weight: bold;
+      display:flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #head{
+      width: 100%;
+      height: 30vh;
+      border: 0.4vh outset #c0c0c0;
+
+
+
+    }
+        input[type=text] {
+          width: 100%;
+          padding: 2vh;
+          margin: 1vh 0vh 2vh 0vh;
+          font-size: 2.5vh;
+          border-radius: 1vh;
+          display: inline-block;
+          border: none;
+          background: #BEBEBE;
+        }
+
+        input[type=text]:focus{
+          background-color: rgb(182, 179, 179);
+          font-size: 2.5vh;
+          border-radius: 1vh;
+          outline: none;
+        }
+
+
+        #goto, #goback, #gosignin, #gosignup{
+          color: white;
+          padding: 1.5vh 1vh 1.5vh 1vh ;
+          font-size: 2.4vh;
+          border: none;
+          cursor: pointer;
+          width: 12vh;
+          opacity: 0.9;
+          border-radius: 1vh;
+          border: 0.4vh outset #c0c0c0;
+        }
+
+        #goto{
+        	width:20vh; 
+        	background-color:rgb(173, 18, 70) ; 
+        	float: right;
+        }
+        
+
+        #id-principal{
+          width: 70%;
+          height: 50%;
+          position:relative
+          margin-left: auto;
+          margin-right: auto;
+          background-color: #BEBEBE;
+        }
+        #id-container {
+          display: none; 
+          position: fixed; 
+          z-index: 1; 
+          left: 0;
+          top: 0;
+          width: 100%; 
+          height: 100%; 
+          overflow: auto;
+          padding-top: 10vh;
+          background-image: url('ressource/image_ia.jpg');
+        }
+
+        .container {
+          width: 70%;
+          margin-left: auto;
+          margin-right: auto;
+          padding: 1vh;
+          background-color: #F0F0F0;
+          border: 0.5vh solid #888;
+          border-radius: 3vh;
+        }
+
+        hr {
+          border: 1px solid #D0D0D0;
+          margin-bottom: 2vh;
+        }
+
+        #redirect{
+        	display: flex;
+        }
+        #redi1{
+        	flex: 33.33vh;
+        }
+        #redi2{
+        	flex: 33.33vh;
+        	position: relative;
+        }
+        #redi3{
+        	flex: 33.33vh;
+        	position: relative;
+        }
+
+        #goback {
+          	background-color: #cc9724;
+        }
+        #gosignup{
+        	text-decoration: none;
+        	position: absolute;
+          top:50%;
+          left:50%;
+          transform:translate(-50%, -50%);
+          background-color: #0080FF;
+        }
+        #gosignin{
+        	text-decoration: none;
+        	position: absolute;
+            top:50%;
+            left:100%;
+            transform:translate(-100%, -50%);
+          	background-color: #4CAF50;
+        }
+        #information{
+          width: 100%;
+          height: 30vh;
+          border: 0.4vh outset #c0c0c0;
+        }
+/*Gride contenant les catégories*/
+        #grid2-style{
+                width: 100%;
+                height: 20vh;
+                border: 0.4vh outset #c0c0c0;
+                display: flex;
+                margin: auto auto auto auto;
+            }
+            .element{
+                flex: auto;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                border: 2px solid white;
+
+            }
+            .a-class-info{
+              color: white;
+              width: 100%;
+              height: 100%;
+              text-align: center;
+              text-decoration: none;
+              padding: 1.5vh 1vh 1.5vh 1vh ;
+              font-size: 2vh;
+              border: none;
+              cursor: pointer;
+              opacity: 0.9;
+            }

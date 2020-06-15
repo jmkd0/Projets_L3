@@ -1,0 +1,33 @@
+/* Magassa Souleymane
+   15607759
+*/
+
+Ce projet consiste à écrire un compilateur Python vers l'assembleur MIPS en Racket.
+
+Pour exécuter le programme, il suffit de rediriger vers un fichier MIPS à l'aide de commande exécutable :
+
+racket src/liec.rkt tests/<source.liec> > source.s
+
+Compiler avec: spim -f source.s
+
+En utilisant un langage fonctionnel (Racket) et le simulateur spim, voici les instructions python qu'il peut interpréter:
+
+- Les opérateurs arithmétiques/logiques ("+", "-", "*", "/", "!", "&&", "||"...)
+- Les opérateurs de comparaison (">", "<", "==", " !=" ...)
+- les mots-clefs du programme ("if", "else", "while", "return", "rec"...)
+- Les signes de ponctuations (" ;", "(", ")", "", "" ...)
+- Les chaîne de caractères ([a-zA-Z]+ avec possibilité de mettre des tirets pour suivre la convention Snake case)
+- Les nombres ([0-9]+ avec possibilité de mettre un tiret pour représenter les nombres négatives)
+- Les valeurs booléennes (soit la valeur true, soit la valeur false)
+- Les types (soit int, str, bool ou nil)
+- Les commentaires longs /* ceci est un commentaire */
+- Print pour afficher les chaînes de caractéres, chiffres, variables déclarées
+- Les definitions
+- Les blocs d'instructions
+- Les conditions
+- Déclaration de fonctions
+- Appel de fonctions
+
+Les fichiers test1.liec, test2.liec, test3.liec, test4.liec et test5.liec contiennent quelques test écrit en C que le mini-compilateur peut compiler.
+
+Il y a également d’autres fonctions dans le fichier semantics.rkt comme les messages d’erreur (err, fail, errt).

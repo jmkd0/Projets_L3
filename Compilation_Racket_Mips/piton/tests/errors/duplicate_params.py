@@ -1,0 +1,1 @@
+def a(b: int, b: int) -> int: return a + b

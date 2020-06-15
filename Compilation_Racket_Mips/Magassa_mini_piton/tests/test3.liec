@@ -1,0 +1,7 @@
+
+int main(int, str list : argc, argv) {
+  // str a = "toto";   // Censé mettre "toto" dans .data puis charger l'adresse avec La
+  int b = 10;       // v0 = 10
+  bool is = true;   // v0 = 1
+  return 0;
+}
